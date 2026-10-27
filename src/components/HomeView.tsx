@@ -146,10 +146,10 @@ export const HomeView: React.FC = () => {
 
           {/* Right Side: Professional Dog & Cat Illustration */}
           <div className="hidden lg:flex items-center justify-center relative shrink-0">
-            <div className="relative w-80 h-64 rounded-3xl overflow-hidden shadow-md border border-[var(--border)] group">
+            <div className="relative w-[26rem] h-64 rounded-3xl overflow-hidden shadow-md border border-[var(--border)] group">
               <img
-                src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=600&q=80"
-                alt="Cão e Gato Veterinária"
+                src="./assets/home-labrador-gato.webp"
+                alt="Filhote de labrador creme ao lado de um gatinho na grama"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#060D1C]/60 via-transparent to-transparent flex items-end p-4">
