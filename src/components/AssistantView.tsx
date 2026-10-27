@@ -32,6 +32,7 @@ import {
   SmartCalculationResult,
   formatClinicalVolume,
 } from '../utils/assistantCalculator';
+import { AITurn, askVetAssistant, errorMessage, getClaudeSample } from '../services/vetAssistantAI';
 
 interface PendingCalculationState {
   drug: CommercialProduct | null;
@@ -95,6 +96,24 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
   const [pendingCalculation, setPendingCalculation] = useState<PendingCalculationState>(EMPTY_PENDING);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Histórico enviado ao Claude e acesso sempre atualizado às fichas
+  const aiTurnsRef = useRef<AITurn[]>([]);
+  const aiAbortRef = useRef<AbortController | null>(null);
+  const patientsRef = useRef<PatientRecord[]>(patients);
+  patientsRef.current = patients;
+  const [aiAvailable, setAiAvailable] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    getClaudeSample().then((s) => {
+      if (active) setAiAvailable(Boolean(s));
+    });
+    return () => {
+      active = false;
+      aiAbortRef.current?.abort();
+    };
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -225,8 +244,54 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
     }
   };
 
+  const updateMessageContent = (id: string, content: string) => {
+    setMessages((prev) => prev.map((m) => (m.id === id ? { ...m, content } : m)));
+  };
+
+  // Conversa livre com o Claude (app aberto no claude.ai), com acesso à biblioteca, ao motor de cálculo e às fichas
+  const chatWithAI = async (sample: NonNullable<Awaited<ReturnType<typeof getClaudeSample>>>, textToSend: string) => {
+    const replyId = 'ai-' + Date.now();
+    setMessages((prev) => [...prev, { id: replyId, role: 'assistant', content: '⏳ Pensando…', timestamp: new Date().toISOString() }]);
+    aiTurnsRef.current.push({ role: 'user', content: textToSend });
+    const ctl = new AbortController();
+    aiAbortRef.current = ctl;
+    let started = false;
+    setLoading(true);
+    try {
+      const reply = await askVetAssistant(sample, aiTurnsRef.current, () => patientsRef.current, {
+        signal: ctl.signal,
+        onText: (text) => {
+          started = true;
+          updateMessageContent(replyId, text);
+        },
+        onProgress: (label) => {
+          if (!started) updateMessageContent(replyId, `⏳ ${label}`);
+        },
+      });
+      updateMessageContent(replyId, reply);
+      aiTurnsRef.current.push({ role: 'assistant', content: reply });
+    } catch (e: any) {
+      const partial: string = e?.text || '';
+      if (partial) aiTurnsRef.current.push({ role: 'assistant', content: partial });
+      if (e?.code === 'cancelled') {
+        updateMessageContent(replyId, partial || 'Resposta interrompida.');
+      } else {
+        updateMessageContent(replyId, `${partial ? partial + '\n\n' : ''}⚠️ ${errorMessage(e?.code)}`);
+      }
+    } finally {
+      setLoading(false);
+      aiAbortRef.current = null;
+    }
+  };
+
   // Fluxo de análise da mensagem
   const processUserMessage = async (textToSend: string) => {
+    const sample = await getClaudeSample();
+    if (sample) {
+      await chatWithAI(sample, textToSend);
+      return;
+    }
+
     // 0. Detecta consulta segura de prontuário por código (VET-XXXXXX)
     const codeMatch = textToSend.match(/VET-\d{5,8}/i);
     if (codeMatch) {
@@ -853,7 +918,16 @@ Confirma esta dose ou deseja prescrever outro valor em mg/kg?`,
     }
   };
 
-  const promptSuggestions = [
+  const promptSuggestions = aiAvailable
+    ? [
+        'Bom dia!',
+        'Qual a dose de meloxicam para um gato de 4 kg?',
+        'Como está o Thor?',
+        'Dipirona gotas para cão de 10 kg',
+        'Gato com vômito há 2 dias, o que investigar?',
+        'Quais pacientes eu tenho cadastrados?',
+      ]
+    : [
     'Agemoxi, cachorro, 12 kg',
     'Biodex, gato, 3,5 kg',
     'Omeprazol injetável, cão, 10 kg, dose de 1 mg/kg',
@@ -861,11 +935,15 @@ Confirma esta dose ou deseja prescrever outro valor em mg/kg?`,
     'Flamavet 0,2%, gato, 4 kg',
     'Trissulfin, cão, 10 kg',
     'Diferenciais para vômito agudo em filhote',
-  ];
+      ];
 
   const formatMessageContent = (content: string) => {
     if (!content) return '';
     return content
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
       .replace(/^#{1,6}\s+/gm, '')
       .replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold text-[#14243A] dark:text-white">$1</strong>')
       .replace(/\*/g, '');
@@ -888,7 +966,9 @@ Confirma esta dose ou deseja prescrever outro valor em mg/kg?`,
                 </span>
               </h1>
               <p className="text-xs text-[#52677F] dark:text-slate-400 mt-0.5">
-                Digite frases naturais como <em>"Agemoxi, cachorro, 12 kg"</em> para calcular doses e volumes sem formulários.
+                {aiAvailable
+                  ? 'Converse como com um colega: doses calculadas pelo app, dúvidas clínicas e fichas dos seus pacientes.'
+                  : <>Digite frases naturais como <em>"Agemoxi, cachorro, 12 kg"</em> para calcular doses e volumes sem formulários.</>}
               </p>
             </div>
           </div>
@@ -896,18 +976,10 @@ Confirma esta dose ou deseja prescrever outro valor em mg/kg?`,
 
         <button
           onClick={() => {
-            if (confirm('Deseja reiniciar a conversa do assistente?')) {
-              setMessages(messages.slice(0, 1));
-              setPendingCalculation({
-                drug: null,
-                species: null,
-                weightKg: null,
-                doseMgKg: null,
-                totalDoseMg: null,
-                concentrationMgMl: null,
-                waitingFor: null,
-              });
-            }
+            aiAbortRef.current?.abort();
+            aiTurnsRef.current = [];
+            setMessages(messages.slice(0, 1));
+            setPendingCalculation(EMPTY_PENDING);
           }}
           className="p-2.5 text-[#52677F] hover:text-[#14243A] dark:text-slate-400 dark:hover:text-slate-200 rounded-xl bg-[#F1F6FC] hover:bg-[#E8F0F8] dark:bg-slate-800 dark:hover:bg-slate-700 border border-[#DCE7F2] dark:border-slate-700 transition-colors cursor-pointer flex items-center space-x-1.5 text-xs font-semibold"
           title="Nova Conversa"
