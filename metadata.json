@@ -1,0 +1,6 @@
+{
+  "name": "VET CALC PRO",
+  "description": "Plataforma profissional de apoio à Medicina Veterinária com calculadoras clínicas precisas, biblioteca de medicamentos, guia de exames, prontuário e assistente veterinário inteligente.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

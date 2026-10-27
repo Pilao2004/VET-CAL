@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@layer base {
+  :root,
+  html,
+  body,
+  .dark {
+    /* Default Dark Theme - Vet Calc Pro */
+    --bg-main: #060D1C;
+    --surface: #10213B;
+    --input-bg: #172A46;
+    --text-main: #F4F7FB;
+    --text-secondary: #9AADC6;
+    --primary: #00D6A0;
+    --secondary: #21B8C5;
+    --border: #243D58;
+    --result-bg: #10213B;
+    --header-bg: #10213B;
+    --banner-from: #15345B;
+    --banner-to: #124C50;
+  }
+
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.4); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, 0.6); }
+
+/* Print */
+@media print {
+  body { background: white !important; color: black !important; }
+}
