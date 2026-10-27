@@ -11,7 +11,6 @@ export const BonusView: React.FC = () => {
     identificacao: false,
     historico: false,
     mucosas: false,
-    tpc: false,
     hidratacao: false,
     linfonodos: false,
     ausculta: false,
@@ -161,7 +160,6 @@ export const BonusView: React.FC = () => {
             ].map((item) => (
               <label
                 key={item.key}
-                onClick={() => toggleCheck(item.key)}
                 className={`flex items-center space-x-2.5 p-2.5 rounded-xl border transition-all cursor-pointer text-xs ${
                   checklistState[item.key]
                     ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-800 dark:text-emerald-300 font-bold'

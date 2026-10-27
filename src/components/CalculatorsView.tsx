@@ -751,11 +751,12 @@ export const CalculatorsView: React.FC = () => {
 
         if (isNaN(w) || w <= 0) return setValidationError('Informe o peso do animal (kg).');
 
+        const isDog = fluidSpecies === 'Canino';
         let maintenanceMlDay = 0;
         if (fluidMaintenanceMethod === 'metabolic') {
-          maintenanceMlDay = fluidSpecies === 'dog' ? (30 * w) + 70 : 70 * Math.pow(w, 0.75);
+          maintenanceMlDay = isDog ? (30 * w) + 70 : 70 * Math.pow(w, 0.75);
         } else {
-          const rate = parseFloat(fluidStandardRate.replace(',', '.')) || (fluidSpecies === 'dog' ? 50 : 40);
+          const rate = parseFloat(fluidStandardRate.replace(',', '.')) || (isDog ? 50 : 40);
           maintenanceMlDay = w * rate;
         }
 
@@ -773,7 +774,7 @@ export const CalculatorsView: React.FC = () => {
           {
             label: '1. Manutenção Diária',
             expression: fluidMaintenanceMethod === 'metabolic'
-              ? (fluidSpecies === 'dog' ? `(30 × ${w}) + 70` : `70 × (${w})^0.75`)
+              ? (isDog ? `(30 × ${w}) + 70` : `70 × (${w})^0.75`)
               : `${w} kg × ${fluidStandardRate} mL/kg/dia`,
             result: `${maintenanceMlDay.toFixed(0)} mL/dia (${(maintenanceMlDay / 24).toFixed(1)} mL/h)`,
           },
@@ -808,7 +809,7 @@ export const CalculatorsView: React.FC = () => {
         setResultSummary(summary);
         setCalculationSteps(steps);
 
-        const presText = `PRESCRIÇÃO DE FLUIDOTERAPIA VETSMART\nPaciente: ${fluidSpecies === 'dog' ? 'Cão' : 'Gato'} (${w} kg) - Grau de Desidratação: ${dehyPct}%\nVolume Total em 24h: ${totalDailyMl.toFixed(0)} mL\nBomba de Infusão Contínua: ${hourlyRateMlHr.toFixed(1)} mL/h\nEquipo Macrogotas: ${Math.round(macroDropsMin)} gotas/minuto (1 gota a cada ${secondsPerDropMacro.toFixed(1)} segundos)\nEquipo Microgotas: ${Math.round(microDropsMin)} microgotas/minuto.`;
+        const presText = `PRESCRIÇÃO DE FLUIDOTERAPIA VETSMART\nPaciente: ${fluidSpecies} (${w} kg) - Grau de Desidratação: ${dehyPct}%\nVolume Total em 24h: ${totalDailyMl.toFixed(0)} mL\nBomba de Infusão Contínua: ${hourlyRateMlHr.toFixed(1)} mL/h\nEquipo Macrogotas: ${Math.round(macroDropsMin)} gotas/minuto (1 gota a cada ${secondsPerDropMacro.toFixed(1)} segundos)\nEquipo Microgotas: ${Math.round(microDropsMin)} microgotas/minuto.`;
         setPrescriptionText(presText);
 
         addCalculationToHistory({

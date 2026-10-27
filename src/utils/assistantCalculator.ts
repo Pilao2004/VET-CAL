@@ -108,12 +108,18 @@ export function parseVeterinaryQuery(query: string): ParsedQuery {
   const candidateProducts: CommercialProduct[] = [];
   let drugMention: string | null = null;
 
+  const queryWords = lower.split(/[^a-z0-9à-ú]+/);
+  // Primeira palavra da marca (ex.: "agemoxi" em "Agemoxi CL® 50 mg") reúne as apresentações da mesma família
+  const brandFamily = (p: CommercialProduct) => p.brandName.toLowerCase().split(/[®(\s]/)[0];
+
   for (const prod of COMMERCIAL_PRODUCTS) {
     const brandLower = prod.brandName.toLowerCase();
     const activeLower = prod.activePrinciple.toLowerCase();
     const simpleBrand = brandLower.split(/[®(]/)[0].trim();
+    const family = brandFamily(prod);
     if (
       lower.includes(simpleBrand) ||
+      (family.length > 3 && queryWords.includes(family)) ||
       lower.includes(brandLower) ||
       lower.includes(activeLower) ||
       activeLower.split(/[\s+/]+/).some((word) => word.length > 3 && lower.includes(word))
@@ -130,12 +136,13 @@ export function parseVeterinaryQuery(query: string): ParsedQuery {
   if (candidateProducts.length === 1) {
     matchedProduct = candidateProducts[0];
   } else if (candidateProducts.length > 1) {
-    const exact = candidateProducts.find((p) =>
+    // Só escolhe sozinho quando o texto aponta para uma única apresentação
+    const exact = candidateProducts.filter((p) =>
       lower.includes(p.brandName.toLowerCase().split(/[®(]/)[0].trim()) ||
       lower.includes(p.activePrinciple.toLowerCase())
     );
-    if (exact) {
-      matchedProduct = exact;
+    if (exact.length === 1 && candidateProducts.filter((p) => brandFamily(p) === brandFamily(exact[0])).length === 1) {
+      matchedProduct = exact[0];
     }
   }
 

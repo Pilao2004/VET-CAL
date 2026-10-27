@@ -48,6 +48,16 @@ interface PendingCalculationState {
   waitingFor?: 'presentation' | 'species' | 'weight' | 'dose' | null;
 }
 
+const EMPTY_PENDING: PendingCalculationState = {
+  drug: null,
+  species: null,
+  weightKg: null,
+  doseMgKg: null,
+  totalDoseMg: null,
+  concentrationMgMl: null,
+  waitingFor: null,
+};
+
 export const AssistantView: React.FC = () => {
   const {
     showToast,
@@ -82,15 +92,7 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
   const [loading, setLoading] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [selectedResultDetails, setSelectedResultDetails] = useState<SmartCalculationResult | null>(null);
-  const [pendingCalculation, setPendingCalculation] = useState<PendingCalculationState>({
-    drug: null,
-    species: null,
-    weightKg: null,
-    doseMgKg: null,
-    totalDoseMg: null,
-    concentrationMgMl: null,
-    waitingFor: null,
-  });
+  const [pendingCalculation, setPendingCalculation] = useState<PendingCalculationState>(EMPTY_PENDING);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -297,13 +299,33 @@ Como deseja prosseguir com este paciente?`,
 
     const parsed = parseVeterinaryQuery(textToSend);
 
+    // A mensagem só continua o cálculo anterior se responder exatamente ao que foi perguntado
+    const waiting = pendingCalculation.waitingFor;
+    const answersPending =
+      (waiting === 'species' && Boolean(parsed.species)) ||
+      (waiting === 'weight' && Boolean(parsed.weightKg)) ||
+      (waiting === 'dose' && (parsed.doseMgKg !== null || parsed.totalDoseMg !== null));
+
+    // Dúvida clínica nova: não reaproveita o medicamento da conversa anterior
+    if (!parsed.isCalculationIntent && !answersPending) {
+      setPendingCalculation(EMPTY_PENDING);
+      await sendToChatApi(textToSend);
+      return;
+    }
+
+    // Medicamento novo citado: descarta o anterior (mantém espécie e peso do mesmo paciente)
+    const base: PendingCalculationState =
+      parsed.candidateProducts.length > 0
+        ? { ...EMPTY_PENDING, species: pendingCalculation.species, weightKg: pendingCalculation.weightKg }
+        : pendingCalculation;
+
     // Mescla dados atuais com o estado pendente
     let current: PendingCalculationState = {
-      ...pendingCalculation,
-      species: parsed.species || pendingCalculation.species,
-      weightKg: parsed.weightKg || pendingCalculation.weightKg,
-      doseMgKg: parsed.doseMgKg !== null ? parsed.doseMgKg : pendingCalculation.doseMgKg,
-      totalDoseMg: parsed.totalDoseMg !== null ? parsed.totalDoseMg : pendingCalculation.totalDoseMg,
+      ...base,
+      species: parsed.species || base.species,
+      weightKg: parsed.weightKg || base.weightKg,
+      doseMgKg: parsed.doseMgKg !== null ? parsed.doseMgKg : base.doseMgKg,
+      totalDoseMg: parsed.totalDoseMg !== null ? parsed.totalDoseMg : base.totalDoseMg,
     };
 
     if (parsed.concentrationMgMl) {
