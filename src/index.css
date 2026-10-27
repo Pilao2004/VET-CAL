@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* O app é sempre escuro: o variant dark: segue a classe .dark do <html>, não o tema do sistema */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   :root,
   html,
