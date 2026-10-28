@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ScrollRow } from './ScrollRow';
 import {
   Stethoscope,
   AlertTriangle,
@@ -79,7 +80,7 @@ export const SymptomsView: React.FC = () => {
           <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2">
             Selecione um ou mais sintomas apresentados para {patientSpecies}:
           </span>
-          <div className="flex flex-nowrap gap-2 overflow-x-auto pb-2">
+          <ScrollRow label="sintomas" className="flex flex-nowrap gap-2 pb-2">
             {filteredSymptoms.map((sym) => {
               const isSelected = selectedSymptomIds.includes(sym.id);
               return (
@@ -101,13 +102,13 @@ export const SymptomsView: React.FC = () => {
                 </button>
               );
             })}
-          </div>
+          </ScrollRow>
         </div>
       </div>
 
       {/* Selected Symptoms Tab Navigation (if multiple) */}
       {selectedSymptomsList.length > 1 && (
-        <div className="flex items-center space-x-2 overflow-x-auto pb-1">
+        <ScrollRow label="sintomas selecionados" fade="from-[var(--bg-main)]" className="flex items-center space-x-2 pb-1">
           <span className="text-xs font-bold text-slate-400 whitespace-nowrap">Detalhando:</span>
           {selectedSymptomsList.map((sym) => (
             <button
@@ -122,7 +123,7 @@ export const SymptomsView: React.FC = () => {
               {sym.name.split(' (')[0]}
             </button>
           ))}
-        </div>
+        </ScrollRow>
       )}
 
       {/* Main Clinical Decision Card */}

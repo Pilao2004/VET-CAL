@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { ScrollRow } from './ScrollRow';
 import {
   Bot,
   Send,
@@ -1407,7 +1408,8 @@ Confirma esta dose ou deseja prescrever outro valor em mg/kg?`,
         </div>
 
         {/* Suggested Quick Prompt Chips */}
-        <div className="p-2.5 bg-[#F5F9FD] dark:bg-slate-900 border-t border-[#DCE7F2] dark:border-slate-800 overflow-x-auto scrollbar-none flex items-center space-x-2">
+        <div className="p-2.5 bg-[#F5F9FD] dark:bg-slate-900 border-t border-[#DCE7F2] dark:border-slate-800">
+          <ScrollRow label="exemplos" fade="from-[#F5F9FD] dark:from-slate-900" className="flex items-center space-x-2">
           <span className="text-[10px] font-bold text-[#52677F] dark:text-slate-400 uppercase tracking-wider whitespace-nowrap pl-1">
             Exemplos rápidos:
           </span>
@@ -1421,6 +1423,7 @@ Confirma esta dose ou deseja prescrever outro valor em mg/kg?`,
               {sug}
             </button>
           ))}
+          </ScrollRow>
         </div>
 
         {/* Input Bar */}

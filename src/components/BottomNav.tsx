@@ -1,4 +1,5 @@
 import React from 'react';
+import { ScrollRow } from './ScrollRow';
 import {
   Calculator,
   Pill,
@@ -27,7 +28,8 @@ export const BottomNav: React.FC = () => {
   ];
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[var(--header-bg)] border-t border-[var(--border)] z-40 overflow-x-auto scrollbar-none pb-safe">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[var(--header-bg)] border-t border-[var(--border)] z-40 pb-safe">
+      <ScrollRow label="menu" fade="from-[var(--header-bg)]">
       <div className="flex items-center justify-around py-2 px-2 min-w-max">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -48,6 +50,7 @@ export const BottomNav: React.FC = () => {
           );
         })}
       </div>
+      </ScrollRow>
     </nav>
   );
 };

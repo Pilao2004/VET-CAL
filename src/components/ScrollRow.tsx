@@ -2,7 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 /** Fileira com rolagem lateral e setas que aparecem quando há mais opções para aquele lado. */
-export const ScrollRow: React.FC<{ children: React.ReactNode; className?: string; label?: string }> = ({ children, className = '', label }) => {
+export const ScrollRow: React.FC<{ children: React.ReactNode; className?: string; label?: string; fade?: string }> = ({
+  children,
+  className = '',
+  label,
+  fade = 'from-[var(--surface)]',
+}) => {
   const ref = useRef<HTMLDivElement>(null);
   const [canLeft, setCanLeft] = useState(false);
   const [canRight, setCanRight] = useState(false);
@@ -44,7 +49,7 @@ export const ScrollRow: React.FC<{ children: React.ReactNode; className?: string
     <div className="relative">
       {canLeft && (
         <>
-          <div className="pointer-events-none absolute left-0 top-0 bottom-2 w-14 z-[5] bg-gradient-to-r from-[var(--surface)] to-transparent" />
+          <div className={`pointer-events-none absolute left-0 top-0 bottom-2 w-14 z-[5] bg-gradient-to-r ${fade} to-transparent`} />
           {arrow(-1)}
         </>
       )}
@@ -53,7 +58,7 @@ export const ScrollRow: React.FC<{ children: React.ReactNode; className?: string
       </div>
       {canRight && (
         <>
-          <div className="pointer-events-none absolute right-0 top-0 bottom-2 w-14 z-[5] bg-gradient-to-l from-[var(--surface)] to-transparent" />
+          <div className={`pointer-events-none absolute right-0 top-0 bottom-2 w-14 z-[5] bg-gradient-to-l ${fade} to-transparent`} />
           {arrow(1)}
         </>
       )}

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ScrollRow } from './ScrollRow';
 import {
   FlaskConical,
   Search,
@@ -106,7 +107,8 @@ export const LabsView: React.FC = () => {
             />
           </div>
 
-          <div className="sm:col-span-6 flex items-center space-x-1.5 overflow-x-auto">
+          <div className="sm:col-span-6 min-w-0">
+          <ScrollRow label="categorias" className="flex items-center space-x-1.5">
             <button
               onClick={() => setSelectedCategory('all')}
               className={`px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors ${
@@ -130,6 +132,7 @@ export const LabsView: React.FC = () => {
                 {cat}
               </button>
             ))}
+          </ScrollRow>
           </div>
         </div>
       </div>

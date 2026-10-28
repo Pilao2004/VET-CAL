@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { AlertTriangle, Download, Siren } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { ScrollRow } from './ScrollRow';
 import { EMERGENCY_DRUGS, EmergencyGroup, emergencyDoses, formatDose } from '../data/emergencyDrugs';
 import { saveFile } from '../utils/fileSave';
 import { PdfDoc } from '../utils/pdfDoc';
@@ -103,7 +104,7 @@ export const EmergencyTable: React.FC = () => {
           </button>
         </div>
 
-        <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
+        <ScrollRow label="grupos" className="flex gap-2 pb-1 -mx-1 px-1">
           {GROUPS.map((g) => (
             <button
               key={g}
@@ -117,7 +118,7 @@ export const EmergencyTable: React.FC = () => {
               {g}
             </button>
           ))}
-        </div>
+        </ScrollRow>
       </div>
 
       <PcrTimer adrenalineMl={validWeight ? emergencyDoses(weight, species, concentrations).find((r) => r.drug.id === 'adrenalina-baixa')?.volumeMl ?? null : null} />
