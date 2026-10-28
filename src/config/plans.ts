@@ -17,7 +17,7 @@ export const APP_FEATURES = [
   'Calculadora de medicamentos com memória de cálculo',
   'Fluidoterapia, diluição, gotejamento, infusão contínua, transfusão e superfície corporal',
   'Tabela de emergência por peso (PCR, convulsão, reversores)',
-  'Biblioteca com 541 apresentações comerciais',
+  'Biblioteca com mais de 500 apresentações comerciais',
   'Assistente IA: doses, dúvidas clínicas e fichas dos pacientes',
   'Prontuários, consultas e evolução clínica por voz',
   'Receita em PDF e envio pelo WhatsApp',

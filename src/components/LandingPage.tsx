@@ -11,7 +11,7 @@ const HIGHLIGHTS = [
   { icon: Calculator, title: 'Doses sem erro', text: 'Dose em mg e volume em mL, com a memória de cálculo para conferir.' },
   { icon: Siren, title: 'Plantão e emergência', text: 'Tabela por peso com PCR, convulsão e reversores prontos para usar.' },
   { icon: MessageCircle, title: 'Assistente IA', text: 'Pergunte como a um colega: doses, condutas e fichas dos seus pacientes.' },
-  { icon: Pill, title: '541 apresentações', text: 'Biblioteca de medicamentos com concentração e doses de referência.' },
+  { icon: Pill, title: '+500 apresentações', text: 'Biblioteca de medicamentos com concentração e doses de referência.' },
   { icon: ClipboardList, title: 'Prontuários', text: 'Pacientes, consultas e evolução clínica ditada por voz.' },
   { icon: FileText, title: 'Receita em PDF', text: 'Gere a receita e envie ao tutor pelo WhatsApp.' },
 ];

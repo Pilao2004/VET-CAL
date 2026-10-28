@@ -553,7 +553,7 @@ export const DrugsView: React.FC = () => {
         </div>
       ) : (
         /* =========================================================================
-           VIEW 2: DIRECT CATALOG VIEW (Cards for all 541 commercial products)
+           VIEW 2: DIRECT CATALOG VIEW (Cards for all commercial products)
            ========================================================================= */
         <div className="space-y-4">
           <div className="flex items-center justify-between px-2">

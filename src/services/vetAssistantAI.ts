@@ -213,7 +213,7 @@ export function buildTools(getPatients: () => PatientRecord[], onProgress: (labe
     {
       name: 'buscar_medicamento',
       description:
-        'Busca na biblioteca do app (541 apresentações comerciais) por marca, princípio ativo ou categoria. Retorna até 10 produtos com id, concentração ou mg por comprimido, doses padrão por espécie, protocolos da bula, via e frequência.',
+        'Busca na biblioteca do app (mais de 500 apresentações comerciais) por marca, princípio ativo ou categoria. Retorna até 10 produtos com id, concentração ou mg por comprimido, doses padrão por espécie, protocolos da bula, via e frequência.',
       inputSchema: {
         type: 'object',
         properties: {

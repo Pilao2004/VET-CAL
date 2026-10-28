@@ -73,7 +73,7 @@ const STEPS: Step[] = [
     title: 'Consultar medicamentos, sintomas e exames',
     intro: 'Três áreas de consulta rápida, todas na barra de navegação.',
     items: [
-      <><strong>Medicamentos</strong>: 541 apresentações. Pesquise pelo nome e toque em <strong>Ver marcas e doses</strong> para ver laboratórios, concentrações e doses de referência.</>,
+      <><strong>Medicamentos</strong>: mais de 500 apresentações. Pesquise pelo nome e toque em <strong>Ver marcas e doses</strong> para ver laboratórios, concentrações e doses de referência.</>,
       <><strong>Sintomas</strong>: marque os sinais do paciente e veja perguntas de anamnese, diferenciais, exames e sinais de alerta.</>,
       <><strong>Exames</strong>: valores de referência para cão e gato e um interpretador onde você digita o resultado do paciente.</>,
       <>Para achar qualquer coisa, use a <strong>lupa</strong> no topo (no computador, <strong>Ctrl + K</strong>).</>,

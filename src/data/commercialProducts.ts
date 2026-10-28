@@ -96,7 +96,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 0.1,
       "felino": 0.1
     },
     "doseRangeText": "1º dia: 1 comp de 0,2 mg para cada 2 kg (0,1 mg/kg) | 2º dia em diante: 1/2 comp para cada 2 kg (0,05 mg/kg)",
@@ -226,8 +225,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 0.1,
-      "felino": 0.05
+      "canino": 0.1
     },
     "doseRangeText": "0,1 mg/kg manutenção a cada 24h",
     "defaultFrequency": "SID",
@@ -249,8 +247,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 0.1,
-      "felino": 0.05
+      "canino": 0.1
     },
     "doseRangeText": "0,1 mg/kg manutenção a cada 24h",
     "defaultFrequency": "SID",
@@ -371,7 +368,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "canino": 0.1,
       "felino": 0.05
     },
-    "doseRangeText": "0,1 mg/kg manutenção",
+    "doseRangeText": "Cães: 0,1 mg/kg SID (manutenção) | Gatos: 0,05 mg/kg SID (manutenção, menor dose eficaz)",
     "defaultFrequency": "SID",
     "defaultRoute": "Oral (VO)",
     "tabletsPerBox": 10,
@@ -390,8 +387,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 0.1,
-      "felino": 0.05
+      "canino": 0.1
     },
     "doseRangeText": "0,1 mg/kg manutenção a cada 24h",
     "defaultFrequency": "SID",
@@ -412,8 +408,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 0.1,
-      "felino": 0.05
+      "canino": 0.1
     },
     "doseRangeText": "0,1 mg/kg SID manutenção",
     "defaultFrequency": "SID",
@@ -434,8 +429,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 0.1,
-      "felino": 0.05
+      "canino": 0.1
     },
     "doseRangeText": "0,1 mg/kg para cães de 40 kg",
     "defaultFrequency": "SID",
@@ -480,8 +474,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 12.5,
-      "felino": 12.5
+      "canino": 12.5
     },
     "doseRangeText": "12,5 a 25 mg/kg a cada 12h",
     "defaultFrequency": "BID",
@@ -503,8 +496,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 12.5,
-      "felino": 12.5
+      "canino": 12.5
     },
     "doseRangeText": "12,5 a 25 mg/kg a cada 12h",
     "defaultFrequency": "BID",
@@ -573,8 +565,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 12.5,
-      "felino": 12.5
+      "canino": 12.5
     },
     "doseRangeText": "12,5 a 25 mg/kg BID",
     "defaultFrequency": "BID",
@@ -644,8 +635,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2,
-      "felino": 2
+      "canino": 2
     },
     "doseRangeText": "2 mg/kg SID para vômito agudo | 8 mg/kg para cinetose",
     "defaultFrequency": "SID",
@@ -666,8 +656,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2,
-      "felino": 2
+      "canino": 2
     },
     "doseRangeText": "2 mg/kg para vômito agudo",
     "defaultFrequency": "SID",
@@ -688,8 +677,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2,
-      "felino": 2
+      "canino": 2
     },
     "doseRangeText": "2 mg/kg para vômito agudo",
     "defaultFrequency": "SID",
@@ -761,8 +749,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5,
-      "felino": 5
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg a cada 24h (1 mL para cada 20 kg)",
     "defaultFrequency": "SID",
@@ -807,8 +794,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5,
-      "felino": 5
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg a cada 24h (1 comp para cada 30 kg)",
     "defaultFrequency": "SID",
@@ -830,8 +816,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5,
-      "felino": 5
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg a cada 24h (1 mL para cada 20 kg)",
     "defaultFrequency": "SID",
@@ -900,8 +885,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 10,
-      "felino": 10
+      "canino": 10
     },
     "doseRangeText": "10 mg/kg SID (1 comp para 20 kg)",
     "defaultFrequency": "SID",
@@ -976,7 +960,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "canino": 3,
       "felino": 1.5
     },
-    "doseRangeText": "2 a 4 mg/kg a cada 8h",
+    "doseRangeText": "Cães: 2 a 4 mg/kg a cada 8h | Gatos: 1 a 2 mg/kg a cada 12h",
     "defaultFrequency": "TID",
     "defaultRoute": "Oral (VO)",
     "tabletsPerBox": 10,
@@ -995,8 +979,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 3,
-      "felino": 2
+      "canino": 3
     },
     "doseRangeText": "2 a 5 mg/kg a cada 8h",
     "defaultFrequency": "TID",
@@ -1033,8 +1016,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "validationStatus": "VALIDADO"
   },
   {
-    "id": "febrax-inj-50",
-    "brandName": "Febrax® Injetável 50% (500 mg/mL)",
+    "id": "d500-inj-500",
+    "brandName": "D-500® Injetável 500 mg/mL (Zoetis)",
     "activePrinciple": "Dipirona Sódica",
     "category": "Analgésico e Antipirético",
     "formType": "liquid",
@@ -1046,64 +1029,122 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     ],
     "defaultDoseMgKg": {
       "canino": 25,
-      "felino": 15
+      "felino": 12.5
     },
-    "doseRangeText": "25 mg/kg a cada 8 horas (0,05 mL/kg)",
+    "doseRangeText": "Cães: 25 mg/kg (0,05 mL/kg) a cada 8 horas | Gatos: 12,5 a 25 mg/kg a cada 12 horas",
     "defaultFrequency": "TID",
     "defaultRoute": "IV lenta / IM / SC",
     "bottleVolumeMl": 50,
-    "clinicalNotes": "0,05 mL por kg de peso. Injetar lentamente por via intravenosa.",
-    "manufacturer": "Genérico (vários laboratórios)",
+    "clinicalNotes": "Aplicar IV lentamente ou IM. Gatos metabolizam a dipirona mais devagar: preferir intervalos maiores.",
+    "manufacturer": "Zoetis",
     "presentationText": "Frasco-ampola de 50 mL",
     "validationStatus": "VALIDADO"
   },
   {
-    "id": "vonau-vet-inj-02",
-    "brandName": "Vonau Vet® Injetável 0,2% (2 mg/mL)",
     "activePrinciple": "Cloridrato de Ondansetrona",
     "category": "Antiemético 5-HT3",
-    "formType": "liquid",
-    "concentrationMgMl": 2,
-    "percentage": 0.2,
+    "manufacturer": "Avert (Biolab)",
     "species": [
-      "Canino",
-      "Felino"
+      "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 0.2,
-      "felino": 0.2
+      "canino": 0.5
     },
-    "doseRangeText": "0,1 a 0,5 mg/kg a cada 8 a 12 horas (0,1 mL/kg a 0,2 mg/kg)",
-    "defaultFrequency": "BID",
-    "defaultRoute": "IV lenta / SC",
-    "bottleVolumeMl": 10,
-    "clinicalNotes": "2 mg/mL. Aplicar IV lentamente.",
-    "manufacturer": "Genérico (vários laboratórios)",
-    "presentationText": "Frasco-ampola de 10 mL",
-    "validationStatus": "VALIDADO"
-  },
-  {
-    "id": "vonau-vet-comp-4",
-    "brandName": "Vonau Vet® 4 mg Comprimidos",
-    "activePrinciple": "Cloridrato de Ondansetrona",
-    "category": "Antiemético 5-HT3",
-    "formType": "tablet",
-    "tabletMg": 4,
-    "species": [
-      "Canino",
-      "Felino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 0.2,
-      "felino": 0.2
-    },
-    "doseRangeText": "0,2 a 0,5 mg/kg BID",
+    "doseRangeText": "0,5 a 1,0 mg/kg VO a cada 12 horas, por até 5 dias",
     "defaultFrequency": "BID",
     "defaultRoute": "Oral (VO)",
+    "clinicalNotes": "Não indicado para cadelas prenhes ou lactantes nem para cães com menos de 12 meses. Em insuficiência hepática, usar a menor dose.",
+    "id": "vonau-vet-sol-5",
+    "brandName": "Vonau Vet® Solução Oral 5 mg/mL (Avert)",
+    "formType": "liquid",
+    "concentrationMgMl": 5,
+    "percentage": 0.5,
+    "bottleVolumeMl": 30,
+    "presentationText": "Frasco de 30 mL"
+  },
+  {
+    "activePrinciple": "Cloridrato de Ondansetrona",
+    "category": "Antiemético 5-HT3",
+    "manufacturer": "Avert (Biolab)",
+    "species": [
+      "Canino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 0.5
+    },
+    "doseRangeText": "0,5 a 1,0 mg/kg VO a cada 12 horas, por até 5 dias",
+    "defaultFrequency": "BID",
+    "defaultRoute": "Oral (VO)",
+    "clinicalNotes": "Não indicado para cadelas prenhes ou lactantes nem para cães com menos de 12 meses. Em insuficiência hepática, usar a menor dose.",
+    "id": "vonau-vet-comp-6",
+    "brandName": "Vonau Vet® 6 mg Comprimidos (Avert)",
+    "formType": "tablet",
+    "tabletMg": 6,
     "tabletsPerBox": 10,
-    "manufacturer": "Genérico (vários laboratórios)",
-    "presentationText": "Cartucho com 10 comprimidos",
-    "validationStatus": "VALIDADO"
+    "presentationText": "Cartucho com 10 comprimidos bissulcados"
+  },
+  {
+    "activePrinciple": "Cloridrato de Ondansetrona",
+    "category": "Antiemético 5-HT3",
+    "manufacturer": "Avert (Biolab)",
+    "species": [
+      "Canino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 0.5
+    },
+    "doseRangeText": "0,5 a 1,0 mg/kg VO a cada 12 horas, por até 5 dias",
+    "defaultFrequency": "BID",
+    "defaultRoute": "Oral (VO)",
+    "clinicalNotes": "Não indicado para cadelas prenhes ou lactantes nem para cães com menos de 12 meses. Em insuficiência hepática, usar a menor dose.",
+    "id": "vonau-vet-comp-12",
+    "brandName": "Vonau Vet® 12 mg Comprimidos (Avert)",
+    "formType": "tablet",
+    "tabletMg": 12,
+    "tabletsPerBox": 10,
+    "presentationText": "Cartucho com 10 comprimidos bissulcados"
+  },
+  {
+    "activePrinciple": "Cloridrato de Ondansetrona",
+    "category": "Antiemético 5-HT3",
+    "manufacturer": "Avert (Biolab)",
+    "species": [
+      "Canino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 0.5
+    },
+    "doseRangeText": "0,5 a 1,0 mg/kg VO a cada 12 horas, por até 5 dias",
+    "defaultFrequency": "BID",
+    "defaultRoute": "Oral (VO)",
+    "clinicalNotes": "Não indicado para cadelas prenhes ou lactantes nem para cães com menos de 12 meses. Em insuficiência hepática, usar a menor dose.",
+    "id": "vonau-vet-comp-18",
+    "brandName": "Vonau Vet® 18 mg Comprimidos (Avert)",
+    "formType": "tablet",
+    "tabletMg": 18,
+    "tabletsPerBox": 10,
+    "presentationText": "Cartucho com 10 comprimidos bissulcados"
+  },
+  {
+    "activePrinciple": "Cloridrato de Ondansetrona",
+    "category": "Antiemético 5-HT3",
+    "manufacturer": "Avert (Biolab)",
+    "species": [
+      "Canino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 0.5
+    },
+    "doseRangeText": "0,5 a 1,0 mg/kg VO a cada 12 horas, por até 5 dias",
+    "defaultFrequency": "BID",
+    "defaultRoute": "Oral (VO)",
+    "clinicalNotes": "Não indicado para cadelas prenhes ou lactantes nem para cães com menos de 12 meses. Em insuficiência hepática, usar a menor dose.",
+    "id": "vonau-vet-comp-30",
+    "brandName": "Vonau Vet® 30 mg Comprimidos (Avert)",
+    "formType": "tablet",
+    "tabletMg": 30,
+    "tabletsPerBox": 10,
+    "presentationText": "Cartucho com 10 comprimidos bissulcados"
   },
   {
     "id": "prediderm-comp-5",
@@ -1152,78 +1193,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "presentationText": "Cartucho com 10 comprimidos"
   },
   {
-    "id": "lasix-inj-1",
-    "brandName": "Lasix® Injetável 1% (10 mg/mL)",
-    "activePrinciple": "Furosemida",
-    "category": "Diurético de Alça",
-    "formType": "liquid",
-    "concentrationMgMl": 10,
-    "percentage": 1,
-    "species": [
-      "Canino",
-      "Felino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 2,
-      "felino": 1
-    },
-    "doseRangeText": "Cães: 2 a 4 mg/kg (0,2 a 0,4 mL/kg) | Gatos: 1 a 2 mg/kg",
-    "defaultFrequency": "BID",
-    "defaultRoute": "IV / IM / SC",
-    "bottleVolumeMl": 20,
-    "clinicalNotes": "1% = 10 mg/mL. Titular dose no edema pulmonar cardiogênico.",
-    "manufacturer": "Sanofi",
-    "presentationText": "Frasco-ampola de 20 mL",
-    "validationStatus": "VALIDADO"
-  },
-  {
-    "id": "lasix-comp-40",
-    "brandName": "Lasix® 40 mg Comprimidos",
-    "activePrinciple": "Furosemida",
-    "category": "Diurético de Alça",
-    "formType": "tablet",
-    "tabletMg": 40,
-    "species": [
-      "Canino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 2,
-      "felino": 1
-    },
-    "doseRangeText": "1 a 2 mg/kg a cada 12 horas",
-    "defaultFrequency": "BID",
-    "defaultRoute": "Oral (VO)",
-    "tabletsPerBox": 20,
-    "manufacturer": "Sanofi",
-    "presentationText": "Cartucho com 20 comprimidos",
-    "validationStatus": "VALIDADO"
-  },
-  {
-    "id": "dopalen-inj-10",
-    "brandName": "Dopalen® Injetável 10% (100 mg/mL) (Ceva)",
-    "activePrinciple": "Cloridrato de Cetamina",
-    "category": "Anestésico Dissociativo / Analgésico",
-    "formType": "liquid",
-    "concentrationMgMl": 100,
-    "percentage": 10,
-    "species": [
-      "Canino",
-      "Felino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 5,
-      "felino": 8
-    },
-    "doseRangeText": "Indução: 5 a 10 mg/kg associado | CRI Analgésica: 0,5 mg/kg bólus + 2-10 mcg/kg/min",
-    "defaultFrequency": "Dose Única",
-    "defaultRoute": "IV / IM",
-    "bottleVolumeMl": 50,
-    "clinicalNotes": "10% = 100 mg/mL. Sempre associar com miorrelaxante.",
-    "manufacturer": "Ceva",
-    "presentationText": "Frasco-ampola de 50 mL",
-    "validationStatus": "VALIDADO"
-  },
-  {
     "id": "acepran-inj-02",
     "brandName": "Acepran® Injetável 0,2% (2 mg/mL) (Vetnil)",
     "activePrinciple": "Acepromazina",
@@ -1249,103 +1218,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "validationStatus": "VALIDADO"
   },
   {
-    "id": "acepran-inj-10",
-    "brandName": "Acepran® Injetável 1% (10 mg/mL) (Vetnil)",
-    "activePrinciple": "Acepromazina",
-    "category": "Tranquilizante Fenotiazínico",
-    "formType": "liquid",
-    "concentrationMgMl": 10,
-    "percentage": 1,
-    "species": [
-      "Canino",
-      "Felino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 0.05,
-      "felino": 0.05
-    },
-    "doseRangeText": "0,02 a 0,1 mg/kg",
-    "defaultFrequency": "Dose Única",
-    "defaultRoute": "IM / SC / IV lenta",
-    "bottleVolumeMl": 20,
-    "clinicalNotes": "1% = 10 mg/mL. Formulação concentrada.",
-    "manufacturer": "Vetnil",
-    "presentationText": "Frasco-ampola de 20 mL",
-    "validationStatus": "VALIDADO"
-  },
-  {
-    "id": "acepran-gotas-02",
-    "brandName": "Acepran® Gotas 0,2% (2 mg/mL) (Vetnil)",
-    "activePrinciple": "Acepromazina",
-    "category": "Tranquilizante Fenotiazínico",
-    "formType": "drops",
-    "concentrationMgMl": 2,
-    "percentage": 0.2,
-    "dropsPerMl": 20,
-    "species": [
-      "Canino",
-      "Felino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 0.1,
-      "felino": 0.1
-    },
-    "doseRangeText": "0,5 a 1 gota por kg de peso corporal",
-    "defaultFrequency": "Dose Única",
-    "defaultRoute": "Oral (VO)",
-    "bottleVolumeMl": 10,
-    "clinicalNotes": "1 gota = 0,1 mg.",
-    "manufacturer": "Vetnil",
-    "presentationText": "Frasco conta-gotas de 10 mL",
-    "validationStatus": "VALIDADO"
-  },
-  {
-    "id": "gaviz-comp-10",
-    "brandName": "Gaviz V® 10 mg Comprimidos (Agener)",
-    "activePrinciple": "Omeprazol",
-    "category": "Protetor Gástrico (Inibidor da Bomba de Prótons)",
-    "formType": "tablet",
-    "tabletMg": 10,
-    "species": [
-      "Canino",
-      "Felino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 1,
-      "felino": 1
-    },
-    "doseRangeText": "0,7 a 1,0 mg/kg SID em jejum matinal",
-    "defaultFrequency": "SID",
-    "defaultRoute": "Oral (VO)",
-    "tabletsPerBox": 14,
-    "clinicalNotes": "Administrar preferencialmente pela manhã 30 min antes da refeição.",
-    "manufacturer": "Agener União",
-    "presentationText": "Cartucho com 14 comprimidos",
-    "validationStatus": "VALIDADO"
-  },
-  {
-    "id": "gaviz-comp-20",
-    "brandName": "Gaviz V® 20 mg Comprimidos (Agener)",
-    "activePrinciple": "Omeprazol",
-    "category": "Protetor Gástrico",
-    "formType": "tablet",
-    "tabletMg": 20,
-    "species": [
-      "Canino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 1,
-      "felino": 1
-    },
-    "doseRangeText": "1,0 mg/kg SID em jejum",
-    "defaultFrequency": "SID",
-    "defaultRoute": "Oral (VO)",
-    "tabletsPerBox": 14,
-    "manufacturer": "Agener União",
-    "presentationText": "Cartucho com 14 comprimidos",
-    "validationStatus": "VALIDADO"
-  },
-  {
     "id": "apoquel-comp-36",
     "brandName": "Apoquel® 3,6 mg Comprimidos (Zoetis)",
     "activePrinciple": "Maleato de Oclacitinib",
@@ -1356,8 +1228,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 0.4,
-      "felino": 0.4
+      "canino": 0.4
     },
     "doseRangeText": "0,4 a 0,6 mg/kg BID por 14 dias; após, SID manutenção",
     "defaultFrequency": "BID",
@@ -1379,8 +1250,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 0.4,
-      "felino": 0.4
+      "canino": 0.4
     },
     "doseRangeText": "0,4 a 0,6 mg/kg BID",
     "defaultFrequency": "BID",
@@ -1402,8 +1272,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 0.4,
-      "felino": 0.4
+      "canino": 0.4
     },
     "doseRangeText": "0,4 a 0,6 mg/kg BID",
     "defaultFrequency": "BID",
@@ -1576,8 +1445,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 4,
-      "felino": 4
+      "canino": 4
     },
     "doseRangeText": "1 mL para cada 10 kg de peso (4 mg/kg de doxiciclina) a cada 24h IM",
     "defaultFrequency": "SID",
@@ -1692,8 +1560,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5,
-      "felino": 5
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg a cada 24h (1 mL para cada 20 kg de peso)",
     "defaultFrequency": "SID",
@@ -1727,8 +1594,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 6,
-      "felino": 0
+      "canino": 6
     },
     "doseRangeText": "Babesiose: 3,5 a 6,6 mg/kg (1 mL para cada 20 kg) SC/IM | Erliquiose: 5 a 6 mg/kg em 2 aplicações",
     "defaultFrequency": "Dose Única",
@@ -2406,30 +2272,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "validationStatus": "VALIDADO"
   },
   {
-    "id": "dimorf-inj-cristalia",
-    "brandName": "Dimorf® 10 mg/mL Injetável (Cristália / Sulfato de Morfina)",
-    "activePrinciple": "Sulfato de Morfina",
-    "category": "Analgésico Opioide Puro Agonista Mu",
-    "formType": "liquid",
-    "concentrationMgMl": 10,
-    "species": [
-      "Canino",
-      "Felino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 0.5,
-      "felino": 0.1
-    },
-    "doseRangeText": "Cães: 0,2 a 0,5 mg/kg (0,02 a 0,05 mL/kg) SC/IM | Gatos: 0,05 a 0,1 mg/kg",
-    "defaultFrequency": "QID",
-    "defaultRoute": "Subcutânea (SC) / IM",
-    "bottleVolumeMl": 1,
-    "clinicalNotes": "10 mg/mL. Não fazer IV rápido em cães (liberação maciça de histamina). Controle especial.",
-    "manufacturer": "Cristália",
-    "presentationText": "Frasco-ampola de 1 mL",
-    "validationStatus": "VALIDADO"
-  },
-  {
     "id": "tramadon-inj-cristalia",
     "brandName": "Tramadon® 50 mg/mL Injetável (Cristália / Tramadol)",
     "activePrinciple": "Cloridrato de Tramadol",
@@ -2500,53 +2342,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "validationStatus": "VALIDADO",
     "manufacturer": "Zoetis",
     "presentationText": "Frasco-ampola de 10 mL"
-  },
-  {
-    "id": "doxitec-50",
-    "brandName": "Doxitec® 50 mg (Ceva)",
-    "activePrinciple": "Hiclato de Doxiciclina",
-    "category": "Antimicrobiano Tetraciclina",
-    "formType": "tablet",
-    "tabletMg": 50,
-    "species": [
-      "Canino",
-      "Felino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 10,
-      "felino": 5
-    },
-    "doseRangeText": "10 mg/kg SID ou 5 mg/kg BID VO",
-    "defaultFrequency": "SID",
-    "defaultRoute": "Oral (VO)",
-    "tabletsPerBox": 15,
-    "clinicalNotes": "Eleição para Erlichiose e Hemoparasitoses. Oferecer com água ou alimento para evitar esofagite em felinos.",
-    "validationStatus": "VALIDADO",
-    "manufacturer": "Ceva",
-    "presentationText": "Cartucho com 15 comprimidos"
-  },
-  {
-    "id": "doxitec-200",
-    "brandName": "Doxitec® 200 mg (Ceva)",
-    "activePrinciple": "Hiclato de Doxiciclina",
-    "category": "Antimicrobiano Tetraciclina",
-    "formType": "tablet",
-    "tabletMg": 200,
-    "species": [
-      "Canino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 10,
-      "felino": 0
-    },
-    "doseRangeText": "10 mg/kg a cada 24h VO",
-    "defaultFrequency": "SID",
-    "defaultRoute": "Oral (VO)",
-    "tabletsPerBox": 14,
-    "clinicalNotes": "Para cães de grande porte.",
-    "validationStatus": "VALIDADO",
-    "manufacturer": "Ceva",
-    "presentationText": "Cartucho com 14 comprimidos"
   },
   {
     "id": "azitromicina-vet-50",
@@ -2632,8 +2427,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 0.5,
-      "felino": 0
+      "canino": 0.5
     },
     "doseRangeText": "0,5 mg/kg (0,1 mL/kg) IV/IM a cada 12h por no máximo 2 dias",
     "defaultFrequency": "BID",
@@ -2668,30 +2462,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "validationStatus": "VALIDADO",
     "manufacturer": "Ceva",
     "presentationText": "Frasco-ampola de 10 mL"
-  },
-  {
-    "id": "ketofen-20-comp",
-    "brandName": "Ketofen® 20 mg Comprimidos (Ceva)",
-    "activePrinciple": "Cetoprofeno",
-    "category": "AINE Anti-inflamatório",
-    "formType": "tablet",
-    "tabletMg": 20,
-    "species": [
-      "Canino",
-      "Felino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 1,
-      "felino": 1
-    },
-    "doseRangeText": "1 mg/kg a cada 24h VO com alimento",
-    "defaultFrequency": "SID",
-    "defaultRoute": "Oral (VO)",
-    "tabletsPerBox": 10,
-    "clinicalNotes": "Anti-inflamatório e antitérmico para cães e gatos.",
-    "validationStatus": "VALIDADO",
-    "manufacturer": "Ceva",
-    "presentationText": "Cartucho com 10 comprimidos"
   },
   {
     "id": "tramadol-comp-50",
@@ -2776,8 +2546,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1,
-      "felino": 0
+      "canino": 1
     },
     "doseRangeText": "1 mg/kg a cada 24h VO",
     "defaultFrequency": "SID",
@@ -2811,30 +2580,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "validationStatus": "VALIDADO",
     "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Frasco-ampola de 10 mL"
-  },
-  {
-    "id": "sucrafilm-susp",
-    "brandName": "Sucrafilm® Suspensão Oral (Aché / Sucralfato)",
-    "activePrinciple": "Sucralfato",
-    "category": "Protetor de Mucosa Gástrica (Citoprotetor)",
-    "formType": "liquid",
-    "concentrationMgMl": 200,
-    "species": [
-      "Canino",
-      "Felino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 50,
-      "felino": 25
-    },
-    "doseRangeText": "Cães: 0,5 g a 1 g por animal | Gatos: 0,25 g a 0,5 g a cada 8-12h VO",
-    "defaultFrequency": "TID",
-    "defaultRoute": "Oral (VO)",
-    "bottleVolumeMl": 120,
-    "clinicalNotes": "Espaçador de 2 horas de outros medicamentos orais.",
-    "validationStatus": "VALIDADO",
-    "manufacturer": "Aché",
-    "presentationText": "Frasco-ampola de 120 mL"
   },
   {
     "id": "primperan-inj",
@@ -2991,8 +2736,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 0.25,
-      "felino": 0
+      "canino": 0.25
     },
     "doseRangeText": "0,25 a 0,3 mg/kg a cada 12h VO",
     "defaultFrequency": "BID",
@@ -3173,30 +2917,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "presentationText": "Frasco conta-gotas de 20 mL"
   },
   {
-    "id": "keppra-750",
-    "brandName": "Keppra® 750 mg Comprimidos (Levetiracetam)",
-    "activePrinciple": "Levetiracetam",
-    "category": "Anticonvulsivante de Nova Geração",
-    "formType": "tablet",
-    "tabletMg": 750,
-    "species": [
-      "Canino",
-      "Felino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 20,
-      "felino": 20
-    },
-    "doseRangeText": "20 a 30 mg/kg a cada 8h VO ou IV",
-    "defaultFrequency": "TID",
-    "defaultRoute": "Oral (VO) / IV",
-    "tabletsPerBox": 30,
-    "clinicalNotes": "Excelente segurança hepática e eficácia em epilepsia refratária.",
-    "validationStatus": "VALIDADO",
-    "manufacturer": "Levetiracetam",
-    "presentationText": "Cartucho com 30 comprimidos"
-  },
-  {
     "id": "propofol-10",
     "brandName": "Propovan / Propofol 10 mg/mL Injetável (Cristália)",
     "activePrinciple": "Propofol",
@@ -3353,8 +3073,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 15,
-      "felino": 0
+      "canino": 15
     },
     "doseRangeText": "1 comprimido para cada 10 kg de peso vivo em dose única VO",
     "defaultFrequency": "Dose Única",
@@ -3376,7 +3095,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 0,
       "felino": 5
     },
     "doseRangeText": "1 comprimido para cada 4 kg de peso vivo VO",
@@ -3399,8 +3117,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.5,
-      "felino": 0
+      "canino": 2.5
     },
     "doseRangeText": "1 tablete mastigável mensal conforme faixa de peso do cão",
     "defaultFrequency": "Dose Única",
@@ -3410,75 +3127,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "validationStatus": "VALIDADO",
     "manufacturer": "Boehringer Ingelheim",
     "presentationText": "Cartucho com 3 comprimidos"
-  },
-  {
-    "id": "simparic",
-    "brandName": "Simparic® 20 mg (Zoetis / Sarolaner)",
-    "activePrinciple": "Sarolaner",
-    "category": "Antiparasitário Externo (Ectoparasiticida)",
-    "formType": "tablet",
-    "tabletMg": 20,
-    "species": [
-      "Canino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 2,
-      "felino": 0
-    },
-    "doseRangeText": "2 a 4 mg/kg mensal VO",
-    "defaultFrequency": "Dose Única",
-    "defaultRoute": "Oral (VO)",
-    "tabletsPerBox": 3,
-    "clinicalNotes": "Tablete mastigável altamente palatável para cães contra pulgas, carrapatos e sarnas.",
-    "validationStatus": "VALIDADO",
-    "manufacturer": "Zoetis",
-    "presentationText": "Cartucho com 3 comprimidos"
-  },
-  {
-    "id": "bravecto",
-    "brandName": "Bravecto® 250 mg (MSD / Fluralaner)",
-    "activePrinciple": "Fluralaner",
-    "category": "Antiparasitário Externo de Longa Duração (3 meses)",
-    "formType": "tablet",
-    "tabletMg": 250,
-    "species": [
-      "Canino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 25,
-      "felino": 0
-    },
-    "doseRangeText": "25 a 56 mg/kg a cada 12 semanas VO",
-    "defaultFrequency": "Dose Única",
-    "defaultRoute": "Oral (VO)",
-    "tabletsPerBox": 1,
-    "clinicalNotes": "Proteção sistêmica contra pulgas e carrapatos por 12 semanas.",
-    "validationStatus": "VALIDADO",
-    "manufacturer": "MSD Saúde Animal",
-    "presentationText": "Cartucho com 1 comprimidos"
-  },
-  {
-    "id": "revolution-gatos",
-    "brandName": "Revolution® 6% Gatos (Zoetis / Selamectina)",
-    "activePrinciple": "Selamectina",
-    "category": "Endectocida Spot-On",
-    "formType": "liquid",
-    "concentrationMgMl": 60,
-    "species": [
-      "Felino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 0,
-      "felino": 6
-    },
-    "doseRangeText": "Mínimo de 6 mg/kg via tópica (spot-on) mensal",
-    "defaultFrequency": "Dose Única",
-    "defaultRoute": "Tópica (Spot-on)",
-    "bottleVolumeMl": 1,
-    "clinicalNotes": "Tratamento e prevenção de pulgas, sarna de orelha, vermes intestinais e dirofilariose em gatos.",
-    "validationStatus": "VALIDADO",
-    "manufacturer": "Zoetis",
-    "presentationText": "Frasco-ampola de 1 mL"
   },
   {
     "id": "epOritro-inj",
@@ -3553,30 +3201,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "presentationText": "Frasco-ampola de 250 mL"
   },
   {
-    "id": "duphalac-xarope",
-    "brandName": "Duphalac® Xarope (Abbott / Lactulose)",
-    "activePrinciple": "Lactulose",
-    "category": "Laxante Osmótico & Protetor Hepático (Encefalopatia)",
-    "formType": "liquid",
-    "concentrationMgMl": 667,
-    "species": [
-      "Canino",
-      "Felino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 333,
-      "felino": 333
-    },
-    "doseRangeText": "0,5 a 1 mL/kg a cada 8 a 12h VO até fezes pastosas",
-    "defaultFrequency": "TID",
-    "defaultRoute": "Oral (VO)",
-    "bottleVolumeMl": 120,
-    "clinicalNotes": "Indicado para constipação crônica, megacólon felino e encefalopatia hepática.",
-    "validationStatus": "VALIDADO",
-    "manufacturer": "Abbott / Lactulose",
-    "presentationText": "Frasco-ampola de 120 mL"
-  },
-  {
     "id": "tobramicina-colirio",
     "brandName": "Tobrex® / Tobramicina 0,3% Colírio (Alcon)",
     "activePrinciple": "Tobramicina",
@@ -3626,29 +3250,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "presentationText": "Cartucho com 1 comprimidos"
   },
   {
-    "id": "meticorten-5",
-    "brandName": "Meticorten® 5 mg (MSD / Prednisona)",
-    "activePrinciple": "Prednisona",
-    "category": "Corticosteroide Anti-inflamatório Sistêmico",
-    "formType": "tablet",
-    "tabletMg": 5,
-    "species": [
-      "Canino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 1,
-      "felino": 0
-    },
-    "doseRangeText": "0,5 a 1 mg/kg SID VO (conversão hepática em prednisolona em cães)",
-    "defaultFrequency": "SID",
-    "defaultRoute": "Oral (VO)",
-    "tabletsPerBox": 20,
-    "clinicalNotes": "Anti-inflamatório e imunossupressor para cães. Gatos devem receber prednisolona direta.",
-    "validationStatus": "VALIDADO",
-    "manufacturer": "MSD Saúde Animal",
-    "presentationText": "Cartucho com 20 comprimidos"
-  },
-  {
     "id": "tramadol-gotas-100",
     "brandName": "Tramadol 100 mg/mL Gotas (Uso Humano / Vet)",
     "activePrinciple": "Cloridrato de Tramadol",
@@ -3672,53 +3273,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "validationStatus": "VALIDADO",
     "manufacturer": "Uso Humano / Vet",
     "presentationText": "Frasco conta-gotas de 10 mL"
-  },
-  {
-    "id": "vetoryl-capsule-10",
-    "brandName": "Vetoryl® 10 mg Cápsulas (Trilostano / Dechra)",
-    "activePrinciple": "Trilostano",
-    "category": "Endocrinologia & Inibidor Enzimático (Hiperadrenocorticismo)",
-    "formType": "tablet",
-    "tabletMg": 10,
-    "species": [
-      "Canino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 2,
-      "felino": 0
-    },
-    "doseRangeText": "1 a 3 mg/kg SID VO com alimento",
-    "defaultFrequency": "SID",
-    "defaultRoute": "Oral (VO)",
-    "tabletsPerBox": 30,
-    "clinicalNotes": "Tratamento de eleição para Hiperadrenocorticismo hipófise-dependente e adrenal-dependente em cães.",
-    "validationStatus": "VALIDADO",
-    "manufacturer": "Dechra",
-    "presentationText": "Cartucho com 30 comprimidos"
-  },
-  {
-    "id": "caninsulin-vet",
-    "brandName": "Caninsulin® 40 UI/mL (Insulina Porda / MSD)",
-    "activePrinciple": "Insulina Lenta (Zinco-Insulina Porcina)",
-    "category": "Endocrinologia & Hormônios (Diabetes Mellitus)",
-    "formType": "liquid",
-    "concentrationMgMl": 40,
-    "species": [
-      "Canino",
-      "Felino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 0.5,
-      "felino": 0.5
-    },
-    "doseRangeText": "0,25 a 0,5 UI/kg SC a cada 12 horas",
-    "defaultFrequency": "BID",
-    "defaultRoute": "Subcutânea (SC)",
-    "bottleVolumeMl": 10,
-    "clinicalNotes": "Insulina de ação intermediária purificada de origem suína. Utilizar seringas U-40.",
-    "validationStatus": "VALIDADO",
-    "manufacturer": "MSD Saúde Animal",
-    "presentationText": "Frasco-ampola de 10 mL"
   },
   {
     "id": "chorulon-hCG",
@@ -3747,35 +3301,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "validationStatus": "VALIDADO",
     "manufacturer": "MSD Saúde Animal",
     "presentationText": "Frasco-ampola de 10 mL"
-  },
-  {
-    "id": "lutalyse-prostaglandina",
-    "brandName": "Lutalyse® 5 mg/mL (Dinoprost Trometamina / Zoetis)",
-    "activePrinciple": "Dinoprost Trometamina (Prostaglandina F2 alfa)",
-    "category": "Reprodução Veterinária & Luteolíticos",
-    "formType": "liquid",
-    "concentrationMgMl": 5,
-    "species": [
-      "Bovino",
-      "Equino",
-      "Suíno",
-      "Caprino",
-      "Ovino"
-    ],
-    "defaultDoseMgKg": {
-      "bovino": 0.05,
-      "equino": 0.05,
-      "canino": 0.02,
-      "felino": 0.02
-    },
-    "doseRangeText": "Bovinos: 25 mg (5 mL) IM | Éguas: 5 mg (1 mL) IM",
-    "defaultFrequency": "Dose Única",
-    "defaultRoute": "Intramuscular (IM)",
-    "bottleVolumeMl": 30,
-    "clinicalNotes": "Indução de lúteolise, sincronização de cio e tratamento de piometra em pequenos animais (sob rigoroso protocolo).",
-    "validationStatus": "VALIDADO",
-    "manufacturer": "Zoetis",
-    "presentationText": "Frasco-ampola de 30 mL"
   },
   {
     "id": "ociovet-ocitocina",
@@ -3836,30 +3361,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "validationStatus": "VALIDADO",
     "manufacturer": "Syntec / Ceva",
     "presentationText": "Frasco-ampola de 50 mL"
-  },
-  {
-    "id": "fentanest-inj",
-    "brandName": "Fentanest® 0,05 mg/mL (Citrato de Fentanil / Cristália)",
-    "activePrinciple": "Citrato de Fentanil",
-    "category": "Anestesia & Analgésico Opioide Potente",
-    "formType": "liquid",
-    "concentrationMgMl": 0.05,
-    "species": [
-      "Canino",
-      "Felino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 0.005,
-      "felino": 0.002
-    },
-    "doseRangeText": "2 a 5 mcg/kg (0,002 a 0,005 mg/kg) IV em bolus ou CRI",
-    "defaultFrequency": "Dose Única",
-    "defaultRoute": "Intravenosa (IV)",
-    "bottleVolumeMl": 10,
-    "clinicalNotes": "Opioide agonista puro mu de alta potência para analgesia transcirúrgica e UTI.",
-    "validationStatus": "VALIDADO",
-    "manufacturer": "Cristália",
-    "presentationText": "Frasco-ampola de 10 mL"
   },
   {
     "id": "epinefrina-adrenalina",
@@ -3967,33 +3468,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "presentationText": "Frasco-ampola de 50 mL"
   },
   {
-    "id": "dectomax-inj",
-    "brandName": "Dectomax® Doramectina 1% Injetável (Zoetis)",
-    "activePrinciple": "Doramectina",
-    "category": "Antiparasitário Endectocida de Longa Ação",
-    "formType": "liquid",
-    "concentrationMgMl": 10,
-    "percentage": 1,
-    "species": [
-      "Bovino",
-      "Suíno",
-      "Ovinos"
-    ],
-    "defaultDoseMgKg": {
-      "bovino": 0.2,
-      "suino": 0.3,
-      "ovino": 0.2
-    },
-    "doseRangeText": "200 mcg/kg (0,2 mL para cada 10 kg) SC/IM dose única",
-    "defaultFrequency": "Dose Única",
-    "defaultRoute": "Subcutânea (SC) / IM",
-    "bottleVolumeMl": 500,
-    "clinicalNotes": "Endectocida de largo espectro contra nematódeos gastrointestinais, carrapatos, bernes e sarnas.",
-    "validationStatus": "VALIDADO",
-    "manufacturer": "Zoetis",
-    "presentationText": "Frasco-ampola de 500 mL"
-  },
-  {
     "id": "bio-calphos-inj",
     "brandName": "Bio-Calphos® Injetável (Biofarm)",
     "activePrinciple": "Cálcio + Fósforo + Magnésio + Dextrose",
@@ -4064,11 +3538,11 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Equino"
     ],
     "defaultDoseMgKg": {
-      "canino": 4,
-      "felino": 4,
+      "canino": 6,
+      "felino": 5,
       "equino": 6.6
     },
-    "doseRangeText": "Cães/Gatos: 4 mg/kg IV/IM/SC a cada 24h; Equinos: 6,6 mg/kg SID",
+    "doseRangeText": "Cães: 6 a 9 mg/kg | Gatos: 5 a 8 mg/kg, IV/IM/SC uma vez ao dia (dose única diária reduz a nefrotoxicidade) | Equinos: 6,6 mg/kg SID",
     "defaultFrequency": "SID",
     "defaultRoute": "Intravenosa (IV) / IM",
     "bottleVolumeMl": 20,
@@ -4331,8 +3805,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 15,
-      "felino": 0
+      "canino": 15
     },
     "doseRangeText": "1 comprimido para cada 10 kg de peso vivo VO em dose única",
     "defaultFrequency": "Dose Única",
@@ -4577,10 +4050,9 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 0.5,
-      "felino": 0
+      "canino": 0.25
     },
-    "doseRangeText": "0,25 a 0,5 mg/kg por dia, dividido em duas administrações de 0,125 mg/kg VO a cada 12h",
+    "doseRangeText": "0,2 a 0,3 mg/kg por tomada a cada 12h VO (0,4 a 0,6 mg/kg por dia), 1 hora antes da refeição",
     "defaultFrequency": "BID",
     "defaultRoute": "Oral (VO)",
     "tabletsPerBox": 30,
@@ -4600,8 +4072,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5,
-      "felino": 0
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg a 10 mg/kg SID VO por 7 a 14 dias",
     "defaultFrequency": "SID",
@@ -4630,7 +4101,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "suino": 0.3,
       "ovino": 0.2
     },
-    "doseRangeText": "0,2 mg/kg (1 mL para cada 50 kg) SC ou IM em dose única",
+    "doseRangeText": "Bovinos e ovinos: 0,2 mg/kg (1 mL para cada 50 kg) | Suínos: 0,3 mg/kg (1 mL para cada 33 kg), SC ou IM em dose única",
     "defaultFrequency": "Dose Única",
     "defaultRoute": "Subcutânea (SC) / IM",
     "bottleVolumeMl": 500,
@@ -4638,52 +4109,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "validationStatus": "VALIDADO",
     "manufacturer": "Zoetis",
     "presentationText": "Frasco-ampola de 500 mL"
-  },
-  {
-    "id": "vetoryl-30",
-    "brandName": "Vetoryl® 30 mg Cápsulas (Dechra / Trilostano)",
-    "activePrinciple": "Trilostano",
-    "category": "Inibidor da Síntese de Esteroides / Síndrome de Cushing",
-    "formType": "tablet",
-    "tabletMg": 30,
-    "species": [
-      "Canino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 2
-    },
-    "doseRangeText": "2 a 5 mg/kg SID administrado com alimento",
-    "defaultFrequency": "SID",
-    "defaultRoute": "Oral (VO)",
-    "tabletsPerBox": 30,
-    "clinicalNotes": "Tratamento de hiperadrenocorticismo hipófise-dependente e adrenal-dependente em cães.",
-    "validationStatus": "VALIDADO",
-    "manufacturer": "Dechra",
-    "presentationText": "Cartucho com 30 comprimidos"
-  },
-  {
-    "id": "caninsulin-40",
-    "brandName": "Caninsulin® 40 UI/mL Suspensão Injetável (MSD / Insulina Lenta)",
-    "activePrinciple": "Insulina Zinco Lenta (Porina Purificada)",
-    "category": "Hormônio / Antidiabético / Insulina",
-    "formType": "liquid",
-    "concentrationMgMl": 40,
-    "species": [
-      "Canino",
-      "Felino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 0.5,
-      "felino": 0.25
-    },
-    "doseRangeText": "0,25 a 0,5 UI/kg BID SC a cada 12h",
-    "defaultFrequency": "BID",
-    "defaultRoute": "Subcutânea (SC)",
-    "bottleVolumeMl": 10,
-    "clinicalNotes": "Insulina de ação intermediária para o tratamento do diabetes mellitus em cães e gatos.",
-    "validationStatus": "VALIDADO",
-    "manufacturer": "MSD Saúde Animal",
-    "presentationText": "Frasco-ampola de 10 mL"
   },
   {
     "id": "hemolitan-pet",
@@ -4900,30 +4325,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "presentationText": "Frasco-ampola de 50 mL"
   },
   {
-    "id": "plasil-vet-inj",
-    "brandName": "Plasil® Vet 5 mg/mL Injetável (Sanofi / Metoclopramida)",
-    "activePrinciple": "Cloridrato de Metoclopramida",
-    "category": "Antiêmético / Procinético Gástrico",
-    "formType": "liquid",
-    "concentrationMgMl": 5,
-    "species": [
-      "Canino",
-      "Felino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 0.5,
-      "felino": 0.5
-    },
-    "doseRangeText": "0,2 a 0,5 mg/kg SC, IM ou IV a cada 8h",
-    "defaultFrequency": "TID",
-    "defaultRoute": "Subcutânea (SC) / IV / IM",
-    "bottleVolumeMl": 20,
-    "clinicalNotes": "Antiemético central e procinético do trato gastrintestinal superior.",
-    "validationStatus": "VALIDADO",
-    "manufacturer": "Sanofi",
-    "presentationText": "Frasco-ampola de 20 mL"
-  },
-  {
     "id": "sucralfato-1g",
     "brandName": "Sucralfato 1 g Comprimidos",
     "activePrinciple": "Sucralfato",
@@ -4985,10 +4386,10 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Equino"
     ],
     "defaultDoseMgKg": {
-      "canino": 4,
+      "canino": 6,
       "bovino": 4
     },
-    "doseRangeText": "4 mg/kg SID IV, IM ou SC",
+    "doseRangeText": "Cães: 6 a 9 mg/kg | Gatos: 5 a 8 mg/kg, IV/IM/SC uma vez ao dia (dose única diária reduz a nefrotoxicidade) | Bovinos: 4 a 6 mg/kg SID",
     "defaultFrequency": "SID",
     "defaultRoute": "Intravenosa (IV) / IM / SC",
     "bottleVolumeMl": 20,
@@ -6565,7 +5966,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "doseRangeText": "Trauma raquimedular agudo: 30 mg/kg IV lento",
     "defaultFrequency": "Dose Única",
     "defaultRoute": "Intravenosa (IV)",
-    "clinicalNotes": "Produto registrado oficialmente pelo laboratório Pfizer. Respeitar indicações e contraindicações de bula.",
+    "clinicalNotes": "Atenção: o protocolo de 30 mg/kg no trauma medular não é mais recomendado de rotina (sem benefício comprovado e com risco de úlcera gastrointestinal e infecção). Produto registrado oficialmente pelo laboratório Pfizer. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 62.5,
     "bottleVolumeMl": 8
@@ -8480,30 +7881,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "bottleVolumeMl": 5
   },
   {
-    "id": "mytedom-inj-10",
-    "brandName": "Mytedom® Injetável 10 mg/mL (Cristália)",
-    "activePrinciple": "Cloridrato de Metadona",
-    "manufacturer": "Cristália",
-    "category": "Analgésico Opioide Agonista Mu & Antagonista NMDA",
-    "formType": "liquid",
-    "presentationText": "Ampola com 1 mL (10 mg)",
-    "species": [
-      "Canino",
-      "Felino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 0.3,
-      "felino": 0.2
-    },
-    "doseRangeText": "0,2 a 0,5 mg/kg IM, SC ou IV lento a cada 4 a 6 horas",
-    "defaultFrequency": "QID",
-    "defaultRoute": "Intramuscular (IM)",
-    "clinicalNotes": "Excelente para dor somática e neuropática (antagonismo NMDA concomitante). Não causa êmese frequente como a morfina.",
-    "validationStatus": "VALIDADO",
-    "concentrationMgMl": 10,
-    "bottleVolumeMl": 1
-  },
-  {
     "id": "mytedom-comp-5",
     "brandName": "Mytedom® 5 mg Comprimidos (Cristália)",
     "activePrinciple": "Cloridrato de Metadona",
@@ -9687,7 +9064,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "canino": 2,
       "felino": 1
     },
-    "doseRangeText": "Edema agudo de pulmão: 2 a 4 mg/kg IV ou IM repetindo a cada 1-2h até estabilização",
+    "doseRangeText": "Edema agudo de pulmão — Cães: 2 a 4 mg/kg | Gatos: 1 a 2 mg/kg, IV ou IM, repetindo a cada 1-2h até estabilização",
     "defaultFrequency": "TID",
     "defaultRoute": "Intravenosa (IV)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Sanofi. Respeitar indicações e contraindicações de bula.",
@@ -9881,30 +9258,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 40,
     "bottleVolumeMl": 20
-  },
-  {
-    "id": "fenocris-inj-100",
-    "brandName": "Fenocris® Injetável 100 mg/mL (Cristália)",
-    "activePrinciple": "Fenobarbital Sódico",
-    "manufacturer": "Cristália",
-    "category": "Anticonvulsivante Barbitúrico Hospitalar",
-    "formType": "liquid",
-    "presentationText": "Ampola de 2 mL (200 mg)",
-    "species": [
-      "Canino",
-      "Felino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 3,
-      "felino": 3
-    },
-    "doseRangeText": "Dose de ataque status epilepticus: 15 a 20 mg/kg IV fracionados ou 3 a 5 mg/kg IV lenta a cada 8-12h",
-    "defaultFrequency": "BID",
-    "defaultRoute": "Intravenosa (IV)",
-    "clinicalNotes": "Produto registrado oficialmente pelo laboratório Cristália. Respeitar indicações e contraindicações de bula.",
-    "validationStatus": "VALIDADO",
-    "concentrationMgMl": 100,
-    "bottleVolumeMl": 2
   },
   {
     "id": "keppra-comp-250",
@@ -10114,9 +9467,9 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "felino": 0.0005
     },
     "doseRangeText": "Choque séptico / vasoplegia: infusão contínua CRI de 0,1 a 1,5 mcg/kg/min (0,0001 a 0,0015 mg/kg/min)",
-    "defaultFrequency": "Dose Única",
+    "defaultFrequency": "Infusão contínua (CRI)",
     "defaultRoute": "Intravenosa (IV)",
-    "clinicalNotes": "Vasopressor de primeira linha no choque séptico distributivo em UTI. Administrar exclusivamente em bomba de infusão.",
+    "clinicalNotes": "Droga de infusão contínua: use a calculadora \"Infusão Contínua na Bolsa\" (dose em mcg/kg/min). Vasopressor de primeira linha no choque séptico distributivo em UTI. Administrar exclusivamente em bomba de infusão.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 2,
     "bottleVolumeMl": 4
@@ -10138,9 +9491,9 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "felino": 0.005
     },
     "doseRangeText": "Infusão contínua: 2 a 10 mcg/kg/min IV em bomba de infusão",
-    "defaultFrequency": "Dose Única",
+    "defaultFrequency": "Infusão contínua (CRI)",
     "defaultRoute": "Intravenosa (IV)",
-    "clinicalNotes": "Produto registrado oficialmente pelo laboratório Cristália. Respeitar indicações e contraindicações de bula.",
+    "clinicalNotes": "Droga de infusão contínua: use a calculadora \"Infusão Contínua na Bolsa\" (dose em mcg/kg/min). Produto registrado oficialmente pelo laboratório Cristália. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 5,
     "bottleVolumeMl": 10
@@ -10163,9 +9516,9 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "felino": 0.005
     },
     "doseRangeText": "Infusão contínua: 2,5 a 10 mcg/kg/min IV em bomba para choque cardiogênico",
-    "defaultFrequency": "Dose Única",
+    "defaultFrequency": "Infusão contínua (CRI)",
     "defaultRoute": "Intravenosa (IV)",
-    "clinicalNotes": "Produto registrado oficialmente pelo laboratório Cristália. Respeitar indicações e contraindicações de bula.",
+    "clinicalNotes": "Droga de infusão contínua: use a calculadora \"Infusão Contínua na Bolsa\" (dose em mcg/kg/min). Produto registrado oficialmente pelo laboratório Cristália. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 12.5,
     "bottleVolumeMl": 20
@@ -10294,30 +9647,6 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "concentrationMgMl": 500,
     "percentage": 50,
     "bottleVolumeMl": 10
-  },
-  {
-    "id": "transamin-inj-50",
-    "brandName": "Transamin® Injetável 50 mg/mL (Cristália)",
-    "activePrinciple": "Ácido Tranexâmico",
-    "manufacturer": "Cristália",
-    "category": "Antifibrinolítico & Hemostático Sistêmico",
-    "formType": "liquid",
-    "presentationText": "Ampola com 5 mL (250 mg)",
-    "species": [
-      "Canino",
-      "Felino"
-    ],
-    "defaultDoseMgKg": {
-      "canino": 10,
-      "felino": 10
-    },
-    "doseRangeText": "Hemorragias ativas / politrauma: 10 a 15 mg/kg IV lento em 15 min a cada 8 horas",
-    "defaultFrequency": "TID",
-    "defaultRoute": "Intravenosa (IV)",
-    "clinicalNotes": "Excelente inibidor da degradação da fibrina. Indicado em hemotórax, hemoperitônio traumático e cirurgias com sangramento profuso.",
-    "validationStatus": "VALIDADO",
-    "concentrationMgMl": 50,
-    "bottleVolumeMl": 5
   },
   {
     "id": "kanakion-mm-inj-10",
@@ -12002,6 +11331,9 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
+      "bovino": 0.2,
+      "ovino": 0.2,
+      "suino": 0.3,
       "canino": 0.2
     },
     "doseRangeText": "Bovinos/Ovinos: 0,2 mg/kg SC ou IM | Cães: 0,2 a 0,4 mg/kg SC para sarna demodécica sob supervisão",
@@ -12369,10 +11701,12 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 0.025
+      "canino": 0.025,
+      "bovino": 0.05,
+      "equino": 0.011
     },
-    "doseRangeText": "Piometra de cérvix aberta em cadelas jovens reprodutoras: 0,025 a 0,05 mg/kg SC com monitoramento estrito",
-    "defaultFrequency": "SID",
+    "doseRangeText": "Cadelas (piometra de cérvix aberta): 0,025 a 0,05 mg/kg SC | Bovinos: 25 mg (5 mL) IM | Éguas: 5 mg (1 mL) IM",
+    "defaultFrequency": "Dose Única",
     "defaultRoute": "Subcutânea (SC)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Zoetis. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",

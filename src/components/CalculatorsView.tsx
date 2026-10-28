@@ -30,6 +30,14 @@ import {
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ProductImage } from './ProductImage';
+
+/** Dose do cadastro para a espécie: cão e gato só usam a própria; outras espécies usam a delas ou, na falta, a de cão como ponto de partida. */
+function speciesDose(doses: Record<string, number | undefined>, species: string): number | undefined {
+  const key = species.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  if (key === 'felino' || key === 'cat') return doses.felino;
+  if (key === 'canino' || key === 'dog') return doses.canino;
+  return doses[key] ?? doses.canino;
+}
 import { CalculatorType, CalculationStep } from '../types';
 import { CALCULATORS_LIST } from '../data/calculators';
 import { EmergencyTable } from './EmergencyTable';
@@ -222,17 +230,14 @@ export const CalculatorsView: React.FC = () => {
     if (prod.protocols && prod.protocols.length > 0) {
       const initialProto = prod.protocols[0];
       setSelectedProtocolId(initialProto.id);
-      recDose = isCat
-        ? (initialProto.doseMgKg.felino ?? initialProto.doseMgKg.canino ?? 0.1)
-        : (initialProto.doseMgKg.canino ?? initialProto.doseMgKg.felino ?? 0.2);
+      recDose = speciesDose(initialProto.doseMgKg, doseSpecies);
     } else {
       setSelectedProtocolId('');
-      recDose = isCat
-        ? (prod.defaultDoseMgKg?.felino ?? prod.defaultDoseMgKg?.canino ?? 0.1)
-        : (prod.defaultDoseMgKg?.canino ?? prod.defaultDoseMgKg?.felino ?? 0.2);
+      recDose = speciesDose(prod.defaultDoseMgKg || {}, doseSpecies);
     }
 
-    setDosePrescribed(recDose !== undefined && !isNaN(recDose) ? String(recDose) : '0.2');
+    // Sem dose cadastrada para a espécie: o campo fica vazio para o veterinário informar
+    setDosePrescribed(recDose !== undefined && !isNaN(recDose) && recDose > 0 ? String(recDose) : '');
     setDrugLabel(prod.brandName);
 
     setDoseFrequency(prod.defaultFrequency);
@@ -242,7 +247,9 @@ export const CalculatorsView: React.FC = () => {
     const speciesKey = isCat ? 'felin' : 'canin';
     const coversSpecies = !['Canino', 'Felino'].includes(doseSpecies) || (prod.species || []).some((s) => s.toLowerCase().startsWith(speciesKey));
     showToast(
-      coversSpecies
+      coversSpecies && !(recDose && recDose > 0)
+        ? `${prod.brandName}: sem dose em mg/kg cadastrada para esta espécie (uso tópico ou conforme bula). Informe a dose se for calcular.`
+        : coversSpecies
         ? `Medicamento selecionado: ${prod.brandName}. Concentração preenchida automaticamente!`
         : `Atenção: ${prod.brandName} não tem indicação cadastrada para ${isCat ? 'gatos' : 'cães'}. Confira a bula.`,
     );
@@ -271,15 +278,9 @@ export const CalculatorsView: React.FC = () => {
     setDoseSubSpecies('');
     const prod = COMMERCIAL_PRODUCTS.find((p) => p.id === selectedProductId);
     if (prod) {
-      const isCat = species === 'Felino' || species === 'cat';
-      if (prod.protocols && prod.protocols.length > 0) {
-        const proto = prod.protocols.find((pr) => pr.id === selectedProtocolId) || prod.protocols[0];
-        const recDose = isCat ? (proto.doseMgKg.felino || proto.doseMgKg.canino || 0.1) : (proto.doseMgKg.canino || 0.2);
-        setDosePrescribed(String(recDose));
-      } else {
-        const recDose = isCat ? (prod.defaultDoseMgKg?.felino || prod.defaultDoseMgKg?.canino || 0.1) : (prod.defaultDoseMgKg?.canino || 0.2);
-        setDosePrescribed(String(recDose));
-      }
+      const proto = prod.protocols?.find((pr) => pr.id === selectedProtocolId) || prod.protocols?.[0];
+      const recDose = speciesDose(proto ? proto.doseMgKg : prod.defaultDoseMgKg || {}, species);
+      setDosePrescribed(recDose && recDose > 0 ? String(recDose) : '');
     }
   };
 
@@ -290,10 +291,9 @@ export const CalculatorsView: React.FC = () => {
     if (prod && prod.protocols) {
       const proto = prod.protocols.find((p) => p.id === protocolId);
       if (proto) {
-        const isCat = doseSpecies === 'Felino' || doseSpecies === 'cat';
-        const recDose = isCat ? (proto.doseMgKg.felino || proto.doseMgKg.canino || 0.1) : (proto.doseMgKg.canino || 0.2);
-        setDosePrescribed(String(recDose));
-        showToast(`Protocolo selecionado: ${proto.label} (${recDose} mg/kg)`);
+        const recDose = speciesDose(proto.doseMgKg, doseSpecies);
+        setDosePrescribed(recDose && recDose > 0 ? String(recDose) : '');
+        showToast(recDose ? `Protocolo selecionado: ${proto.label} (${recDose} mg/kg)` : `Protocolo ${proto.label}: sem dose cadastrada para esta espécie.`);
       }
     }
   };
@@ -1631,7 +1631,14 @@ export const CalculatorsView: React.FC = () => {
                         <option value="TID">A cada 8h (TID - 3x/dia)</option>
                         <option value="QID">A cada 6h (QID - 4x/dia)</option>
                         <option value="Dose Única">Dose Única</option>
+                        <option value="Mensal">Mensal (1x a cada 30 dias)</option>
+                        <option value="Infusão contínua (CRI)">Infusão contínua (CRI)</option>
                       </select>
+                      {doseFrequency === 'Infusão contínua (CRI)' && (
+                        <button type="button" onClick={() => setSelectedCalculator('cri')} className="mt-1.5 text-[11px] font-semibold text-[var(--primary)] underline cursor-pointer text-left">
+                          Droga de infusão contínua: calcule na Infusão Contínua (mcg/kg/min) →
+                        </button>
+                      )}
                     </div>
 
                     <div>
