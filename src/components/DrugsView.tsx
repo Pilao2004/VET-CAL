@@ -18,6 +18,7 @@ import {
   Boxes,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { ProductImage } from './ProductImage';
 import { COMMERCIAL_PRODUCTS, CommercialProduct } from '../data/commercialProducts';
 
 export const DrugsView: React.FC = () => {
@@ -419,7 +420,9 @@ export const DrugsView: React.FC = () => {
                           >
                             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
                               {/* Left Info: Brand, Lab, Concentration, Form */}
-                              <div className="space-y-1.5 flex-1">
+                              <div className="flex items-start gap-3 flex-1 min-w-0">
+                              <ProductImage product={prod} size={56} />
+                              <div className="space-y-1.5 flex-1 min-w-0">
                                 <div className="flex items-center space-x-2 flex-wrap">
                                   <h3 className="font-bold text-sm text-[#14243A] dark:text-white">
                                     {prod.brandName}
@@ -459,6 +462,7 @@ export const DrugsView: React.FC = () => {
                                 <p className="text-[11px] text-[#007F62] dark:text-[#00C896] font-bold font-mono">
                                   {prod.doseRangeText}
                                 </p>
+                              </div>
                               </div>
 
                               {/* Right Actions: CALCULAR DOSE & Favorite */}
@@ -587,13 +591,16 @@ export const DrugsView: React.FC = () => {
                     </div>
 
                     {/* Brand Name */}
-                    <div>
+                    <div className="flex items-center gap-3">
+                      <ProductImage product={prod} size={64} />
+                      <div className="min-w-0">
                       <h3 className="font-extrabold text-sm text-[#14243A] dark:text-white leading-snug">
                         {prod.brandName}
                       </h3>
                       <p className="text-xs text-[#52677F] dark:text-slate-400 mt-0.5">
                         Princípio ativo: <strong className="text-[#007F62] dark:text-[#00C896]">{prod.activePrinciple}</strong>
                       </p>
+                      </div>
                     </div>
 
                     {/* Details Badges */}

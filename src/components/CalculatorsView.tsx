@@ -29,6 +29,7 @@ import {
   Lock,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { ProductImage } from './ProductImage';
 import { CalculatorType, CalculationStep } from '../types';
 import { CALCULATORS_LIST } from '../data/calculators';
 import { EmergencyTable } from './EmergencyTable';
@@ -1298,7 +1299,9 @@ export const CalculatorsView: React.FC = () => {
                               : 'hover:bg-[#F1F6FC] dark:hover:bg-slate-800 text-[#0F172A] dark:text-slate-300'
                           }`}
                         >
-                          <div>
+                          <div className="flex items-center gap-2.5 min-w-0">
+                          <ProductImage product={prod} size={40} />
+                          <div className="min-w-0">
                             <div className="flex items-center space-x-2 flex-wrap">
                               <span className="font-bold text-[#0F172A] dark:text-white">
                                 {prod.brandName}
@@ -1317,6 +1320,7 @@ export const CalculatorsView: React.FC = () => {
                               {prod.formType === 'tablet' && `Comprimido • ${prod.tabletMg} mg por comprimido`}
                               {prod.formType === 'drops' && `Gotas • ${prod.concentrationMgMl} mg/mL (1 mL = 20 gotas)`}
                             </p>
+                          </div>
                           </div>
 
                           <div className="text-right shrink-0 ml-2">
@@ -1339,7 +1343,11 @@ export const CalculatorsView: React.FC = () => {
                 {/* Cartão de Informações do Medicamento Selecionado */}
                 <div className="p-3.5 rounded-xl bg-white dark:bg-[var(--surface)] border border-[#B8E8D9] dark:border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
                   <div className="flex items-start sm:items-center space-x-2.5 min-w-0">
-                    <CheckCircle2 className={`w-5 h-5 shrink-0 mt-0.5 sm:mt-0 ${selectedProductObj ? 'text-[#007F62] dark:text-emerald-400' : 'text-[#64748B] dark:text-slate-500'}`} />
+{selectedProductObj ? (
+                      <ProductImage product={selectedProductObj} size={52} />
+                    ) : (
+                      <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5 sm:mt-0 text-[#64748B] dark:text-slate-500" />
+                    )}
                     <div className="min-w-0">
                       {/* Linha Principal: Nome comercial + concentração + laboratório */}
                       <div className="flex items-center space-x-1.5 flex-wrap font-bold text-xs sm:text-sm text-[#0F172A] dark:text-white leading-normal">

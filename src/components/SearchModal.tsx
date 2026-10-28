@@ -10,6 +10,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { ProductImage } from './ProductImage';
 import { CALCULATORS_LIST } from '../data/calculators';
 import { INITIAL_DRUGS } from '../data/drugs';
 import { COMMERCIAL_PRODUCTS, CommercialProduct } from '../data/commercialProducts';
@@ -217,7 +218,9 @@ export const SearchModal: React.FC = () => {
                     }}
                     className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50 dark:hover:bg-slate-800/80 border border-transparent hover:border-blue-200 dark:hover:border-slate-700 text-left transition-colors group cursor-pointer"
                   >
-                    <div>
+                    <div className="flex items-center gap-3 min-w-0">
+                    <ProductImage product={prod} size={40} />
+                    <div className="min-w-0">
                       <div className="flex items-center space-x-2 flex-wrap">
                         <span className="font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
                           {prod.brandName}
@@ -229,6 +232,7 @@ export const SearchModal: React.FC = () => {
                       <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-1">
                         {prod.activePrinciple} • {prod.doseRangeText}
                       </p>
+                    </div>
                     </div>
                     <span className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950/60 px-2 py-0.5 rounded shrink-0 ml-2">
                       Calcular Dose
