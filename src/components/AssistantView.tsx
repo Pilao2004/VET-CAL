@@ -32,7 +32,22 @@ import {
   SmartCalculationResult,
   formatClinicalVolume,
 } from '../utils/assistantCalculator';
-import { AITurn, askServerAssistant, askVetAssistant, errorMessage, getClaudeSample } from '../services/vetAssistantAI';
+import {
+  AITurn,
+  AssistantProviderChoice,
+  askServerAssistant,
+  askVetAssistant,
+  errorMessage,
+  getClaudeSample,
+} from '../services/vetAssistantAI';
+
+const PROVIDER_STORAGE_KEY = 'vetcalc_ai_provider';
+const PROVIDER_OPTIONS: { id: AssistantProviderChoice; label: string; hint: string }[] = [
+  { id: 'auto', label: 'Padrão', hint: 'O sistema escolhe a IA gratuita disponível no momento.' },
+  { id: 'gemini', label: 'Gemini', hint: 'Google Gemini, plano gratuito.' },
+  { id: 'groq', label: 'Groq', hint: 'Modelo Llama via Groq, plano gratuito.' },
+];
+const PROVIDER_NAMES: Record<string, string> = { gemini: 'Gemini', groq: 'Groq (Llama)', claude: 'Claude' };
 
 interface PendingCalculationState {
   drug: CommercialProduct | null;
@@ -105,6 +120,21 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
   const [aiAvailable, setAiAvailable] = useState(false);
   // Fica true quando o site não tem a IA do servidor publicada ou configurada
   const serverAgentDownRef = useRef(false);
+  const [aiProvider, setAiProvider] = useState<AssistantProviderChoice>(() => {
+    try {
+      const saved = localStorage.getItem(PROVIDER_STORAGE_KEY);
+      return saved === 'gemini' || saved === 'groq' ? saved : 'auto';
+    } catch {
+      return 'auto';
+    }
+  });
+  const chooseProvider = (choice: AssistantProviderChoice) => {
+    setAiProvider(choice);
+    serverAgentDownRef.current = false;
+    try {
+      localStorage.setItem(PROVIDER_STORAGE_KEY, choice);
+    } catch {}
+  };
 
   useEffect(() => {
     let active = true;
@@ -277,6 +307,7 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
         },
       });
       updateMessageContent(replyId, reply);
+      setMessages((prev) => prev.map((m) => (m.id === replyId ? { ...m, aiProvider: PROVIDER_NAMES.claude } : m)));
       aiTurnsRef.current.push({ role: 'assistant', content: reply });
     } catch (e: any) {
       const partial: string = e?.text || '';
@@ -300,18 +331,31 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
     aiAbortRef.current = ctl;
     setLoading(true);
     try {
-      const { text } = await askServerAssistant([...aiTurnsRef.current, { role: 'user', content: textToSend }], () => patientsRef.current, {
+      const { text, provider } = await askServerAssistant([...aiTurnsRef.current, { role: 'user', content: textToSend }], () => patientsRef.current, {
         signal: ctl.signal,
+        provider: aiProvider,
         onProgress: (label) => updateMessageContent(replyId, `⏳ ${label}`),
       });
       aiTurnsRef.current.push({ role: 'user', content: textToSend }, { role: 'assistant', content: text });
-      updateMessageContent(replyId, text);
+      setMessages((prev) => prev.map((m) => (m.id === replyId ? { ...m, content: text, aiProvider: PROVIDER_NAMES[provider] || provider } : m)));
       setAiAvailable(true);
       return true;
     } catch (e: any) {
       const code = e?.code;
       if (code === 'cancelled') {
         updateMessageContent(replyId, 'Resposta interrompida.');
+        return true;
+      }
+      const chosen = aiProvider !== 'auto' ? PROVIDER_NAMES[aiProvider] : null;
+      if (chosen && (code === 'unavailable' || code === 'unconfigured' || code === 'quota')) {
+        updateMessageContent(
+          replyId,
+          code === 'quota'
+            ? `⚠️ O ${chosen} atingiu o limite gratuito de hoje. Escolha outra IA no topo ou use "Padrão".`
+            : code === 'unconfigured'
+              ? `⚠️ O ${chosen} ainda não foi configurado no servidor do app. Escolha outra IA no topo ou use "Padrão".`
+              : `⚠️ O ${chosen} só funciona no site publicado do app. Aqui, use a opção "Padrão".`,
+        );
         return true;
       }
       if (code === 'unavailable' || code === 'unconfigured') {
@@ -333,12 +377,12 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
 
   // Fluxo de análise da mensagem
   const processUserMessage = async (textToSend: string) => {
-    const sample = await getClaudeSample();
+    const sample = aiProvider === 'auto' ? await getClaudeSample() : null;
     if (sample) {
       await chatWithAI(sample, textToSend);
       return;
     }
-    if (!serverAgentDownRef.current && (await chatWithServer(textToSend))) {
+    if ((aiProvider !== 'auto' || !serverAgentDownRef.current) && (await chatWithServer(textToSend))) {
       return;
     }
 
@@ -1002,8 +1046,8 @@ Confirma esta dose ou deseja prescrever outro valor em mg/kg?`,
   return (
     <div className="space-y-4 animate-fadeIn pb-16 max-w-4xl mx-auto">
       {/* Header */}
-      <div className="bg-[#FFFFFF] dark:bg-slate-900 rounded-3xl p-5 sm:p-6 border border-[#DCE7F2] dark:border-slate-800 shadow-sm flex items-center justify-between">
-        <div>
+      <div className="bg-[#FFFFFF] dark:bg-slate-900 rounded-3xl p-5 sm:p-6 border border-[#DCE7F2] dark:border-slate-800 shadow-sm flex flex-wrap items-center justify-between gap-4">
+        <div className="flex-1 min-w-0">
           <div className="flex items-center space-x-3">
             <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-[#00C896] to-[#2563EB] text-white flex items-center justify-center shadow-md shadow-blue-500/15 shrink-0">
               <Bot className="w-6 h-6 stroke-[2.5]" />
@@ -1037,6 +1081,35 @@ Confirma esta dose ou deseja prescrever outro valor em mg/kg?`,
           <RefreshCw className="w-4 h-4" />
           <span className="hidden sm:inline">Nova Conversa</span>
         </button>
+
+        {/* Escolha da IA que responde */}
+        <div className="basis-full flex flex-wrap items-center gap-x-3 gap-y-2 pt-3 border-t border-[#DCE7F2] dark:border-slate-800">
+          <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#52677F] dark:text-slate-400">
+            Responder com
+          </span>
+          <div role="radiogroup" aria-label="IA que responde" className="inline-flex p-1 rounded-xl bg-[#F1F6FC] dark:bg-slate-800 border border-[#DCE7F2] dark:border-slate-700">
+            {PROVIDER_OPTIONS.map((opt) => (
+              <button
+                key={opt.id}
+                id={`ai-provider-${opt.id}`}
+                role="radio"
+                aria-checked={aiProvider === opt.id}
+                onClick={() => chooseProvider(opt.id)}
+                disabled={loading}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer disabled:cursor-not-allowed ${
+                  aiProvider === opt.id
+                    ? 'bg-[#00C896] text-[#062C23] shadow-sm'
+                    : 'text-[#52677F] dark:text-slate-300 hover:text-[#14243A] dark:hover:text-white'
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+          <span className="text-[11px] text-[#52677F] dark:text-slate-400">
+            {PROVIDER_OPTIONS.find((o) => o.id === aiProvider)?.hint}
+          </span>
+        </div>
       </div>
 
       {/* Chat Messages Container */}
@@ -1292,8 +1365,10 @@ Confirma esta dose ou deseja prescrever outro valor em mg/kg?`,
                   )}
 
                   {!isUser && !msg.calcResult && (
-                    <div className="flex items-center justify-between pt-2 border-t border-[#DCE7F2] dark:border-slate-700/50 text-[10px] text-[#52677F] dark:text-slate-400">
-                      <span className="font-mono">VET CALC PRO ASSISTANT</span>
+                    <div className="flex items-center justify-between gap-4 pt-2 border-t border-[#DCE7F2] dark:border-slate-700/50 text-[10px] text-[#52677F] dark:text-slate-400">
+                      <span className="font-mono">
+                        VET CALC PRO ASSISTANT{msg.aiProvider ? ` · ${msg.aiProvider}` : ''}
+                      </span>
                       <button
                         onClick={() => copyToClipboard(msg.content, msg.id)}
                         className="hover:text-[#14243A] dark:hover:text-slate-200 flex items-center space-x-1 cursor-pointer font-medium"

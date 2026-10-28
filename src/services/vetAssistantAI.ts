@@ -311,6 +311,8 @@ type ServerMessage =
   | { role: 'assistant'; text?: string; toolCalls?: { id: string; name: string; args: Record<string, unknown> }[] }
   | { role: 'tool'; id: string; name: string; result: unknown };
 
+export type AssistantProviderChoice = 'auto' | 'gemini' | 'groq';
+
 export type ServerAgentErrorCode = 'quota' | 'unavailable' | 'unconfigured' | 'upstream' | 'cancelled';
 
 const MAX_TOOL_ROUNDS = 6;
@@ -319,7 +321,7 @@ const MAX_TOOL_ROUNDS = 6;
 export async function askServerAssistant(
   history: AITurn[],
   getPatients: () => PatientRecord[],
-  handlers: { onProgress: (label: string) => void; signal?: AbortSignal },
+  handlers: { onProgress: (label: string) => void; signal?: AbortSignal; provider?: AssistantProviderChoice },
 ): Promise<{ text: string; provider: string }> {
   const tools = buildTools(getPatients, handlers.onProgress);
   const schemas = tools.map(({ name, description, inputSchema }) => ({ name, description, inputSchema }));
@@ -332,7 +334,7 @@ export async function askServerAssistant(
       res = await fetch('./api/assistant/agent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ system: buildRules(getPatients()), history: work, tools: schemas }),
+        body: JSON.stringify({ system: buildRules(getPatients()), history: work, tools: schemas, provider: handlers.provider || 'auto' }),
         signal: handlers.signal,
       });
     } catch (e: any) {

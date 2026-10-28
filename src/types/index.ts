@@ -212,6 +212,7 @@ export interface ChatMessage {
   calcResult?: any;
   quickOptions?: ChatQuickOption[];
   isSearchingExternal?: boolean;
+  aiProvider?: string; // IA que escreveu a resposta (Claude, Gemini, Groq)
   timestamp: string;
 }
 

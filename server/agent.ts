@@ -147,8 +147,23 @@ async function askGroq(system: string, history: AgentMessage[], tools: AgentTool
   return calls.length ? { provider: 'groq', text: msg.content || undefined, toolCalls: calls } : { provider: 'groq', text: msg.content || '' };
 }
 
-/** Uma rodada: Gemini primeiro; Groq quando o Gemini estiver sem cota, sem chave ou fora do ar. */
-export async function runAgentRound(system: string, history: AgentMessage[], tools: AgentToolSchema[]): Promise<AgentReply> {
+export type AgentProvider = 'auto' | 'gemini' | 'groq';
+
+/** Uma rodada. 'auto': Gemini primeiro e Groq quando o Gemini estiver sem cota, sem chave ou fora do ar. */
+export async function runAgentRound(
+  system: string,
+  history: AgentMessage[],
+  tools: AgentToolSchema[],
+  provider: AgentProvider = 'auto',
+): Promise<AgentReply> {
+  const asAgentError = (err: unknown) => (err instanceof AgentError ? err : new AgentError('upstream', String(err)));
+  if (provider === 'gemini' || provider === 'groq') {
+    try {
+      return await (provider === 'gemini' ? askGemini : askGroq)(system, history, tools);
+    } catch (err) {
+      throw asAgentError(err);
+    }
+  }
   let geminiErr: AgentError | null = null;
   try {
     return await askGemini(system, history, tools);
