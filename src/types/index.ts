@@ -9,7 +9,8 @@ export type ActiveView =
   | 'subscription'
   | 'bonus'
   | 'profile'
-  | 'support';
+  | 'support'
+  | 'legal';
 
 export type CalculatorType =
   | 'dosage'
@@ -196,6 +197,9 @@ export interface SubscriptionInfo {
   isActive: boolean;
   licenseKey?: string;
   expiresAt?: string;
+  email?: string;
+  /** Token assinado pelo servidor; prova o Premium para a IA */
+  token?: string;
 }
 
 export interface ChatQuickOption {

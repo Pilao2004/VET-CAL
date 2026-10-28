@@ -4,7 +4,7 @@ import { useApp } from '../context/AppContext';
 import { saveFile } from '../utils/fileSave';
 
 export const BonusView: React.FC = () => {
-  const { showToast } = useApp();
+  const { showToast, isPremium, setIsSubscriptionModalOpen } = useApp();
   const [downloadedBonus1, setDownloadedBonus1] = useState(false);
   const [downloadedBonus3, setDownloadedBonus3] = useState(false);
   const [generating, setGenerating] = useState<'guia' | 'checklist' | null>(null);
@@ -24,6 +24,10 @@ export const BonusView: React.FC = () => {
   };
 
   const downloadBonus = async (which: 'guia' | 'checklist') => {
+    if (!isPremium) {
+      setIsSubscriptionModalOpen(true);
+      return;
+    }
     setGenerating(which);
     try {
       const pdfs = await import('../utils/bonusPdfs');
@@ -121,7 +125,7 @@ export const BonusView: React.FC = () => {
             className="px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs shadow-md transition-all flex items-center space-x-2 cursor-pointer disabled:opacity-60 disabled:cursor-wait"
           >
             <Download className="w-4 h-4" />
-            <span>{generating === 'guia' ? 'Gerando PDF…' : downloadedBonus1 ? 'Guia baixado · baixar de novo' : 'Baixar Guia de Urgências (PDF)'}</span>
+            <span>{generating === 'guia' ? 'Gerando PDF…' : downloadedBonus1 ? 'Guia baixado · baixar de novo' : isPremium ? 'Baixar Guia de Urgências (PDF)' : 'Baixar Guia (Premium)'}</span>
           </button>
         </div>
       </div>
@@ -202,7 +206,7 @@ export const BonusView: React.FC = () => {
             className="px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs shadow-md transition-all flex items-center space-x-2 cursor-pointer disabled:opacity-60 disabled:cursor-wait"
           >
             <Download className="w-4 h-4" />
-            <span>{generating === 'checklist' ? 'Gerando PDF…' : downloadedBonus3 ? 'Checklist baixado · baixar de novo' : 'Baixar Checklist de Anamnese (PDF)'}</span>
+            <span>{generating === 'checklist' ? 'Gerando PDF…' : downloadedBonus3 ? 'Checklist baixado · baixar de novo' : isPremium ? 'Baixar Checklist de Anamnese (PDF)' : 'Baixar Checklist (Premium)'}</span>
           </button>
         </div>
       </div>

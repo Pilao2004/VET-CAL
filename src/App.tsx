@@ -14,10 +14,13 @@ import { AssistantView } from './components/AssistantView';
 import { BonusView } from './components/BonusView';
 import { ProfileView } from './components/ProfileView';
 import { SupportView } from './components/SupportView';
+import { PremiumGate } from './components/PremiumGate';
+import { LegalView } from './components/LegalView';
+import { TermsConsent } from './components/TermsConsent';
 import { ShieldCheck, Heart } from 'lucide-react';
 
 const AppContent: React.FC = () => {
-  const { currentView, toast } = useApp();
+  const { currentView, toast, setCurrentView } = useApp();
 
   return (
     <div className="min-h-screen bg-[var(--bg-main)] text-[var(--text-main)] flex flex-col transition-colors selection:bg-emerald-500/20 selection:text-emerald-800">
@@ -25,6 +28,7 @@ const AppContent: React.FC = () => {
       <BottomNav />
       <SearchModal />
       <SubscriptionModal />
+      <TermsConsent />
 
       {/* Main Content View */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-20">
@@ -33,11 +37,20 @@ const AppContent: React.FC = () => {
         {currentView === 'drugs' && <DrugsView />}
         {currentView === 'symptoms' && <SymptomsView />}
         {currentView === 'labs' && <LabsView />}
-        {currentView === 'patients' && <PatientsView />}
-        {currentView === 'assistant' && <AssistantView />}
+        {currentView === 'patients' && (
+          <PremiumGate title="Prontuários e pacientes" description="Cadastre pacientes, registre consultas e evoluções por voz, exporte prontuários em PDF e consulte as fichas pela Assistente IA.">
+            <PatientsView />
+          </PremiumGate>
+        )}
+        {currentView === 'assistant' && (
+          <PremiumGate title="Assistente IA" description="Converse como com um colega: doses calculadas pelo app, dúvidas clínicas e as fichas dos seus pacientes.">
+            <AssistantView />
+          </PremiumGate>
+        )}
         {currentView === 'bonus' && <BonusView />}
         {currentView === 'profile' && <ProfileView />}
         {currentView === 'support' && <SupportView />}
+        {currentView === 'legal' && <LegalView />}
       </main>
 
       {/* Footer */}
@@ -57,6 +70,9 @@ const AppContent: React.FC = () => {
           <div className="pt-2 flex items-center justify-center space-x-1 text-[11px] text-slate-400">
             <span>Desenvolvido com excelência técnico-científica para a prática clínica veterinária.</span>
           </div>
+          <button type="button" onClick={() => setCurrentView('legal')} className="text-[11px] text-slate-300 underline cursor-pointer">
+            Termos de Uso e Política de Privacidade
+          </button>
         </div>
       </footer>
 

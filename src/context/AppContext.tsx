@@ -18,6 +18,7 @@ import {
   getSupabaseConfig,
 } from '../lib/supabase';
 import { patientService, MigrationSummary } from '../services/patientService';
+import { isOwnerPreview } from '../config/plans';
 
 interface PrefillData {
   drugName?: string;
@@ -102,6 +103,8 @@ interface AppContextType {
   // Subscription
   subscription: SubscriptionInfo;
   activateSubscriptionServer: (key: string, email?: string) => Promise<{ success: boolean; message: string }>;
+  deactivateSubscription: () => void;
+  isPremium: boolean;
   checkIsFeatureUnlocked: (badge: 'Básica' | 'Avançada') => boolean;
 
   // Toast
@@ -800,47 +803,64 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
-  // Subscription state
+  // Subscription state: grátis por padrão; Premium só com código ativado no servidor
+  const FREE_PLAN: SubscriptionInfo = { tier: 'free', isActive: false };
   const [subscription, setSubscription] = useState<SubscriptionInfo>(() => {
     try {
-      const saved = localStorage.getItem('vet_calc_pro_sub');
-      return saved ? JSON.parse(saved) : { tier: 'premium', isActive: true, expiresAt: '2027-12-31' };
+      const saved: SubscriptionInfo | null = JSON.parse(localStorage.getItem('vet_calc_pro_sub') || 'null');
+      // Licenças antigas sem token (códigos públicos) não valem mais
+      if (!saved || saved.tier !== 'premium' || !saved.token) return FREE_PLAN;
+      return saved;
     } catch {
-      return { tier: 'premium', isActive: true, expiresAt: '2027-12-31' };
+      return FREE_PLAN;
     }
   });
 
+  const isPremium =
+    isOwnerPreview() ||
+    (subscription.tier === 'premium' &&
+      subscription.isActive &&
+      (!subscription.expiresAt || subscription.expiresAt >= new Date().toISOString().slice(0, 10)));
+
   const activateSubscriptionServer = async (key: string, email?: string): Promise<{ success: boolean; message: string }> => {
     try {
-      const response = await fetch('/api/subscription/activate', {
+      const response = await fetch('./api/subscription/activate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ licenseKey: key, email }),
       });
-
-      const data = await response.json();
-      if (response.ok && data.success) {
+      const data = await response.json().catch(() => null);
+      if (response.ok && data?.success) {
         const subData: SubscriptionInfo = {
           tier: 'premium',
           isActive: true,
-          licenseKey: key,
-          expiresAt: data.expiresAt || '2027-12-31',
+          licenseKey: key.trim().toUpperCase(),
+          expiresAt: data.expiresAt,
+          email: (email || '').trim().toLowerCase(),
+          token: data.token,
         };
         setSubscription(subData);
-        localStorage.setItem('vet_calc_pro_sub', JSON.stringify(subData));
-        showToast('Assinatura Premium ativada com sucesso!');
+        try {
+          localStorage.setItem('vet_calc_pro_sub', JSON.stringify(subData));
+        } catch {}
+        showToast('Premium ativado!');
         return { success: true, message: data.message };
-      } else {
-        return { success: false, message: data.message || 'Chave inválida.' };
       }
-    } catch (err: any) {
-      return { success: false, message: 'Falha na comunicação com o servidor de validação.' };
+      return { success: false, message: data?.message || 'Não foi possível ativar. Confira o código e o e-mail.' };
+    } catch {
+      return { success: false, message: 'Sem conexão com o servidor de ativação. Verifique a internet e tente de novo.' };
     }
   };
 
-  const checkIsFeatureUnlocked = (_badge: 'Básica' | 'Avançada'): boolean => {
-    return true;
+  const deactivateSubscription = () => {
+    setSubscription(FREE_PLAN);
+    try {
+      localStorage.removeItem('vet_calc_pro_sub');
+    } catch {}
+    showToast('Premium removido deste aparelho.');
   };
+
+  const checkIsFeatureUnlocked = (badge: 'Básica' | 'Avançada'): boolean => badge !== 'Avançada' || isPremium;
 
   // Open calculator prefilled with drug
   const openCalculatorWithDrug = (
@@ -971,6 +991,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
         subscription,
         activateSubscriptionServer,
+        deactivateSubscription,
+        isPremium,
         checkIsFeatureUnlocked,
         toast,
         showToast,

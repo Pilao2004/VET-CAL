@@ -106,7 +106,7 @@ export const INITIAL_DRUGS: DrugItem[] = [
         frequency: 'A cada 24 horas (SID)',
         suggestedMgKg: 0.1,
         suggestedMgMl: 2,
-        notes: 'Bula Oficial Agener / VetSmart: 0,1 mg/kg no 1º dia (0,05 mL/kg do injetável 0,2% = 0,20 mL para gato de 4 kg). Dias subsequentes: 0,05 mg/kg (0,025 mL/kg = 0,10 mL).',
+        notes: 'Bula Oficial Agener: 0,1 mg/kg no 1º dia (0,05 mL/kg do injetável 0,2% = 0,20 mL para gato de 4 kg). Dias subsequentes: 0,05 mg/kg (0,025 mL/kg = 0,10 mL).',
       },
     ],
     routes: ['Oral (VO)', 'Subcutânea (SC)', 'Intravenosa (IV)'],

@@ -26,12 +26,15 @@ import {
   CheckCircle,
   XCircle,
   X,
+  Lock,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { CalculatorType, CalculationStep } from '../types';
 import { CALCULATORS_LIST } from '../data/calculators';
 import { EmergencyTable } from './EmergencyTable';
 import { PrescriptionActions } from './PrescriptionActions';
+import { PremiumGate } from './PremiumGate';
+import { PREMIUM_CALCULATORS } from '../config/plans';
 import { SafetyAlert, speciesSafetyAlerts } from '../utils/safetyRules';
 import { COMMERCIAL_PRODUCTS, CommercialProduct } from '../data/commercialProducts';
 import { runCompleteClinicalTestSuite, TestSuiteSummary } from '../utils/clinicalTestSuite';
@@ -46,6 +49,7 @@ export const CalculatorsView: React.FC = () => {
     calculationHistory,
     clearHistory,
     showToast,
+    isPremium,
   } = useApp();
 
   const [copied, setCopied] = useState(false);
@@ -53,7 +57,7 @@ export const CalculatorsView: React.FC = () => {
   const [isPrescriptionValidated, setIsPrescriptionValidated] = useState(false);
 
   // ==========================================
-  // SELEÇÃO DE MEDICAMENTO COMERCIAL (VETSMART)
+  // SELEÇÃO DE MEDICAMENTO COMERCIAL
   // ==========================================
   const [selectedProductId, setSelectedProductId] = useState<string>('flamavet-inj-02');
   const [selectedProtocolId, setSelectedProtocolId] = useState<string>('day1-attack');
@@ -61,7 +65,7 @@ export const CalculatorsView: React.FC = () => {
   const [isProductListOpen, setIsProductListOpen] = useState<boolean>(false);
 
   // ==========================================
-  // 1. CALCULADORA DE MEDICAMENTOS (PADRÃO VETSMART)
+  // 1. CALCULADORA DE MEDICAMENTOS 
   // ==========================================
   const [dosageFormType, setDosageFormType] = useState<'liquid' | 'tablet' | 'drops'>('liquid');
   const [doseSpecies, setDoseSpecies] = useState<string>('Canino');
@@ -90,7 +94,7 @@ export const CalculatorsView: React.FC = () => {
   const [dropsPerMlFactor, setDropsPerMlFactor] = useState<string>('20');
 
   // ==========================================
-  // 2. FLUIDOTERAPIA COMPLETA VETSMART (3 PARCELAS)
+  // 2. FLUIDOTERAPIA COMPLETA (3 PARCELAS)
   // ==========================================
   const [fluidSpecies, setFluidSpecies] = useState<string>('Canino');
   const [fluidWeight, setFluidWeight] = useState<string>('12');
@@ -327,7 +331,7 @@ export const CalculatorsView: React.FC = () => {
     }
   };
 
-  // Format tablet fractions (VetSmart: 1/4, 1/2, 3/4, 1, 1 e 1/2)
+  // Format tablet fractions (1/4, 1/2, 3/4, 1, 1 e 1/2)
   const formatTabletFraction = (val: number): string => {
     const roundedQuarters = Math.round(val * 4) / 4;
     const whole = Math.floor(roundedQuarters);
@@ -355,7 +359,7 @@ export const CalculatorsView: React.FC = () => {
     return 'Seringa de 20 mL';
   };
 
-  // Formatação clínica com precisão de seringa veterinária (VetSmart)
+  // Formatação clínica com precisão de seringa veterinária
   const formatVolumeStrict = (vol: number): { displayShort: string; displayDetailed: string } => {
     if (vol <= 0) return { displayShort: '0 mL', displayDetailed: '0 mL' };
     if (vol < 0.01) {
@@ -474,7 +478,7 @@ export const CalculatorsView: React.FC = () => {
     setCopiedPrescription(false);
 
     try {
-      // 1. DOSAGEM VETSMART
+      // 1. DOSAGEM
       if (selectedCalculator === 'dosage') {
         const w = parseFloat(doseWeight.replace(',', '.'));
         const d = parseFloat(dosePrescribed.replace(',', '.'));
@@ -547,7 +551,7 @@ export const CalculatorsView: React.FC = () => {
             const mlPerKg = 0.05; // 1 mL para cada 20 kg
             const directMl = w * mlPerKg;
             bulaStep = {
-              label: '7. Regra da Bula Oficial Agener União & VetSmart',
+              label: '7. Regra da Bula Oficial (Agener União)',
               expression: 'Cães e gatos: 1 mL para cada 20 kg (0,05 mL/kg) para dose de 0,5 mg/kg',
               result: `${w} kg × 0,05 mL/kg = ${directMl.toFixed(2)} mL (${directMl.toFixed(1)} mL)`,
             };
@@ -559,7 +563,7 @@ export const CalculatorsView: React.FC = () => {
                 const mlPerKg = isMaint ? 0.025 : 0.05;
                 const directMl = w * mlPerKg;
                 bulaStep = {
-                  label: '7. Regra da Bula Oficial Agener União & VetSmart',
+                  label: '7. Regra da Bula Oficial (Agener União)',
                   expression: isMaint
                     ? 'Gatos manutenção: 1 mL para cada 40 kg (0,025 mL/kg)'
                     : 'Gatos 1º dia / dose única: 1 mL para cada 20 kg (0,05 mL/kg)',
@@ -569,7 +573,7 @@ export const CalculatorsView: React.FC = () => {
                 const mlPerKg = isMaint ? 0.05 : 0.1;
                 const directMl = w * mlPerKg;
                 bulaStep = {
-                  label: '7. Regra da Bula Oficial Agener União & VetSmart',
+                  label: '7. Regra da Bula Oficial (Agener União)',
                   expression: isMaint
                     ? 'Cães manutenção: 1 mL para cada 20 kg (0,05 mL/kg)'
                     : 'Cães 1º dia: 1 mL para cada 10 kg (0,10 mL/kg)',
@@ -672,7 +676,7 @@ export const CalculatorsView: React.FC = () => {
               result: `${theoreticalTablets.toFixed(2)} comprimidos`,
             },
             {
-              label: '3. Fracionamento Prático Recomendado (VetSmart)',
+              label: '3. Fracionamento Prático Recomendado',
               expression: 'Arredondamento comercial para quartos (1/4, 1/2, 3/4)',
               result: `${fractionLabel} (${actualMgDelivered.toFixed(2)} mg)`,
             },
@@ -728,7 +732,7 @@ export const CalculatorsView: React.FC = () => {
               result: `${mgPerDrop.toFixed(2)} mg por gota`,
             },
             {
-              label: '3. Gotas por Tomada (VetSmart)',
+              label: '3. Gotas por Tomada',
               expression: `${dosePerTakeMg.toFixed(2)} mg ÷ ${mgPerDrop.toFixed(2)} mg/gota`,
               result: `${dropsPerTake} gotas (${actualMgDelivered.toFixed(1)} mg)`,
             },
@@ -756,7 +760,7 @@ export const CalculatorsView: React.FC = () => {
         }
       }
 
-      // 2. FLUIDOTERAPIA VETSMART
+      // 2. FLUIDOTERAPIA
       else if (selectedCalculator === 'fluidotherapy') {
         const w = parseFloat(fluidWeight.replace(',', '.'));
         const dehyPct = parseFloat(fluidDehydrationPercent.replace(',', '.'));
@@ -779,7 +783,7 @@ export const CalculatorsView: React.FC = () => {
         const totalDailyMl = maintenanceMlDay + deficitMl + ongoingLosses;
         const hourlyRateMlHr = totalDailyMl / 24;
 
-        // Regra VetSmart: Macrogotas = mL/h ÷ 3
+        // Regra prática: Macrogotas = mL/h ÷ 3
         const macroDropsMin = hourlyRateMlHr / 3;
         const microDropsMin = hourlyRateMlHr;
         const secondsPerDropMacro = macroDropsMin > 0 ? 60 / macroDropsMin : 0;
@@ -808,7 +812,7 @@ export const CalculatorsView: React.FC = () => {
             result: `${totalDailyMl.toFixed(0)} mL/dia → ${hourlyRateMlHr.toFixed(1)} mL/h`,
           },
           {
-            label: '5. Equipo Macrogotas (20 gts/mL) — Regra VetSmart',
+            label: '5. Equipo Macrogotas (20 gts/mL) — Regra prática',
             expression: `${hourlyRateMlHr.toFixed(1)} mL/h ÷ 3`,
             result: `${Math.round(macroDropsMin)} gotas/min (1 gota a cada ${secondsPerDropMacro.toFixed(1)} s)`,
           },
@@ -823,12 +827,12 @@ export const CalculatorsView: React.FC = () => {
         setResultSummary(summary);
         setCalculationSteps(steps);
 
-        const presText = `PRESCRIÇÃO DE FLUIDOTERAPIA VETSMART\nPaciente: ${fluidSpecies} (${w} kg) - Grau de Desidratação: ${dehyPct}%\nVolume Total em 24h: ${totalDailyMl.toFixed(0)} mL\nBomba de Infusão Contínua: ${hourlyRateMlHr.toFixed(1)} mL/h\nEquipo Macrogotas: ${Math.round(macroDropsMin)} gotas/minuto (1 gota a cada ${secondsPerDropMacro.toFixed(1)} segundos)\nEquipo Microgotas: ${Math.round(microDropsMin)} microgotas/minuto.`;
+        const presText = `PRESCRIÇÃO DE FLUIDOTERAPIA\nPaciente: ${fluidSpecies} (${w} kg) - Grau de Desidratação: ${dehyPct}%\nVolume Total em 24h: ${totalDailyMl.toFixed(0)} mL\nBomba de Infusão Contínua: ${hourlyRateMlHr.toFixed(1)} mL/h\nEquipo Macrogotas: ${Math.round(macroDropsMin)} gotas/minuto (1 gota a cada ${secondsPerDropMacro.toFixed(1)} segundos)\nEquipo Microgotas: ${Math.round(microDropsMin)} microgotas/minuto.`;
         setPrescriptionText(presText);
 
         addCalculationToHistory({
           type: 'fluidotherapy',
-          title: `Fluidoterapia VetSmart (${w} kg)`,
+          title: `Fluidoterapia (${w} kg)`,
           inputs: { peso_kg: w, total_ml: totalDailyMl, taxa_ml_h: hourlyRateMlHr },
           resultSummary: summary,
           steps,
@@ -943,7 +947,7 @@ export const CalculatorsView: React.FC = () => {
           const mg = p * 10;
           setResultSummary(`${p}% = ${mg} mg/mL`);
           setCalculationSteps([
-            { label: 'Regra Prática VetSmart', expression: `${p}% × 10`, result: `${mg} mg/mL` },
+            { label: 'Regra Prática', expression: `${p}% × 10`, result: `${mg} mg/mL` },
           ]);
         } else {
           const m = parseFloat(mgMlInput.replace(',', '.'));
@@ -971,7 +975,7 @@ export const CalculatorsView: React.FC = () => {
         setResultSummary(`${mlHr.toFixed(1)} mL/h | ${Math.round(macro)} gts/min macrogotas`);
         setCalculationSteps([
           { label: 'Taxa em Bomba', expression: `${vol} mL ÷ ${h} h`, result: `${mlHr.toFixed(1)} mL/h` },
-          { label: 'Macrogotas (Regra VetSmart mL/h ÷ 3)', expression: `${mlHr.toFixed(1)} ÷ 3`, result: `${Math.round(macro)} gotas/min` },
+          { label: 'Macrogotas (Regra prática: mL/h ÷ 3)', expression: `${mlHr.toFixed(1)} ÷ 3`, result: `${Math.round(macro)} gotas/min` },
         ]);
       } else if (selectedCalculator === 'rule-of-three') {
         const a = parseFloat(ruleA.replace(',', '.'));
@@ -1058,7 +1062,7 @@ export const CalculatorsView: React.FC = () => {
 
   const copyResultToClipboard = () => {
     if (!resultSummary) return;
-    const textToCopy = `${resultSummary}\n\nMemória de Cálculo (Padrão VetSmart):\n${calculationSteps
+    const textToCopy = `${resultSummary}\n\nMemória de Cálculo (VET CALC PRO):\n${calculationSteps
       .map((s) => `${s.label}: ${s.expression} = ${s.result}`)
       .join('\n')}\n\n(Calculado com precisão no VET CALC PRO)`;
 
@@ -1113,7 +1117,7 @@ export const CalculatorsView: React.FC = () => {
               <Calculator className="w-5 h-5 text-[var(--primary)]" />
             </div>
             <h1 className="text-base sm:text-xl lg:text-2xl font-extrabold text-[var(--text-main)] tracking-tight leading-snug break-words">
-              Calculadoras Veterinárias (Padrão VetSmart)
+              Calculadoras Veterinárias
             </h1>
           </div>
           <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
@@ -1160,13 +1164,18 @@ export const CalculatorsView: React.FC = () => {
                 <span className={isSelected ? 'text-[var(--primary)] font-bold' : ''}>
                   {calc.title.split(' (')[0]}
                 </span>
+                {!isPremium && PREMIUM_CALCULATORS.includes(calc.type) && <Lock className="w-3 h-3 text-amber-400" aria-label="Premium" />}
               </button>
             );
           })}
         </div>
       </div>
 
-      {selectedCalculator === 'emergency' ? (
+      {!isPremium && PREMIUM_CALCULATORS.includes(selectedCalculator) ? (
+        <PremiumGate title={activeCalcMeta.title.split(' (')[0]} description="Esta calculadora faz parte do Premium, junto com a tabela de emergência, a Assistente IA, os prontuários e a receita.">
+          {null}
+        </PremiumGate>
+      ) : selectedCalculator === 'emergency' ? (
         <EmergencyTable />
       ) : (
       /* Main Grid: Form Left, Memory & Results Right */
@@ -1369,7 +1378,7 @@ export const CalculatorsView: React.FC = () => {
 
             {/* DYNAMIC FORM FIELDS */}
             <div className="space-y-4">
-              {/* 1. DOSAGEM VETSMART */}
+              {/* 1. DOSAGEM */}
               {selectedCalculator === 'dosage' && (
                 <>
                   {/* Forma Farmacêutica */}
@@ -1502,13 +1511,13 @@ export const CalculatorsView: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Protocolos Posológicos da Bula (Padrão VetSmart) */}
+                  {/* Protocolos Posológicos da Bula */}
                   {selectedProductObj?.protocols && selectedProductObj.protocols.length > 0 && (
                     <div className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] space-y-2.5">
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-extrabold text-slate-900 dark:text-emerald-300 flex items-center space-x-1.5 uppercase tracking-wider">
                           <Sparkles className="w-3.5 h-3.5 text-emerald-500" />
-                          <span>Protocolo da Bula (VetSmart):</span>
+                          <span>Protocolo da Bula:</span>
                         </span>
                         <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[var(--primary)]/20 text-[var(--primary)] font-extrabold uppercase">
                           {doseSpecies === 'Canino' ? 'Cão' : 'Gato (Felino)'}
@@ -1572,7 +1581,7 @@ export const CalculatorsView: React.FC = () => {
 
                     <div className="sm:col-span-6">
                       <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5">
-                        Regime Posológico (VetSmart)
+                        Regime Posológico
                       </label>
                       <select
                         value={doseRegime}
@@ -1769,7 +1778,7 @@ export const CalculatorsView: React.FC = () => {
                         onChange={(e: any) => setFluidMaintenanceMethod(e.target.value)}
                         className="w-full px-3 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--input-bg)] text-[var(--text-main)] text-xs font-semibold"
                       >
-                        <option value="metabolic">Fórmula Alométrica / Metabólica (VetSmart)</option>
+                        <option value="metabolic">Fórmula Alométrica / Metabólica</option>
                         <option value="standard">Padrão Diário ({fluidSpecies === 'Canino' ? '50-60' : '40-50'} mL/kg/dia)</option>
                       </select>
                     </div>
@@ -2361,7 +2370,7 @@ export const CalculatorsView: React.FC = () => {
           <div ref={resultCardRef} className="scroll-mt-28 bg-[var(--result-bg)] rounded-3xl p-4 sm:p-6 border-2 border-[var(--primary)]/40 shadow-md space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider font-mono">
-                Resultado VetSmart
+                Resultado
               </span>
               {resultSummary && (
                 <button
@@ -2453,7 +2462,7 @@ export const CalculatorsView: React.FC = () => {
               </div>
             )}
 
-            {/* Ready Prescription Card (Modelo VetSmart) */}
+            {/* Ready Prescription Card */}
             {prescriptionText && (
               <div className="p-4 rounded-2xl bg-[#FFFFFF] dark:bg-slate-900/90 border border-[#DCE7F2] dark:border-slate-800 space-y-2">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
@@ -2473,7 +2482,9 @@ export const CalculatorsView: React.FC = () => {
                 <pre className="font-mono text-xs text-[#14243A] dark:text-slate-200 whitespace-pre-wrap break-words bg-[#F1F6FC] dark:bg-slate-950/70 p-3 rounded-xl border border-[#DCE7F2] dark:border-slate-800">
                   {prescriptionText}
                 </pre>
-                <PrescriptionActions prescriptionText={prescriptionText} />
+                <PremiumGate compact title="Receita em PDF e WhatsApp" description="">
+                  <PrescriptionActions prescriptionText={prescriptionText} />
+                </PremiumGate>
               </div>
             )}
           </div>

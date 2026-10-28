@@ -60,7 +60,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultFrequency": "SID",
     "defaultRoute": "Subcutânea (SC)",
     "bottleVolumeMl": 20,
-    "clinicalNotes": "0,2% = 2 mg/mL. Regra da Bula Agener União & VetSmart: Gatos no 1º dia / dose única recebem 1 mL para cada 20 kg (0,05 mL/kg → 0,20 mL para 4 kg). A partir do 2º dia: 1 mL para cada 40 kg (0,05 mg/kg → 0,10 mL para 4 kg). Cães: 0,2 mg/kg 1º dia e 0,1 mg/kg manutenção.",
+    "clinicalNotes": "0,2% = 2 mg/mL. Regra da Bula (Agener União): Gatos no 1º dia / dose única recebem 1 mL para cada 20 kg (0,05 mL/kg → 0,20 mL para 4 kg). A partir do 2º dia: 1 mL para cada 40 kg (0,05 mg/kg → 0,10 mL para 4 kg). Cães: 0,2 mg/kg 1º dia e 0,1 mg/kg manutenção.",
     "protocols": [
       {
         "id": "day1-attack",
@@ -1027,7 +1027,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultFrequency": "TID",
     "defaultRoute": "Oral (VO)",
     "bottleVolumeMl": 20,
-    "clinicalNotes": "Regra de ouro VetSmart: 1 gota por kg para cães (1 gota = 25 mg).",
+    "clinicalNotes": "Regra prática: 1 gota por kg para cães (1 gota = 25 mg).",
     "manufacturer": "500 mg/mL",
     "presentationText": "Frasco conta-gotas de 20 mL",
     "validationStatus": "VALIDADO"
@@ -1619,7 +1619,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultFrequency": "TID",
     "defaultRoute": "Intravenosa (IV) lento / SC",
     "bottleVolumeMl": 10,
-    "clinicalNotes": "1% m/v = 10 mg/mL de ondansetrona base (12,5 mg/mL de cloridrato diidratado). Regra da Bula Agener União & VetSmart: 1 mL para cada 20 kg de peso (0,05 mL/kg na dose de 0,5 mg/kg). Cão de 10 kg recebe 0,5 mL (5 mg). Aplicar IV lentamente em pelo menos 1 a 3 minutos.",
+    "clinicalNotes": "1% m/v = 10 mg/mL de ondansetrona base (12,5 mg/mL de cloridrato diidratado). Regra da Bula (Agener União): 1 mL para cada 20 kg de peso (0,05 mL/kg na dose de 0,5 mg/kg). Cão de 10 kg recebe 0,5 mL (5 mg). Aplicar IV lentamente em pelo menos 1 a 3 minutos.",
     "protocols": [
       {
         "id": "emedron-full",

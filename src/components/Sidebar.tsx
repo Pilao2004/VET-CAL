@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, User, Crown, HelpCircle, LogOut, Users, Bot, Gift } from 'lucide-react';
+import { X, User, Crown, HelpCircle, LogOut, Users, Bot, Gift, ShieldCheck } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 interface SidebarProps {
@@ -8,7 +8,7 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
-  const { setCurrentView, setIsSubscriptionModalOpen } = useApp();
+  const { setCurrentView, setIsSubscriptionModalOpen, isPremium } = useApp();
 
   return (
     <>
@@ -51,6 +51,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             <Gift className="w-5 h-5 text-[var(--secondary)]" />
             <span>Bônus Exclusivos</span>
           </button>
+          <button
+            onClick={() => { setIsSubscriptionModalOpen(true); onClose(); }}
+            className="flex items-center space-x-3 w-full p-3 hover:bg-[var(--input-bg)] rounded-xl cursor-pointer"
+          >
+            <Crown className="w-5 h-5 text-amber-400" />
+            <span>{isPremium ? 'Meu Premium' : 'Seja Premium'}</span>
+          </button>
           <div className="border-t border-[var(--border)] my-2" />
           <button 
             onClick={() => { setCurrentView('profile'); onClose(); }}
@@ -65,6 +72,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           >
             <HelpCircle className="w-5 h-5 text-[var(--secondary)]" />
             <span>Suporte</span>
+          </button>
+          <button
+            onClick={() => { setCurrentView('legal'); onClose(); }}
+            className="flex items-center space-x-3 w-full p-3 hover:bg-[var(--input-bg)] rounded-xl cursor-pointer"
+          >
+            <ShieldCheck className="w-5 h-5 text-[var(--secondary)]" />
+            <span>Termos e Privacidade</span>
           </button>
         </div>
       </div>

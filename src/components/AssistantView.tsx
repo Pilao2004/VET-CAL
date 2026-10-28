@@ -33,6 +33,7 @@ import {
   formatClinicalVolume,
 } from '../utils/assistantCalculator';
 import { EvolutionComposer } from './EvolutionComposer';
+import { premiumHeaders } from '../config/plans';
 import {
   AITurn,
   AssistantProviderChoice,
@@ -225,9 +226,9 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
   const searchExternalDrug = async (drugName: string, species?: string | null) => {
     setLoading(true);
     try {
-      const res = await fetch('/api/assistant/search-drug', {
+      const res = await fetch('./api/assistant/search-drug', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...premiumHeaders() },
         body: JSON.stringify({ query: drugName, species }),
       });
 
@@ -250,9 +251,9 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
   const sendToChatApi = async (textToSend: string) => {
     setLoading(true);
     try {
-      const response = await fetch('/api/assistant/chat', {
+      const response = await fetch('./api/assistant/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...premiumHeaders() },
         body: JSON.stringify({
           messages: [...messages, { id: 'u', role: 'user', content: textToSend }].map((m) => ({
             role: m.role,
@@ -364,6 +365,10 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
         serverAgentDownRef.current = true;
         setMessages((prev) => prev.filter((m) => m.id !== replyId));
         return false;
+      }
+      if (code === 'premium_required') {
+        updateMessageContent(replyId, '⚠️ Seu acesso Premium venceu ou não está ativado neste aparelho. Abra o menu > Seja Premium para ativar.');
+        return true;
       }
       if (code === 'quota') {
         updateMessageContent(replyId, '⚠️ A IA gratuita atingiu o limite de uso de hoje. Sigo no modo automático, que calcula doses a partir de frases como "Agemoxi, cão, 12 kg".');
@@ -1047,12 +1052,12 @@ Confirma esta dose ou deseja prescrever outro valor em mg/kg?`,
               <h1 className="text-xl font-extrabold text-[#14243A] dark:text-white tracking-tight flex items-center space-x-2">
                 <span>Assistente IA com Calculadora Inteligente</span>
                 <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-[#E5FFF4] text-[#007F62] border border-[#B8E8D9] dark:bg-emerald-500/20 dark:text-emerald-400 dark:border-transparent font-extrabold uppercase">
-                  VET SMART PRO
+                  IA + CÁLCULO
                 </span>
               </h1>
               <p className="text-xs text-[#52677F] dark:text-slate-400 mt-0.5">
                 {aiAvailable
-                  ? 'Converse como com um colega: doses calculadas pelo app, dúvidas clínicas e fichas dos seus pacientes.'
+                  ? 'Converse como com um colega: doses calculadas pelo app, dúvidas clínicas e fichas dos seus pacientes. Não envie nome, telefone ou CPF de tutores.'
                   : <>Digite frases naturais como <em>"Agemoxi, cachorro, 12 kg"</em> para calcular doses e volumes sem formulários.</>}
               </p>
             </div>

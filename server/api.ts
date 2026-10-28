@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { GoogleGenAI } from '@google/genai';
 import { AgentError, runAgentRound } from './agent';
+import { expiryFromDays, issueToken, licensingConfigured, normalizeEmail, signLicense, stampToIso, verifyLicense, verifyToken } from './license';
 
 dotenv.config();
 
@@ -23,64 +24,58 @@ try {
   console.warn('Gemini client could not be initialized:', err);
 }
 
-// In-memory or verified valid coupon/license keys for Premium
-const VALID_PROMO_KEYS = new Set([
-  'VETPRO2026',
-  'MEDVET',
-  'HOTMART-VIP',
-  'VETCALC-PREMIUM',
-  'CRMV-BRASIL',
-]);
-
-// Active licenses store in server memory
-const activeLicenses = new Map<string, { activatedAt: string; plan: string; email?: string }>();
-
-// API: Validate subscription / license key
-router.post('/subscription/validate', (req: Request, res: Response) => {
-  const { licenseKey } = req.body;
-  if (!licenseKey) {
-    return res.status(400).json({ valid: false, message: 'Chave não informada.' });
+// API: Premium (licenças assinadas; ver server/license.ts)
+router.post('/subscription/activate', (req: Request, res: Response) => {
+  const { licenseKey, email } = req.body || {};
+  const cleanEmail = normalizeEmail(email);
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(cleanEmail)) {
+    return res.status(400).json({ success: false, message: 'Informe o e-mail usado na compra.' });
   }
-
-  const cleanKey = String(licenseKey).trim().toUpperCase();
-  if (VALID_PROMO_KEYS.has(cleanKey) || activeLicenses.has(cleanKey)) {
-    return res.json({
-      valid: true,
-      tier: 'premium',
-      message: 'Assinatura Premium ativa e validada no servidor.',
-      expiresAt: '2027-12-31',
-    });
+  const check = verifyLicense(cleanEmail, licenseKey);
+  if (!check.ok) {
+    const message =
+      check.reason === 'expired'
+        ? 'Este código de acesso venceu. Renove o Premium para continuar.'
+        : check.reason === 'unconfigured'
+          ? 'A ativação ainda não foi configurada no servidor do app.'
+          : 'Código inválido para este e-mail. Confira o código e o e-mail usados na compra.';
+    return res.status(check.reason === 'unconfigured' ? 503 : 400).json({ success: false, message });
   }
-
-  return res.status(403).json({
-    valid: false,
-    message: 'Código de ativação ou assinatura inválido. Utilize um cupom promocional ou renove sua assinatura.',
+  return res.json({
+    success: true,
+    tier: 'premium',
+    message: 'Premium ativado. Bom trabalho!',
+    expiresAt: stampToIso(check.expiry),
+    token: licensingConfigured() ? issueToken(cleanEmail, check.expiry) : undefined,
   });
 });
 
-// API: Activate subscription
-router.post('/subscription/activate', (req: Request, res: Response) => {
-  const { licenseKey, email } = req.body;
-  const cleanKey = String(licenseKey || '').trim().toUpperCase();
+router.post('/subscription/validate', (req: Request, res: Response) => {
+  const data = verifyToken(req.body?.token);
+  return data ? res.json({ valid: true, expiresAt: stampToIso(data.expiry) }) : res.status(401).json({ valid: false });
+});
 
-  if (VALID_PROMO_KEYS.has(cleanKey)) {
-    activeLicenses.set(cleanKey, {
-      activatedAt: new Date().toISOString(),
-      plan: 'premium',
-      email: email || 'usuario@medvet.com',
-    });
-    return res.json({
-      success: true,
-      tier: 'premium',
-      message: 'Plano Premium ativado com sucesso!',
-      expiresAt: '2027-12-31',
-    });
+// Gera códigos para compradores (página admin-licencas.html), protegido por ADMIN_PASSWORD
+router.post('/admin/license', (req: Request, res: Response) => {
+  const { password, email, days } = req.body || {};
+  const adminPassword = process.env.ADMIN_PASSWORD || '';
+  if (!adminPassword || !licensingConfigured()) {
+    return res.status(503).json({ error: 'Configure ADMIN_PASSWORD e LICENSE_SECRET no Netlify.' });
   }
+  if (String(password || '') !== adminPassword) return res.status(401).json({ error: 'Senha incorreta.' });
+  const cleanEmail = normalizeEmail(email);
+  const validDays = Math.min(Math.max(Number(days) || 365, 1), 3650);
+  if (!cleanEmail.includes('@')) return res.status(400).json({ error: 'E-mail inválido.' });
+  const expiry = expiryFromDays(validDays);
+  return res.json({ email: cleanEmail, key: signLicense(cleanEmail, expiry), expiresAt: stampToIso(expiry) });
+});
 
-  return res.status(400).json({
-    success: false,
-    message: 'Chave de ativação inválida. Verifique o código e tente novamente.',
-  });
+// Rotas antigas de IA também são Premium
+router.use(['/assistant/chat', '/assistant/search-drug'], (req: Request, res: Response, next) => {
+  if (process.env.PREMIUM_AI !== 'off' && !verifyToken(req.headers['x-vcp-token'])) {
+    return res.status(402).json({ error: 'premium_required' });
+  }
+  next();
 });
 
 // API: Veterinary AI Assistant
@@ -343,6 +338,10 @@ router.post('/assistant/agent', async (req: Request, res: Response) => {
   const { system, history, tools, provider } = req.body || {};
   if (typeof system !== 'string' || !Array.isArray(history) || !Array.isArray(tools)) {
     return res.status(400).json({ error: 'invalid_request' });
+  }
+  // A IA é recurso Premium: exige o token emitido na ativação (desligue com PREMIUM_AI=off)
+  if (process.env.PREMIUM_AI !== 'off' && !verifyToken(req.headers['x-vcp-token'])) {
+    return res.status(402).json({ error: 'premium_required' });
   }
   try {
     const choice = provider === 'gemini' || provider === 'groq' ? provider : 'auto';

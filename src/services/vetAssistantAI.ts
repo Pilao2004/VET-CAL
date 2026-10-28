@@ -4,6 +4,7 @@ import { COMMERCIAL_PRODUCTS, CommercialProduct } from '../data/commercialProduc
 import { calculateDeterministicDosage, calculateTabletDosage, calculateDropsDosage } from '../utils/calculatorEngine';
 import { PatientRecord } from '../types';
 import { speciesSafetyAlerts } from '../utils/safetyRules';
+import { premiumHeaders } from '../config/plans';
 
 export interface AITurn {
   role: 'user' | 'assistant';
@@ -140,7 +141,6 @@ function patientBrief(p: PatientRecord) {
     especie: p.species,
     raca: p.breed,
     peso_kg: p.weight,
-    tutor: p.tutorName,
     ultima_consulta: last ? `${last.date.slice(0, 10)}: ${last.tentativeDiagnosis || last.chiefComplaint}` : 'nenhuma',
   };
 }
@@ -252,7 +252,7 @@ export function buildTools(getPatients: () => PatientRecord[], onProgress: (labe
     },
     {
       name: 'listar_pacientes',
-      description: 'Lista os pacientes cadastrados no app com código, espécie, raça, peso, tutor e a última consulta.',
+      description: 'Lista os pacientes cadastrados no app com código, espécie, raça, peso e a última consulta (sem dados pessoais do tutor).',
       execute: () => {
         onProgress('Consultando os pacientes…');
         const ps = getPatients();
@@ -318,7 +318,7 @@ type ServerMessage =
 
 export type AssistantProviderChoice = 'auto' | 'gemini' | 'groq';
 
-export type ServerAgentErrorCode = 'quota' | 'unavailable' | 'unconfigured' | 'upstream' | 'cancelled';
+export type ServerAgentErrorCode = 'quota' | 'unavailable' | 'unconfigured' | 'upstream' | 'cancelled' | 'premium_required';
 
 const MAX_TOOL_ROUNDS = 6;
 
@@ -338,7 +338,7 @@ export async function askServerAssistant(
     try {
       res = await fetch('./api/assistant/agent', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...premiumHeaders() },
         body: JSON.stringify({ system: buildRules(getPatients()), history: work, tools: schemas, provider: handlers.provider || 'auto' }),
         signal: handlers.signal,
       });
@@ -349,7 +349,7 @@ export async function askServerAssistant(
     const data = await res.json().catch(() => null);
     if (!res.ok || !data) {
       const code = data?.error;
-      throw fail(code === 'quota' || code === 'unconfigured' ? code : res.status === 404 ? 'unavailable' : 'upstream');
+      throw fail(code === 'quota' || code === 'unconfigured' || code === 'premium_required' ? code : res.status === 404 ? 'unavailable' : 'upstream');
     }
     if (data.toolCalls?.length) {
       work.push({ role: 'assistant', text: data.text, toolCalls: data.toolCalls });
@@ -390,7 +390,7 @@ export async function generateWithAI(
   try {
     res = await fetch('./api/assistant/agent', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...premiumHeaders() },
       body: JSON.stringify({ system: instructions, history: [{ role: 'user', text: prompt }], tools: [], provider: options.provider || 'auto' }),
       signal: options.signal,
     });
@@ -399,6 +399,9 @@ export async function generateWithAI(
   }
   if (!(res.headers.get('content-type') || '').includes('application/json')) throw fail('unavailable');
   const data = await res.json().catch(() => null);
-  if (!res.ok || !data?.text) throw fail(data?.error === 'quota' || data?.error === 'unconfigured' ? data.error : res.ok ? 'upstream' : res.status === 404 ? 'unavailable' : 'upstream');
+  if (!res.ok || !data?.text) {
+    const code = data?.error;
+    throw fail(code === 'quota' || code === 'unconfigured' || code === 'premium_required' ? code : res.status === 404 ? 'unavailable' : 'upstream');
+  }
   return { text: String(data.text).trim(), provider: data.provider };
 }
