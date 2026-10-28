@@ -284,7 +284,14 @@ export function calculateTabletDosage(input: TabletDosageInput): TabletDosageRes
 
   const roundedQuarter = Math.round(tabletsPerTake * 4) / 4;
   if (Math.abs(tabletsPerTake - roundedQuarter) > 0.001) {
-    formattedTabletsStr = `${tabletsPerTake.toFixed(2)} comprimidos`;
+    // Fração prática mais próxima (múltiplos de 1/4) e quanto ela desvia da dose calculada
+    const practical = Math.max(0.25, roundedQuarter);
+    const deviation = ((practical / tabletsPerTake) - 1) * 100;
+    const whole = Math.floor(practical);
+    const quarter = Math.round((practical - whole) * 4);
+    const fracText = ['', '1/4', '1/2', '3/4'][quarter];
+    const practicalLabel = whole === 0 ? `${fracText} comprimido` : quarter === 0 ? `${whole} comprimido(s)` : `${whole} e ${fracText} comprimido(s)`;
+    formattedTabletsStr = `${tabletsPerTake.toFixed(2).replace('.', ',')} comprimidos (na prática: ${practicalLabel}, ${deviation >= 0 ? '+' : ''}${deviation.toFixed(0)}% da dose)`;
   } else if (roundedQuarter === 0.25) {
     formattedTabletsStr = '1/4 de comprimido';
   } else if (roundedQuarter === 0.5) {

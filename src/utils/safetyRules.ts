@@ -80,6 +80,18 @@ export function speciesSafetyAlerts(input: {
     alerts.push({ level: 'warning', text: 'Aminoglicosídeos são nefrotóxicos: mantenha o paciente hidratado, use dose única diária e monitore a urina e a creatinina.' });
   }
 
+  // Produto sem indicação cadastrada para a espécie escolhida
+  const productSpecies = (input.product?.species || []).map(norm);
+  if (input.product && (isCat || isDog) && productSpecies.length > 0) {
+    const wanted = isCat ? 'felin' : 'canin';
+    if (!productSpecies.some((s) => s.startsWith(wanted))) {
+      alerts.push({
+        level: 'danger',
+        text: `Este produto não tem indicação cadastrada para ${isCat ? 'gatos' : 'cães'} (cadastro: ${input.product.species.join(', ')}). Confira a bula antes de usar; a dose pode não se aplicar a esta espécie.`,
+      });
+    }
+  }
+
   // Dose muito acima da dose padrão do cadastro para a espécie
   const key = norm(input.species).replace(/\s+/g, '');
   const reference = input.product?.defaultDoseMgKg?.[key];

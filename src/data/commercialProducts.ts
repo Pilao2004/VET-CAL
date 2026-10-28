@@ -211,7 +211,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
         }
       }
     ],
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Agener União",
     "presentationText": "Cartucho com 10 comprimidos",
     "validationStatus": "VALIDADO"
   },
@@ -234,7 +234,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "tabletsPerBox": 10,
     "clinicalNotes": "Ideal para cães de 10 kg (1 comprimido a cada 24h).",
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Agener União",
     "presentationText": "Cartucho com 10 comprimidos",
     "validationStatus": "VALIDADO"
   },
@@ -257,7 +257,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "tabletsPerBox": 10,
     "clinicalNotes": "Ideal para cães de 20 kg (1 comprimido a cada 24h).",
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Agener União",
     "presentationText": "Cartucho com 10 comprimidos",
     "validationStatus": "VALIDADO"
   },
@@ -376,7 +376,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "tabletsPerBox": 10,
     "validationStatus": "VALIDADO",
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Ourofino",
     "presentationText": "Cartucho com 10 comprimidos"
   },
   {
@@ -397,7 +397,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultFrequency": "SID",
     "defaultRoute": "Oral (VO)",
     "tabletsPerBox": 10,
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Ourofino",
     "presentationText": "Cartucho com 10 comprimidos",
     "validationStatus": "VALIDADO"
   },
@@ -535,7 +535,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "bottleVolumeMl": 15,
     "clinicalNotes": "12,5 mg/kg equivale a 0,25 mL/kg. Agitar antes de usar.",
-    "manufacturer": "50 mg/mL",
+    "manufacturer": "Zoetis",
     "presentationText": "Frasco-ampola de 15 mL",
     "validationStatus": "VALIDADO"
   },
@@ -558,7 +558,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultFrequency": "BID",
     "defaultRoute": "Oral (VO)",
     "tabletsPerBox": 10,
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Agener União",
     "presentationText": "Cartucho com 10 comprimidos",
     "validationStatus": "VALIDADO"
   },
@@ -580,7 +580,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultFrequency": "BID",
     "defaultRoute": "Oral (VO)",
     "tabletsPerBox": 10,
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Agener União",
     "presentationText": "Cartucho com 10 comprimidos",
     "validationStatus": "VALIDADO"
   },
@@ -604,7 +604,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Subcutânea (SC) / IM",
     "bottleVolumeMl": 50,
     "clinicalNotes": "Dose do produto pronto: 1 mL para cada 16 kg de peso corporal.",
-    "manufacturer": "140 mg/mL",
+    "manufacturer": "Agener União",
     "presentationText": "Frasco-ampola de 50 mL",
     "validationStatus": "VALIDADO"
   },
@@ -630,7 +630,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "bottleVolumeMl": 20,
     "clinicalNotes": "Dose prática exata: 0,1 mL para cada 1 kg de peso. Manter refrigerado para não arder.",
     "validationStatus": "VALIDADO",
-    "manufacturer": "1%",
+    "manufacturer": "Zoetis",
     "presentationText": "Frasco-ampola de 20 mL"
   },
   {
@@ -793,7 +793,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "tabletsPerBox": 10,
     "validationStatus": "VALIDADO",
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Elanco",
     "presentationText": "Cartucho com 10 comprimidos"
   },
   {
@@ -815,7 +815,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "tabletsPerBox": 10,
     "validationStatus": "VALIDADO",
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Elanco",
     "presentationText": "Cartucho com 10 comprimidos"
   },
   {
@@ -932,7 +932,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "IV lenta / SC / IM",
     "bottleVolumeMl": 20,
     "clinicalNotes": "2% = 20 mg/mL.",
-    "manufacturer": "20 mg/mL",
+    "manufacturer": "Agener União",
     "presentationText": "Frasco-ampola de 20 mL",
     "validationStatus": "VALIDADO"
   },
@@ -957,7 +957,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "IV lenta / SC / IM",
     "bottleVolumeMl": 20,
     "clinicalNotes": "5% = 50 mg/mL.",
-    "manufacturer": "50 mg/mL",
+    "manufacturer": "Agener União",
     "presentationText": "Frasco-ampola de 20 mL",
     "validationStatus": "VALIDADO"
   },
@@ -980,7 +980,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultFrequency": "TID",
     "defaultRoute": "Oral (VO)",
     "tabletsPerBox": 10,
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Agener União",
     "presentationText": "Cartucho com 10 comprimidos",
     "validationStatus": "VALIDADO"
   },
@@ -1002,7 +1002,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultFrequency": "TID",
     "defaultRoute": "Oral (VO)",
     "tabletsPerBox": 10,
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Agener União",
     "presentationText": "Cartucho com 10 comprimidos",
     "validationStatus": "VALIDADO"
   },
@@ -1028,7 +1028,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "bottleVolumeMl": 20,
     "clinicalNotes": "Regra prática: 1 gota por kg para cães (1 gota = 25 mg).",
-    "manufacturer": "500 mg/mL",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Frasco conta-gotas de 20 mL",
     "validationStatus": "VALIDADO"
   },
@@ -1053,7 +1053,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "IV lenta / IM / SC",
     "bottleVolumeMl": 50,
     "clinicalNotes": "0,05 mL por kg de peso. Injetar lentamente por via intravenosa.",
-    "manufacturer": "500 mg/mL",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Frasco-ampola de 50 mL",
     "validationStatus": "VALIDADO"
   },
@@ -1078,7 +1078,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "IV lenta / SC",
     "bottleVolumeMl": 10,
     "clinicalNotes": "2 mg/mL. Aplicar IV lentamente.",
-    "manufacturer": "2 mg/mL",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Frasco-ampola de 10 mL",
     "validationStatus": "VALIDADO"
   },
@@ -1101,7 +1101,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultFrequency": "BID",
     "defaultRoute": "Oral (VO)",
     "tabletsPerBox": 10,
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Cartucho com 10 comprimidos",
     "validationStatus": "VALIDADO"
   },
@@ -1172,7 +1172,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "IV / IM / SC",
     "bottleVolumeMl": 20,
     "clinicalNotes": "1% = 10 mg/mL. Titular dose no edema pulmonar cardiogênico.",
-    "manufacturer": "10 mg/mL",
+    "manufacturer": "Sanofi",
     "presentationText": "Frasco-ampola de 20 mL",
     "validationStatus": "VALIDADO"
   },
@@ -1194,7 +1194,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultFrequency": "BID",
     "defaultRoute": "Oral (VO)",
     "tabletsPerBox": 20,
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Sanofi",
     "presentationText": "Cartucho com 20 comprimidos",
     "validationStatus": "VALIDADO"
   },
@@ -1219,7 +1219,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "IV / IM",
     "bottleVolumeMl": 50,
     "clinicalNotes": "10% = 100 mg/mL. Sempre associar com miorrelaxante.",
-    "manufacturer": "100 mg/mL",
+    "manufacturer": "Ceva",
     "presentationText": "Frasco-ampola de 50 mL",
     "validationStatus": "VALIDADO"
   },
@@ -1244,7 +1244,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "IM / SC / IV lenta",
     "bottleVolumeMl": 20,
     "clinicalNotes": "0,2% = 2 mg/mL. Cuidado com hipotensão.",
-    "manufacturer": "2 mg/mL",
+    "manufacturer": "Vetnil",
     "presentationText": "Frasco-ampola de 20 mL",
     "validationStatus": "VALIDADO"
   },
@@ -1269,7 +1269,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "IM / SC / IV lenta",
     "bottleVolumeMl": 20,
     "clinicalNotes": "1% = 10 mg/mL. Formulação concentrada.",
-    "manufacturer": "10 mg/mL",
+    "manufacturer": "Vetnil",
     "presentationText": "Frasco-ampola de 20 mL",
     "validationStatus": "VALIDADO"
   },
@@ -1295,7 +1295,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "bottleVolumeMl": 10,
     "clinicalNotes": "1 gota = 0,1 mg.",
-    "manufacturer": "2 mg/mL",
+    "manufacturer": "Vetnil",
     "presentationText": "Frasco conta-gotas de 10 mL",
     "validationStatus": "VALIDADO"
   },
@@ -1640,7 +1640,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
         "bulaRuleText": "0,02 mL para cada 1 kg de peso a cada 8 a 12 horas (Cão 10 kg = 0,20 mL)"
       }
     ],
-    "manufacturer": "10 mg/mL",
+    "manufacturer": "Agener União",
     "presentationText": "Frasco-ampola de 10 mL",
     "validationStatus": "VALIDADO"
   },
@@ -1790,7 +1790,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
         "bulaRuleText": "0,025 mL/kg para cães e 0,05 mL/kg para gatos"
       }
     ],
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Frasco-ampola de 5 mL",
     "validationStatus": "VALIDADO"
   },
@@ -1870,7 +1870,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
         "bulaRuleText": "0,25 mL/kg a cada 12 horas via IV"
       }
     ],
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Frasco-ampola de 10 mL",
     "validationStatus": "VALIDADO"
   },
@@ -1916,7 +1916,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       }
     ],
     "validationStatus": "VALIDADO",
-    "manufacturer": "1%",
+    "manufacturer": "Furp / Teuto / Hipolabor",
     "presentationText": "Frasco-ampola de 2 mL"
   },
   {
@@ -2308,7 +2308,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
         "bulaRuleText": "1,4 mL por kg diluído em SG 5% infundido em 1 hora"
       }
     ],
-    "manufacturer": "Acetilcisteína 100 mg/mL",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Frasco-ampola de 3 mL",
     "validationStatus": "VALIDADO"
   },
@@ -2569,7 +2569,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "tabletsPerBox": 10,
     "clinicalNotes": "Excelente para infecções respiratórias superiores e micoplasmoses.",
     "validationStatus": "VALIDADO",
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Cartucho com 10 comprimidos"
   },
   {
@@ -2785,7 +2785,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "tabletsPerBox": 28,
     "clinicalNotes": "Proteção gástrica em cães em uso de AINEs e corticoides.",
     "validationStatus": "VALIDADO",
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Cartucho com 28 comprimidos"
   },
   {
@@ -2809,7 +2809,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "bottleVolumeMl": 10,
     "clinicalNotes": "Infundir lentamente IV.",
     "validationStatus": "VALIDADO",
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Frasco-ampola de 10 mL"
   },
   {
@@ -2929,7 +2929,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "tabletsPerBox": 20,
     "clinicalNotes": "Manutenção de pacientes cardiopatas e nefropatas.",
     "validationStatus": "VALIDADO",
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Cartucho com 20 comprimidos"
   },
   {
@@ -2953,7 +2953,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "tabletsPerBox": 30,
     "clinicalNotes": "Sinergismo excelente com inibidores da ECA e furosemida na ICC.",
     "validationStatus": "VALIDADO",
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Cartucho com 30 comprimidos"
   },
   {
@@ -3024,7 +3024,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "tabletsPerBox": 30,
     "clinicalNotes": "Vasodilatador sistêmico e cardioprotetor.",
     "validationStatus": "VALIDADO",
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Cartucho com 30 comprimidos"
   },
   {
@@ -3048,7 +3048,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "bottleVolumeMl": 10,
     "clinicalNotes": "Emergência para bradicardia severa e intoxicação por organofosforados.",
     "validationStatus": "VALIDADO",
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Frasco-ampola de 10 mL"
   },
   {
@@ -3072,7 +3072,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "bottleVolumeMl": 1,
     "clinicalNotes": "Uso estrito em parada cardiorrespiratória e choque anafilático grave.",
     "validationStatus": "VALIDADO",
-    "manufacturer": "1:1000",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Frasco-ampola de 1 mL"
   },
   {
@@ -3169,7 +3169,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "bottleVolumeMl": 20,
     "clinicalNotes": "Gotas 40 mg/mL (1 mL = 40 gotas → 1 gota = 1 mg).",
     "validationStatus": "VALIDADO",
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Frasco conta-gotas de 20 mL"
   },
   {
@@ -3242,7 +3242,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "bottleVolumeMl": 10,
     "clinicalNotes": "100 mg/mL. Nunca usar isolado em cães e gatos (rigidez muscular e convulsões). Sempre associar a sedativos.",
     "validationStatus": "VALIDADO",
-    "manufacturer": "100 mg/mL",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Frasco-ampola de 10 mL"
   },
   {
@@ -3267,7 +3267,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "bottleVolumeMl": 10,
     "clinicalNotes": "Potente sedativo com efeitos cardiovasculares (bradicardia e arritmias). Reversível com ioimbina.",
     "validationStatus": "VALIDADO",
-    "manufacturer": "20 mg/mL",
+    "manufacturer": "Elanco",
     "presentationText": "Frasco-ampola de 10 mL"
   },
   {
@@ -3339,7 +3339,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "tabletsPerBox": 10,
     "clinicalNotes": "Excelente penetração no SNC e barreira hematoencefálica para micoses sistêmicas.",
     "validationStatus": "VALIDADO",
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Cartucho com 10 comprimidos"
   },
   {
@@ -3501,7 +3501,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "bottleVolumeMl": 1,
     "clinicalNotes": "Para anemia não regenerativa associada à Doença Renal Crônica (DRC). Cuidado com anticorpos anti-EPO.",
     "validationStatus": "VALIDADO",
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Frasco-ampola de 1 mL"
   },
   {
@@ -3564,8 +3564,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 0.5,
-      "felino": 0.5
+      "canino": 333,
+      "felino": 333
     },
     "doseRangeText": "0,5 a 1 mL/kg a cada 8 a 12h VO até fezes pastosas",
     "defaultFrequency": "TID",
@@ -3834,7 +3834,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "bottleVolumeMl": 50,
     "clinicalNotes": "10% = 100 mg/mL. Anestésico dissociativo de ação central. Nunca usar isolado em cães e gatos.",
     "validationStatus": "VALIDADO",
-    "manufacturer": "100 mg/mL",
+    "manufacturer": "Syntec / Ceva",
     "presentationText": "Frasco-ampola de 50 mL"
   },
   {
@@ -3884,7 +3884,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "bottleVolumeMl": 1,
     "clinicalNotes": "Fármaco essencial em protocolos de Reanimação Cardiopulmonar (RCP) e choque anafilático grave.",
     "validationStatus": "VALIDADO",
-    "manufacturer": "1:1.000",
+    "manufacturer": "Hipolabor",
     "presentationText": "Frasco-ampola de 1 mL"
   },
   {
@@ -3937,7 +3937,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "bottleVolumeMl": 20,
     "clinicalNotes": "5% = 50 mg/mL. Diurético potente de alça para edema agudo de pulmão, ICC e insuficiência renal.",
     "validationStatus": "VALIDADO",
-    "manufacturer": "5%",
+    "manufacturer": "Ourofino / Vetnil",
     "presentationText": "Frasco-ampola de 20 mL"
   },
   {
@@ -4943,7 +4943,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "tabletsPerBox": 20,
     "clinicalNotes": "Formação de barreira protetora sobre úlceras gástricas e duodenais.",
     "validationStatus": "VALIDADO",
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Cartucho com 20 comprimidos"
   },
   {
@@ -5017,7 +5017,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "tabletsPerBox": 10,
     "clinicalNotes": "Antiemético de alta potência indicado em quadros de quimioterapia e vômitos refratários.",
     "validationStatus": "VALIDADO",
-    "manufacturer": "Laboratório Farmacêutico",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Cartucho com 10 comprimidos"
   },
   {
@@ -5041,7 +5041,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "bottleVolumeMl": 150,
     "clinicalNotes": "Suspensão oral pediátrica/veterinária para infecções sensíveis em cães e gatos.",
     "validationStatus": "VALIDADO",
-    "manufacturer": "50 mg/mL",
+    "manufacturer": "Genérico (vários laboratórios)",
     "presentationText": "Frasco-ampola de 150 mL"
   },
   {
@@ -5234,7 +5234,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Chemitec. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
-    "tabletMg": 1.0,
+    "tabletMg": 1,
     "tabletsPerBox": 10
   },
   {
@@ -5256,7 +5256,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Chemitec. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
-    "tabletMg": 2.0,
+    "tabletMg": 2,
     "tabletsPerBox": 10
   },
   {
@@ -5278,7 +5278,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Chemitec. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
-    "tabletMg": 4.0,
+    "tabletMg": 4,
     "tabletsPerBox": 10
   },
   {
@@ -5328,7 +5328,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Chemitec. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 20,
-    "percentage": 2.0,
+    "percentage": 2,
     "bottleVolumeMl": 50
   },
   {
@@ -5374,7 +5374,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Duprat. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
-    "tabletMg": 2.0,
+    "tabletMg": 2,
     "tabletsPerBox": 10
   },
   {
@@ -5445,7 +5445,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Vetnil. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
-    "tabletMg": 1.0,
+    "tabletMg": 1,
     "tabletsPerBox": 10
   },
   {
@@ -5467,7 +5467,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Vetnil. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
-    "tabletMg": 2.0,
+    "tabletMg": 2,
     "tabletsPerBox": 10
   },
   {
@@ -5489,7 +5489,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Vetnil. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
-    "tabletMg": 4.0,
+    "tabletMg": 4,
     "tabletsPerBox": 10
   },
   {
@@ -5556,7 +5556,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Ourofino. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
-    "tabletMg": 2.0,
+    "tabletMg": 2,
     "tabletsPerBox": 10
   },
   {
@@ -5637,7 +5637,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 4.0
+      "canino": 4
     },
     "doseRangeText": "4,0 mg/kg via SC ou IV lenta, preferencialmente pré-operatório",
     "defaultFrequency": "SID",
@@ -5645,7 +5645,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Zoetis. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 50,
-    "percentage": 5.0,
+    "percentage": 5,
     "bottleVolumeMl": 20
   },
   {
@@ -5660,7 +5660,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 4.0
+      "canino": 4
     },
     "doseRangeText": "2 a 4 mg/kg por dia divididos em 1 a 2 tomadas",
     "defaultFrequency": "BID",
@@ -5682,7 +5682,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 4.0
+      "canino": 4
     },
     "doseRangeText": "2 a 4 mg/kg por dia",
     "defaultFrequency": "BID",
@@ -5704,7 +5704,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 4.0
+      "canino": 4
     },
     "doseRangeText": "2 a 4 mg/kg por dia",
     "defaultFrequency": "SID",
@@ -5727,8 +5727,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0,
-      "felino": 1.0
+      "canino": 1,
+      "felino": 1
     },
     "doseRangeText": "1 mg/kg uma vez ao dia por até 3 a 5 dias consecutivos",
     "defaultFrequency": "SID",
@@ -5750,7 +5750,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0
+      "canino": 1
     },
     "doseRangeText": "1 mg/kg SID por 3 a 5 dias",
     "defaultFrequency": "SID",
@@ -5773,8 +5773,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0,
-      "felino": 2.0
+      "canino": 2,
+      "felino": 2
     },
     "doseRangeText": "2 mg/kg SC, IM ou IV no 1º dia (0,2 mL/kg da solução 1%)",
     "defaultFrequency": "SID",
@@ -5782,7 +5782,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Boehringer Ingelheim. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 10,
-    "percentage": 1.0,
+    "percentage": 1,
     "bottleVolumeMl": 20
   },
   {
@@ -5798,8 +5798,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0,
-      "felino": 2.0
+      "canino": 2,
+      "felino": 2
     },
     "doseRangeText": "2 mg/kg no 1º dia SC, IM ou IV",
     "defaultFrequency": "SID",
@@ -5807,7 +5807,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Chemitec. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 10,
-    "percentage": 1.0,
+    "percentage": 1,
     "bottleVolumeMl": 20
   },
   {
@@ -5829,7 +5829,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Chemitec. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 100,
-    "percentage": 10.0,
+    "percentage": 10,
     "bottleVolumeMl": 50
   },
   {
@@ -5844,7 +5844,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg uma vez ao dia com ou sem alimento",
     "defaultFrequency": "SID",
@@ -5866,7 +5866,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg uma vez ao dia para cães de médio e grande porte",
     "defaultFrequency": "SID",
@@ -5888,7 +5888,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "felino": 1.0
+      "felino": 1
     },
     "doseRangeText": "1 a 2,4 mg/kg uma vez ao dia por até 6 dias (dose padrão 1 mg/kg)",
     "defaultFrequency": "SID",
@@ -5910,7 +5910,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0
+      "canino": 1
     },
     "doseRangeText": "1 a 2 mg/kg SID sem alimento",
     "defaultFrequency": "SID",
@@ -5932,7 +5932,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0
+      "canino": 1
     },
     "doseRangeText": "1 a 2 mg/kg uma vez ao dia",
     "defaultFrequency": "SID",
@@ -5954,7 +5954,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0
+      "canino": 1
     },
     "doseRangeText": "1 a 2 mg/kg uma vez ao dia",
     "defaultFrequency": "SID",
@@ -5977,8 +5977,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0,
-      "felino": 2.0
+      "canino": 2,
+      "felino": 2
     },
     "doseRangeText": "2 mg/kg SC antes da cirurgia (ortopédica ou tecidos moles)",
     "defaultFrequency": "SID",
@@ -6000,7 +6000,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "2 mg/kg VO no dia 0, repetir no dia 14 e após isso mensalmente (a cada 30 dias)",
     "defaultFrequency": "Dose Única",
@@ -6022,7 +6022,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "2 mg/kg VO dia 0, dia 14 e mensal",
     "defaultFrequency": "Dose Única",
@@ -6044,7 +6044,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "2 mg/kg VO para cães de grande porte",
     "defaultFrequency": "Dose Única",
@@ -6066,7 +6066,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "2 mg/kg VO para cães gigantes",
     "defaultFrequency": "Dose Única",
@@ -6088,7 +6088,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "2 mg/kg uma vez ao dia com ou sem alimento",
     "defaultFrequency": "SID",
@@ -6110,7 +6110,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "2 mg/kg uma vez ao dia",
     "defaultFrequency": "SID",
@@ -6132,7 +6132,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "2 mg/kg uma vez ao dia para cães grandes",
     "defaultFrequency": "SID",
@@ -6188,7 +6188,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Chemitec. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 50,
-    "percentage": 5.0,
+    "percentage": 5,
     "bottleVolumeMl": 50
   },
   {
@@ -6204,8 +6204,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 25.0,
-      "felino": 15.0
+      "canino": 25,
+      "felino": 15
     },
     "doseRangeText": "Cães: 25 mg/kg (1 gota/kg) TID | Gatos: 10 a 15 mg/kg BID a TID",
     "defaultFrequency": "TID",
@@ -6229,7 +6229,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Bovino"
     ],
     "defaultDoseMgKg": {
-      "canino": 25.0
+      "canino": 25
     },
     "doseRangeText": "25 mg/kg IV lento, IM ou SC a cada 8h",
     "defaultFrequency": "TID",
@@ -6253,7 +6253,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     ],
     "defaultDoseMgKg": {
       "canino": 0.5,
-      "felino": 1.0
+      "felino": 1
     },
     "doseRangeText": "Anti-inflamatório: 0,5 a 1 mg/kg/dia | Imunossupressor: 2 a 4 mg/kg/dia",
     "defaultFrequency": "SID",
@@ -6299,7 +6299,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     ],
     "defaultDoseMgKg": {
       "canino": 0.5,
-      "felino": 1.0
+      "felino": 1
     },
     "doseRangeText": "10 mg/mL (1 gota = 0,5 mg). Anti-inflamatório: 0,5 a 1 mg/kg SID a BID",
     "defaultFrequency": "SID",
@@ -6323,7 +6323,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     ],
     "defaultDoseMgKg": {
       "canino": 0.5,
-      "felino": 1.0
+      "felino": 1
     },
     "doseRangeText": "3 mg/mL. Dose anti-inflamatória: 0,5 a 1 mg/kg VO a cada 12-24h",
     "defaultFrequency": "SID",
@@ -6347,7 +6347,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     ],
     "defaultDoseMgKg": {
       "canino": 0.5,
-      "felino": 1.0
+      "felino": 1
     },
     "doseRangeText": "3 mg/mL. Cães: 0,5 a 1 mg/kg SID | Gatos: 1 a 2 mg/kg SID",
     "defaultFrequency": "SID",
@@ -6512,8 +6512,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0,
-      "felino": 2.0
+      "canino": 1,
+      "felino": 2
     },
     "doseRangeText": "Cães: 1 mg/kg IM/SC a cada 1-3 semanas | Gatos: 10 a 20 mg/gato dose única IM a cada 2-4 semanas",
     "defaultFrequency": "Dose Única",
@@ -6536,13 +6536,13 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 30.0,
-      "felino": 30.0
+      "canino": 30,
+      "felino": 30
     },
     "doseRangeText": "Trauma medular agudo (primeiras 8h): 30 mg/kg IV lento em 15 min",
     "defaultFrequency": "Dose Única",
     "defaultRoute": "Intravenosa (IV)",
-    "clinicalNotes": "Padrão ouro hospitalar para trauma agudo de medula espinhal e choque anafilático refratário.",
+    "clinicalNotes": "Atenção: o protocolo de 30 mg/kg no trauma medular não é mais recomendado de rotina (sem benefício comprovado e com risco de úlcera gastrointestinal e infecção). Padrão ouro hospitalar para trauma agudo de medula espinhal e choque anafilático refratário.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 62.5,
     "bottleVolumeMl": 2
@@ -6560,7 +6560,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Equino"
     ],
     "defaultDoseMgKg": {
-      "canino": 30.0
+      "canino": 30
     },
     "doseRangeText": "Trauma raquimedular agudo: 30 mg/kg IV lento",
     "defaultFrequency": "Dose Única",
@@ -6767,8 +6767,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0,
-      "felino": 5.0
+      "canino": 5,
+      "felino": 5
     },
     "doseRangeText": "5 mg/kg uma vez ao dia (ou dividida a cada 12h) por 5 a 10 dias",
     "defaultFrequency": "SID",
@@ -6791,8 +6791,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0,
-      "felino": 5.0
+      "canino": 5,
+      "felino": 5
     },
     "doseRangeText": "5 mg/kg uma vez ao dia",
     "defaultFrequency": "SID",
@@ -6814,7 +6814,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg uma vez ao dia",
     "defaultFrequency": "SID",
@@ -6836,7 +6836,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg uma vez ao dia",
     "defaultFrequency": "SID",
@@ -6860,7 +6860,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Suíno"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 5
     },
     "doseRangeText": "10% = 100 mg/mL. Cães: 5 mg/kg SC ou IM (0,5 mL para cada 10 kg)",
     "defaultFrequency": "SID",
@@ -6868,7 +6868,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Agener União. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 100,
-    "percentage": 10.0,
+    "percentage": 10,
     "bottleVolumeMl": 50
   },
   {
@@ -6884,8 +6884,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0,
-      "felino": 5.0
+      "canino": 5,
+      "felino": 5
     },
     "doseRangeText": "5 mg/kg uma vez ao dia",
     "defaultFrequency": "SID",
@@ -6907,7 +6907,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg uma vez ao dia para cães grandes",
     "defaultFrequency": "SID",
@@ -6930,8 +6930,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0,
-      "felino": 5.0
+      "canino": 5,
+      "felino": 5
     },
     "doseRangeText": "2,5% = 25 mg/mL (1 mL para cada 5 kg). Cães e gatos: 5 mg/kg SC ou IM",
     "defaultFrequency": "SID",
@@ -6954,7 +6954,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg uma vez ao dia",
     "defaultFrequency": "SID",
@@ -6976,7 +6976,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg uma vez ao dia",
     "defaultFrequency": "SID",
@@ -6998,7 +6998,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg uma vez ao dia",
     "defaultFrequency": "SID",
@@ -7021,8 +7021,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 25.0,
-      "felino": 25.0
+      "canino": 25,
+      "felino": 25
     },
     "doseRangeText": "15 a 30 mg/kg a cada 12 horas (BID) por 14 a 28 dias",
     "defaultFrequency": "BID",
@@ -7044,7 +7044,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 25.0
+      "canino": 25
     },
     "doseRangeText": "25 mg/kg BID por 14 a 28 dias",
     "defaultFrequency": "BID",
@@ -7066,7 +7066,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 25.0
+      "canino": 25
     },
     "doseRangeText": "25 mg/kg BID para cães grandes",
     "defaultFrequency": "BID",
@@ -7089,8 +7089,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 20.0,
-      "felino": 20.0
+      "canino": 20,
+      "felino": 20
     },
     "doseRangeText": "20 mg/kg BID",
     "defaultFrequency": "BID",
@@ -7112,7 +7112,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 20.0
+      "canino": 20
     },
     "doseRangeText": "20 mg/kg BID",
     "defaultFrequency": "BID",
@@ -7134,7 +7134,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 20.0
+      "canino": 20
     },
     "doseRangeText": "20 mg/kg BID para cães gigantes",
     "defaultFrequency": "BID",
@@ -7156,7 +7156,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 25.0
+      "canino": 25
     },
     "doseRangeText": "20 a 30 mg/kg a cada 12 horas",
     "defaultFrequency": "BID",
@@ -7178,7 +7178,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 25.0
+      "canino": 25
     },
     "doseRangeText": "25 mg/kg BID",
     "defaultFrequency": "BID",
@@ -7200,7 +7200,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 25.0
+      "canino": 25
     },
     "doseRangeText": "20 a 30 mg/kg BID",
     "defaultFrequency": "BID",
@@ -7223,8 +7223,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 25.0,
-      "felino": 25.0
+      "canino": 25,
+      "felino": 25
     },
     "doseRangeText": "50 mg/mL (0,5 mL/kg). 25 mg/kg BID",
     "defaultFrequency": "BID",
@@ -7247,8 +7247,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 25.0,
-      "felino": 25.0
+      "canino": 25,
+      "felino": 25
     },
     "doseRangeText": "Profilaxia cirúrgica: 25 mg/kg IV lenta na indução anestésica e a cada 90-120 min intraoperatório",
     "defaultFrequency": "TID",
@@ -7271,8 +7271,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 25.0,
-      "felino": 25.0
+      "canino": 25,
+      "felino": 25
     },
     "doseRangeText": "25 a 30 mg/kg IV lento ou IM a cada 6 a 8 horas",
     "defaultFrequency": "QID",
@@ -7295,8 +7295,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 25.0,
-      "felino": 25.0
+      "canino": 25,
+      "felino": 25
     },
     "doseRangeText": "25 a 50 mg/kg IV lenta (infusão em 20 min) a cada 12 a 24 horas",
     "defaultFrequency": "BID",
@@ -7319,8 +7319,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0,
-      "felino": 5.0
+      "canino": 5,
+      "felino": 5
     },
     "doseRangeText": "5 mg/kg a cada 12h ou 10 mg/kg a cada 24h por 28 dias para Erliquiose",
     "defaultFrequency": "BID",
@@ -7342,7 +7342,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg BID ou 10 mg/kg SID por 28 dias",
     "defaultFrequency": "BID",
@@ -7364,7 +7364,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 10
     },
     "doseRangeText": "10 mg/kg SID para cães grandes",
     "defaultFrequency": "SID",
@@ -7387,8 +7387,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0,
-      "felino": 5.0
+      "canino": 5,
+      "felino": 5
     },
     "doseRangeText": "5 mg/kg BID ou 10 mg/kg SID",
     "defaultFrequency": "BID",
@@ -7410,7 +7410,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg BID ou 10 mg/kg SID",
     "defaultFrequency": "BID",
@@ -7432,7 +7432,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg BID ou 10 mg/kg SID",
     "defaultFrequency": "SID",
@@ -7455,8 +7455,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0,
-      "felino": 5.0
+      "canino": 5,
+      "felino": 5
     },
     "doseRangeText": "5 mg/kg BID ou 10 mg/kg SID",
     "defaultFrequency": "BID",
@@ -7478,7 +7478,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg BID ou 10 mg/kg SID",
     "defaultFrequency": "BID",
@@ -7501,8 +7501,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0,
-      "felino": 5.0
+      "canino": 5,
+      "felino": 5
     },
     "doseRangeText": "5 mg/kg BID ou 10 mg/kg SID",
     "defaultFrequency": "BID",
@@ -7524,7 +7524,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 10
     },
     "doseRangeText": "10 mg/kg SID",
     "defaultFrequency": "SID",
@@ -7593,8 +7593,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0,
-      "felino": 2.0
+      "canino": 2,
+      "felino": 2
     },
     "doseRangeText": "2 mg/kg uma vez ao dia",
     "defaultFrequency": "SID",
@@ -7616,7 +7616,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "2 mg/kg uma vez ao dia",
     "defaultFrequency": "SID",
@@ -7640,7 +7640,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "10% = 100 mg/mL. 2 mg/kg IV, IM ou SC",
     "defaultFrequency": "SID",
@@ -7648,7 +7648,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Vetoquinol. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 100,
-    "percentage": 10.0,
+    "percentage": 10,
     "bottleVolumeMl": 50
   },
   {
@@ -7664,8 +7664,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 25.0,
-      "felino": 25.0
+      "canino": 25,
+      "felino": 25
     },
     "doseRangeText": "0,5 mL/kg a cada 12 horas (BID) por 5 dias consecutivos",
     "defaultFrequency": "BID",
@@ -7688,8 +7688,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 15.0,
-      "felino": 15.0
+      "canino": 15,
+      "felino": 15
     },
     "doseRangeText": "10 a 25 mg/kg a cada 12 horas por 5 a 7 dias",
     "defaultFrequency": "BID",
@@ -7712,8 +7712,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 10.0,
-      "felino": 10.0
+      "canino": 10,
+      "felino": 10
     },
     "doseRangeText": "10 a 15 mg/kg em infusão IV lenta (correr em 30 a 60 min) a cada 12h",
     "defaultFrequency": "BID",
@@ -7736,8 +7736,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0,
-      "felino": 1.0
+      "canino": 1,
+      "felino": 1
     },
     "doseRangeText": "1 comprimido para cada 2 kg de peso vivo a cada 24 horas por 5 a 10 dias",
     "defaultFrequency": "SID",
@@ -7759,7 +7759,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0
+      "canino": 1
     },
     "doseRangeText": "1 comprimido para cada 10 kg de peso vivo a cada 24 horas",
     "defaultFrequency": "SID",
@@ -7781,7 +7781,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0
+      "canino": 1
     },
     "doseRangeText": "1 comprimido para cada 20 kg de peso a cada 24 horas",
     "defaultFrequency": "SID",
@@ -7849,7 +7849,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.5
+      "canino": 11
     },
     "doseRangeText": "11 mg/kg SID para cães grandes",
     "defaultFrequency": "SID",
@@ -7896,8 +7896,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 10.0,
-      "felino": 10.0
+      "canino": 10,
+      "felino": 10
     },
     "doseRangeText": "10 mg/kg IV lenta em infusão a cada 12 horas",
     "defaultFrequency": "BID",
@@ -7920,8 +7920,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 10.0,
-      "felino": 10.0
+      "canino": 10,
+      "felino": 10
     },
     "doseRangeText": "5 a 10 mg/kg a cada 24 horas por 3 a 5 dias",
     "defaultFrequency": "SID",
@@ -7943,7 +7943,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 10.0
+      "canino": 10
     },
     "doseRangeText": "10 mg/kg SID por 3 a 5 dias",
     "defaultFrequency": "SID",
@@ -7966,8 +7966,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 10.0,
-      "felino": 10.0
+      "canino": 10,
+      "felino": 10
     },
     "doseRangeText": "10 mg/kg uma vez ao dia",
     "defaultFrequency": "SID",
@@ -7990,8 +7990,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 10.0,
-      "felino": 10.0
+      "canino": 10,
+      "felino": 10
     },
     "doseRangeText": "40 mg/mL (1 mL para cada 4 kg). 10 mg/kg SID por 3 a 5 dias",
     "defaultFrequency": "SID",
@@ -8015,7 +8015,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Bovino"
     ],
     "defaultDoseMgKg": {
-      "canino": 15.0
+      "canino": 15
     },
     "doseRangeText": "160 mg Sulfa + 32 mg TMP por mL (total 192 mg/mL). 15 a 30 mg/kg combinados SC, IM ou IV SID a BID",
     "defaultFrequency": "SID",
@@ -8037,7 +8037,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 25.0
+      "canino": 25
     },
     "doseRangeText": "400 mg Sulfa + 80 mg TMP (480 mg total). 15 a 30 mg/kg a cada 12 horas",
     "defaultFrequency": "BID",
@@ -8061,7 +8061,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Equino"
     ],
     "defaultDoseMgKg": {
-      "canino": 20.0
+      "canino": 20
     },
     "doseRangeText": "200 mg Sulfa + 40 mg TMP por mL (240 mg/mL). 15 a 24 mg/kg IV ou IM",
     "defaultFrequency": "SID",
@@ -8085,8 +8085,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Equino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0,
-      "felino": 4.0
+      "canino": 5,
+      "felino": 4
     },
     "doseRangeText": "Cães: 5 a 8 mg/kg IV ou SC em dose única diária (SID) | Gatos: 4 a 5 mg/kg SID por até 3 a 5 dias",
     "defaultFrequency": "SID",
@@ -8110,7 +8110,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Bovino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 5
     },
     "doseRangeText": "5 a 8 mg/kg SID",
     "defaultFrequency": "SID",
@@ -8133,8 +8133,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 15.0,
-      "felino": 10.0
+      "canino": 15,
+      "felino": 10
     },
     "doseRangeText": "Cães: 15 a 20 mg/kg IV ou SC a cada 24 horas (SID) | Gatos: 10 a 15 mg/kg SID por 3 a 5 dias",
     "defaultFrequency": "SID",
@@ -8264,7 +8264,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 20000.0
+      "canino": 20000
     },
     "doseRangeText": "Cães: 20.000 a 40.000 UI/kg IM ou SC a cada 24 a 48h | Grandes: 1 mL para cada 25 kg",
     "defaultFrequency": "SID",
@@ -8328,7 +8328,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "2 a 4 mg/kg a cada 8 horas (TID)",
     "defaultFrequency": "TID",
@@ -8350,7 +8350,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "2 a 4 mg/kg TID",
     "defaultFrequency": "TID",
@@ -8373,7 +8373,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0,
+      "canino": 2,
       "felino": 1.5
     },
     "doseRangeText": "5% = 50 mg/mL. Cães: 2 a 4 mg/kg IV, IM ou SC | Gatos: 1 a 2 mg/kg IV ou SC a cada 8-12h",
@@ -8382,7 +8382,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Syntec. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 50,
-    "percentage": 5.0,
+    "percentage": 5,
     "bottleVolumeMl": 20
   },
   {
@@ -8633,8 +8633,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 4.0,
-      "felino": 5.0
+      "canino": 4,
+      "felino": 5
     },
     "doseRangeText": "Indução: 3 a 6 mg/kg IV efeito-dependente (titular lentamente em 60-90 segundos) | Manutenção CRI: 0,1 a 0,4 mg/kg/min",
     "defaultFrequency": "Dose Única",
@@ -8642,7 +8642,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Indução rápida e suave com despertar límpido. Não contém conservante antibacteriano (descartar sobras do frasco aberto).",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 10,
-    "percentage": 1.0,
+    "percentage": 1,
     "bottleVolumeMl": 20
   },
   {
@@ -8658,8 +8658,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 4.0,
-      "felino": 5.0
+      "canino": 4,
+      "felino": 5
     },
     "doseRangeText": "3 a 6 mg/kg IV lento titulado até perda do reflexo laringotraqueal",
     "defaultFrequency": "Dose Única",
@@ -8667,7 +8667,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Aspen Pharma. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 10,
-    "percentage": 1.0,
+    "percentage": 1,
     "bottleVolumeMl": 20
   },
   {
@@ -8684,8 +8684,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Equino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0,
-      "felino": 10.0
+      "canino": 5,
+      "felino": 10
     },
     "doseRangeText": "Indução cães: 5 mg/kg IV (associada a benzodiazepínico) | Gatos: 5 a 15 mg/kg IM ou IV | Analgesia infusão CRI: 0,1 a 0,6 mg/kg/h",
     "defaultFrequency": "Dose Única",
@@ -8693,7 +8693,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Anestésico dissociativo clássico. Preserva reflexos protetores faríngeos. Associar sempre a relaxante muscular.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 100,
-    "percentage": 10.0,
+    "percentage": 10,
     "bottleVolumeMl": 10
   },
   {
@@ -8709,8 +8709,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0,
-      "felino": 10.0
+      "canino": 5,
+      "felino": 10
     },
     "doseRangeText": "5 a 10 mg/kg IV ou IM",
     "defaultFrequency": "Dose Única",
@@ -8734,8 +8734,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Equino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0,
-      "felino": 10.0
+      "canino": 5,
+      "felino": 10
     },
     "doseRangeText": "5 a 10 mg/kg",
     "defaultFrequency": "Dose Única",
@@ -8743,7 +8743,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Ceva. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 100,
-    "percentage": 10.0,
+    "percentage": 10,
     "bottleVolumeMl": 10
   },
   {
@@ -8760,8 +8760,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Silvestres"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0,
-      "felino": 7.0
+      "canino": 5,
+      "felino": 7
     },
     "doseRangeText": "Cães: 3 a 7 mg/kg IM ou 2 a 5 mg/kg IV | Gatos: 5 a 10 mg/kg IM ou IV",
     "defaultFrequency": "Dose Única",
@@ -8889,7 +8889,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Causa vasodilatação periférica por bloqueio alfa-1 (não utilizar em animais hipotensos, hipovolêmicos ou em choque).",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 10,
-    "percentage": 1.0,
+    "percentage": 1,
     "bottleVolumeMl": 20
   },
   {
@@ -8907,8 +8907,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Bovino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0,
-      "felino": 1.0
+      "canino": 1,
+      "felino": 1
     },
     "doseRangeText": "2% = 20 mg/mL. Cães: 1 a 2 mg/kg IM ou 0,5 a 1 mg/kg IV | Gatos: 1 a 2 mg/kg IM | Equinos: 0,5 a 1,1 mg/kg IV",
     "defaultFrequency": "Dose Única",
@@ -8916,7 +8916,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Syntec. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 20,
-    "percentage": 2.0,
+    "percentage": 2,
     "bottleVolumeMl": 20
   },
   {
@@ -8933,7 +8933,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Bovino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0
+      "canino": 1
     },
     "doseRangeText": "1 a 2 mg/kg IM ou 0,5 a 1 mg/kg IV",
     "defaultFrequency": "Dose Única",
@@ -8941,7 +8941,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório König. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 20,
-    "percentage": 2.0,
+    "percentage": 2,
     "bottleVolumeMl": 20
   },
   {
@@ -9043,7 +9043,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "Êmese geral: 2 mg/kg SID | Prevenção de cinetose (enjoo de viagem): 8 mg/kg 2h antes da viagem",
     "defaultFrequency": "SID",
@@ -9138,8 +9138,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0,
-      "felino": 1.0
+      "canino": 1,
+      "felino": 1
     },
     "doseRangeText": "0,7 a 1,5 mg/kg uma vez ao dia em jejum pela manhã",
     "defaultFrequency": "SID",
@@ -9161,7 +9161,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0
+      "canino": 1
     },
     "doseRangeText": "1 mg/kg SID em jejum",
     "defaultFrequency": "SID",
@@ -9184,8 +9184,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0,
-      "felino": 1.0
+      "canino": 1,
+      "felino": 1
     },
     "doseRangeText": "1 mg/kg IV lenta (em 5 a 10 min) a cada 12 a 24 horas para esofagite grave ou hemorragia digestiva",
     "defaultFrequency": "SID",
@@ -9208,8 +9208,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0,
-      "felino": 1.0
+      "canino": 1,
+      "felino": 1
     },
     "doseRangeText": "1 mg/kg IV lenta a cada 12 a 24 horas",
     "defaultFrequency": "SID",
@@ -9232,8 +9232,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0,
-      "felino": 2.0
+      "canino": 2,
+      "felino": 2
     },
     "doseRangeText": "1 a 2 mg/kg IV lenta ou SC a cada 8 a 12 horas",
     "defaultFrequency": "BID",
@@ -9256,8 +9256,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 40.0,
-      "felino": 40.0
+      "canino": 40,
+      "felino": 40
     },
     "doseRangeText": "Cães pequenos e gatos: 250 a 500 mg VO TID | Cães médios e grandes: 1 a 2 g VO TID em jejum",
     "defaultFrequency": "TID",
@@ -9280,8 +9280,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 300.0,
-      "felino": 300.0
+      "canino": 333,
+      "felino": 333
     },
     "doseRangeText": "Constipação: 0,5 mL/kg a cada 8-12h | Encefalopatia hepática: titular para 2-3 fezes pastosas ao dia",
     "defaultFrequency": "TID",
@@ -9304,8 +9304,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 10.0,
-      "felino": 10.0
+      "canino": 10,
+      "felino": 10
     },
     "doseRangeText": "1 gota/kg VO a cada 8 horas para alívio de gases e meteorismo",
     "defaultFrequency": "TID",
@@ -9378,7 +9378,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Boehringer Ingelheim. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
-    "tabletMg": 5.0,
+    "tabletMg": 5,
     "tabletsPerBox": 50
   },
   {
@@ -9400,7 +9400,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Boehringer Ingelheim. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
-    "tabletMg": 10.0,
+    "tabletMg": 10,
     "tabletsPerBox": 50
   },
   {
@@ -9466,7 +9466,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Syntec. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
-    "tabletMg": 5.0,
+    "tabletMg": 5,
     "tabletsPerBox": 30
   },
   {
@@ -9512,7 +9512,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Elanco. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
-    "tabletMg": 5.0,
+    "tabletMg": 5,
     "tabletsPerBox": 28
   },
   {
@@ -9534,7 +9534,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Elanco. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
-    "tabletMg": 20.0,
+    "tabletMg": 20,
     "tabletsPerBox": 28
   },
   {
@@ -9554,9 +9554,9 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "doseRangeText": "1 comprimido para cada 5 a 10 kg uma vez ao dia junto ao alimento",
     "defaultFrequency": "SID",
     "defaultRoute": "Oral (VO)",
-    "clinicalNotes": "Produto registrado oficialmente pelo laboratório Ceva. Respeitar indicações e contraindicações de bula.",
+    "clinicalNotes": "Cálculo pelo benazepril (0,25 mg/kg, que corresponde a 2 mg/kg de espironolactona): 1 comprimido para cada 10 kg. Produto registrado oficialmente pelo laboratório Ceva. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
-    "tabletMg": 22.5,
+    "tabletMg": 2.5,
     "tabletsPerBox": 30
   },
   {
@@ -9576,9 +9576,9 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "doseRangeText": "1 comprimido para cada 10 a 20 kg SID",
     "defaultFrequency": "SID",
     "defaultRoute": "Oral (VO)",
-    "clinicalNotes": "Produto registrado oficialmente pelo laboratório Ceva. Respeitar indicações e contraindicações de bula.",
+    "clinicalNotes": "Cálculo pelo benazepril (0,25 mg/kg, que corresponde a 2 mg/kg de espironolactona): 1 comprimido para cada 20 kg. Produto registrado oficialmente pelo laboratório Ceva. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
-    "tabletMg": 45.0,
+    "tabletMg": 5,
     "tabletsPerBox": 30
   },
   {
@@ -9598,9 +9598,9 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "doseRangeText": "1 comprimido para cada 20 a 40 kg SID",
     "defaultFrequency": "SID",
     "defaultRoute": "Oral (VO)",
-    "clinicalNotes": "Produto registrado oficialmente pelo laboratório Ceva. Respeitar indicações e contraindicações de bula.",
+    "clinicalNotes": "Cálculo pelo benazepril (0,25 mg/kg, que corresponde a 2 mg/kg de espironolactona): 1 comprimido para cada 40 kg. Produto registrado oficialmente pelo laboratório Ceva. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
-    "tabletMg": 90.0,
+    "tabletMg": 10,
     "tabletsPerBox": 30
   },
   {
@@ -9660,8 +9660,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0,
-      "felino": 1.0
+      "canino": 2,
+      "felino": 1
     },
     "doseRangeText": "Cães: 1 a 4 mg/kg a cada 8 a 12h | Gatos: 1 a 2 mg/kg a cada 12 a 24h",
     "defaultFrequency": "BID",
@@ -9684,8 +9684,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0,
-      "felino": 1.0
+      "canino": 2,
+      "felino": 1
     },
     "doseRangeText": "Edema agudo de pulmão: 2 a 4 mg/kg IV ou IM repetindo a cada 1-2h até estabilização",
     "defaultFrequency": "TID",
@@ -9707,7 +9707,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "1 a 4 mg/kg a cada 8 a 12 horas",
     "defaultFrequency": "BID",
@@ -9730,8 +9730,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0,
-      "felino": 1.0
+      "canino": 1,
+      "felino": 1
     },
     "doseRangeText": "1 a 2 mg/kg a cada 12 a 24 horas junto ao alimento",
     "defaultFrequency": "BID",
@@ -9753,7 +9753,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "felino": 0.625
+      "felino": 0.18
     },
     "doseRangeText": "Gatos: 0,625 mg a 1,25 mg por gato uma vez ao dia (ou 0,18 a 0,3 mg/kg SID)",
     "defaultFrequency": "SID",
@@ -9800,8 +9800,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 500.0,
-      "felino": 500.0
+      "canino": 500,
+      "felino": 500
     },
     "doseRangeText": "Hipertensão intracraniana e glaucoma agudo: 0,5 a 1,0 g/kg (2,5 a 5 mL/kg da solução 20%) IV em 20-30 min",
     "defaultFrequency": "Dose Única",
@@ -9809,7 +9809,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Halex Istar. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 200,
-    "percentage": 20.0,
+    "percentage": 20,
     "bottleVolumeMl": 250
   },
   {
@@ -9895,8 +9895,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 3.0,
-      "felino": 3.0
+      "canino": 3,
+      "felino": 3
     },
     "doseRangeText": "Dose de ataque status epilepticus: 15 a 20 mg/kg IV fracionados ou 3 a 5 mg/kg IV lenta a cada 8-12h",
     "defaultFrequency": "BID",
@@ -9919,8 +9919,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 20.0,
-      "felino": 20.0
+      "canino": 20,
+      "felino": 20
     },
     "doseRangeText": "20 a 30 mg/kg a cada 8 horas (TID). Não sofre metabolismo hepático",
     "defaultFrequency": "TID",
@@ -9942,7 +9942,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 20.0
+      "canino": 20
     },
     "doseRangeText": "20 a 30 mg/kg TID para cães grandes",
     "defaultFrequency": "TID",
@@ -9965,8 +9965,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 20.0,
-      "felino": 20.0
+      "canino": 20,
+      "felino": 20
     },
     "doseRangeText": "100 mg/mL (0,2 a 0,3 mL/kg) a cada 8 horas (TID)",
     "defaultFrequency": "TID",
@@ -9989,8 +9989,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 10.0,
-      "felino": 10.0
+      "canino": 10,
+      "felino": 10
     },
     "doseRangeText": "Dor crônica/neuropática: 10 a 20 mg/kg BID a TID | Redução de estresse em felinos: 50 a 100 mg/gato 2h antes de consultas",
     "defaultFrequency": "BID",
@@ -10012,7 +10012,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 10.0
+      "canino": 10
     },
     "doseRangeText": "10 a 20 mg/kg BID a TID",
     "defaultFrequency": "BID",
@@ -10035,8 +10035,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 3.0,
-      "felino": 2.0
+      "canino": 3,
+      "felino": 2
     },
     "doseRangeText": "2 a 4 mg/kg a cada 12 horas",
     "defaultFrequency": "BID",
@@ -10094,7 +10094,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Fagra. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 10,
-    "percentage": 1.0,
+    "percentage": 1,
     "bottleVolumeMl": 10
   },
   {
@@ -10183,7 +10183,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0,
+      "canino": 2,
       "felino": 0.5
     },
     "doseRangeText": "Taquicardia ventricular: bolus 2 mg/kg IV lento em cães, seguido de CRI 25 a 50 mcg/kg/min",
@@ -10192,7 +10192,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Antiarrítmico Classe IB de referência. Em gatos usar com extremo cuidado devido a sensibilidade miocárdica.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 20,
-    "percentage": 2.0,
+    "percentage": 2,
     "bottleVolumeMl": 20
   },
   {
@@ -10208,8 +10208,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 50.0,
-      "felino": 50.0
+      "canino": 50,
+      "felino": 50
     },
     "doseRangeText": "Eclâmpsia / Hipocalcemia aguda: 0,5 a 1,5 mL/kg IV lento monitorando ECG por 15-20 min",
     "defaultFrequency": "Dose Única",
@@ -10217,7 +10217,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Monitorar ritmo cardíaco durante a infusão. Parar imediatamente se ocorrer bradicardia ou parada sinusal.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 100,
-    "percentage": 10.0,
+    "percentage": 10,
     "bottleVolumeMl": 10
   },
   {
@@ -10233,8 +10233,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0,
-      "felino": 1.0
+      "canino": 1,
+      "felino": 1
     },
     "doseRangeText": "Acidose metabólica grave com HCO3 < 10 mEq/L: mEq = 0,3 x Peso x (12 - HCO3 sérico) IV lento",
     "defaultFrequency": "Dose Única",
@@ -10283,8 +10283,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 500.0,
-      "felino": 500.0
+      "canino": 500,
+      "felino": 500
     },
     "doseRangeText": "Hipoglicemia aguda / convulsão hipoglicêmica: 1 a 2 mL/kg da solução 50% diluída 1:1 com soro IV lento",
     "defaultFrequency": "Dose Única",
@@ -10292,7 +10292,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Halex Istar. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 500,
-    "percentage": 50.0,
+    "percentage": 50,
     "bottleVolumeMl": 10
   },
   {
@@ -10308,8 +10308,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 10.0,
-      "felino": 10.0
+      "canino": 10,
+      "felino": 10
     },
     "doseRangeText": "Hemorragias ativas / politrauma: 10 a 15 mg/kg IV lento em 15 min a cada 8 horas",
     "defaultFrequency": "TID",
@@ -10384,7 +10384,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Zoetis. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
-    "tabletMg": 54,
+    "tabletMg": 5.4,
     "tabletsPerBox": 20
   },
   {
@@ -10421,7 +10421,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "Dose mínima recomendada: 2 mg/kg via SC a cada 4 a 8 semanas conforme retorno do prurido",
     "defaultFrequency": "Dose Única",
@@ -10443,7 +10443,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "2 mg/kg via SC a cada 4 a 8 semanas",
     "defaultFrequency": "Dose Única",
@@ -10465,7 +10465,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "2 mg/kg via SC a cada 4 a 8 semanas",
     "defaultFrequency": "Dose Única",
@@ -10487,7 +10487,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "2 mg/kg via SC a cada 4 a 8 semanas para cães grandes",
     "defaultFrequency": "Dose Única",
@@ -10509,7 +10509,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg uma vez ao dia 2h antes ou depois da refeição",
     "defaultFrequency": "SID",
@@ -10531,7 +10531,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg uma vez ao dia",
     "defaultFrequency": "SID",
@@ -10553,7 +10553,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg uma vez ao dia",
     "defaultFrequency": "SID",
@@ -10575,7 +10575,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 5
     },
     "doseRangeText": "5 mg/kg uma vez ao dia",
     "defaultFrequency": "SID",
@@ -10597,7 +10597,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "felino": 7.0
+      "felino": 7
     },
     "doseRangeText": "7 mg/kg (0,07 mL/kg) uma vez ao dia misturado a um pequeno petisco ou diretamente na boca",
     "defaultFrequency": "SID",
@@ -10620,8 +10620,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0,
-      "felino": 7.0
+      "canino": 5,
+      "felino": 7
     },
     "doseRangeText": "Cães: 5 mg/kg SID | Gatos: 7 mg/kg SID",
     "defaultFrequency": "SID",
@@ -10668,8 +10668,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0,
-      "felino": 1.0
+      "canino": 1,
+      "felino": 1
     },
     "doseRangeText": "Reação anafilática ou alérgica aguda: 1 a 2 mg/kg IM ou IV lento a cada 8-12h",
     "defaultFrequency": "BID",
@@ -10714,8 +10714,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0,
-      "felino": 1.0
+      "canino": 1,
+      "felino": 1
     },
     "doseRangeText": "1 a 2 mg/kg a cada 8 a 12 horas",
     "defaultFrequency": "TID",
@@ -10737,7 +10737,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "1 comprimido de 5 mg a cada 35 dias (dose alvo 2 a 4 mg/kg de sarolaner)",
     "defaultFrequency": "Dose Única",
@@ -10759,7 +10759,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "1 comprimido de 10 mg a cada 35 dias (dose alvo 2 a 4 mg/kg de sarolaner)",
     "defaultFrequency": "Dose Única",
@@ -10781,7 +10781,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "1 comprimido de 20 mg a cada 35 dias (dose alvo 2 a 4 mg/kg de sarolaner)",
     "defaultFrequency": "Dose Única",
@@ -10803,7 +10803,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "1 comprimido de 40 mg a cada 35 dias (dose alvo 2 a 4 mg/kg de sarolaner)",
     "defaultFrequency": "Dose Única",
@@ -10825,7 +10825,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "1 comprimido de 80 mg a cada 35 dias (dose alvo 2 a 4 mg/kg de sarolaner)",
     "defaultFrequency": "Dose Única",
@@ -10847,7 +10847,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "1 comprimido de 120 mg a cada 35 dias (dose alvo 2 a 4 mg/kg de sarolaner)",
     "defaultFrequency": "Dose Única",
@@ -10869,7 +10869,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "1 comprimido mensal contra ectoparasitas, vermes intestinais e prevenção de dirofilariose",
     "defaultFrequency": "Dose Única",
@@ -10891,7 +10891,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "1 comprimido mensal contra ectoparasitas, vermes intestinais e prevenção de dirofilariose",
     "defaultFrequency": "Dose Única",
@@ -10913,7 +10913,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "1 comprimido mensal contra ectoparasitas, vermes intestinais e prevenção de dirofilariose",
     "defaultFrequency": "Dose Única",
@@ -10935,7 +10935,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "1 comprimido mensal contra ectoparasitas, vermes intestinais e prevenção de dirofilariose",
     "defaultFrequency": "Dose Única",
@@ -10957,7 +10957,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "1 comprimido mensal contra ectoparasitas, vermes intestinais e prevenção de dirofilariose",
     "defaultFrequency": "Dose Única",
@@ -10979,7 +10979,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "1 comprimido mensal contra ectoparasitas, vermes intestinais e prevenção de dirofilariose",
     "defaultFrequency": "Dose Única",
@@ -11001,7 +11001,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 25.0
+      "canino": 25
     },
     "doseRangeText": "1 comprimido a cada 12 semanas (84 dias / 3 meses)",
     "defaultFrequency": "Dose Única",
@@ -11023,7 +11023,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 25.0
+      "canino": 25
     },
     "doseRangeText": "1 comprimido a cada 12 semanas (84 dias / 3 meses)",
     "defaultFrequency": "Dose Única",
@@ -11045,7 +11045,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 25.0
+      "canino": 25
     },
     "doseRangeText": "1 comprimido a cada 12 semanas (84 dias / 3 meses)",
     "defaultFrequency": "Dose Única",
@@ -11067,7 +11067,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 25.0
+      "canino": 25
     },
     "doseRangeText": "1 comprimido a cada 12 semanas (84 dias / 3 meses)",
     "defaultFrequency": "Dose Única",
@@ -11089,7 +11089,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 25.0
+      "canino": 25
     },
     "doseRangeText": "1 comprimido a cada 12 semanas (84 dias / 3 meses)",
     "defaultFrequency": "Dose Única",
@@ -11111,7 +11111,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "felino": 40.0
+      "felino": 40
     },
     "doseRangeText": "1 pipeta tópica na base do crânio a cada 12 semanas (3 meses)",
     "defaultFrequency": "Dose Única",
@@ -11133,7 +11133,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "felino": 40.0
+      "felino": 40
     },
     "doseRangeText": "1 pipeta tópica na base do crânio a cada 12 semanas (3 meses)",
     "defaultFrequency": "Dose Única",
@@ -11155,7 +11155,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "felino": 40.0
+      "felino": 40
     },
     "doseRangeText": "1 pipeta tópica na base do crânio a cada 12 semanas (3 meses)",
     "defaultFrequency": "Dose Única",
@@ -11316,7 +11316,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Boehringer Ingelheim. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
-    "tabletMg": 45.0,
+    "tabletMg": 45,
     "tabletsPerBox": 3
   },
   {
@@ -11375,7 +11375,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 20.0
+      "canino": 20
     },
     "doseRangeText": "1 comprimido mensal administrado junto ao alimento ou até 30 min após",
     "defaultFrequency": "Dose Única",
@@ -11397,7 +11397,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 20.0
+      "canino": 20
     },
     "doseRangeText": "1 comprimido mensal administrado junto ao alimento ou até 30 min após",
     "defaultFrequency": "Dose Única",
@@ -11419,7 +11419,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 20.0
+      "canino": 20
     },
     "doseRangeText": "1 comprimido mensal administrado junto ao alimento ou até 30 min após",
     "defaultFrequency": "Dose Única",
@@ -11441,7 +11441,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 20.0
+      "canino": 20
     },
     "doseRangeText": "1 comprimido mensal administrado junto ao alimento ou até 30 min após",
     "defaultFrequency": "Dose Única",
@@ -11463,7 +11463,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 20.0
+      "canino": 20
     },
     "doseRangeText": "1 comprimido mensal administrado junto ao alimento ou até 30 min após",
     "defaultFrequency": "Dose Única",
@@ -11485,7 +11485,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "felino": 6.0
+      "felino": 6
     },
     "doseRangeText": "1 comprimido mensal administrado com a comida (dose mínima 6 mg/kg)",
     "defaultFrequency": "Dose Única",
@@ -11507,7 +11507,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "felino": 6.0
+      "felino": 6
     },
     "doseRangeText": "1 comprimido mensal administrado com a comida (dose mínima 6 mg/kg)",
     "defaultFrequency": "Dose Única",
@@ -11529,7 +11529,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "felino": 6.0
+      "felino": 6
     },
     "doseRangeText": "1 pipeta tópica mensal na nuca (dose 6 mg/kg de selamectina)",
     "defaultFrequency": "Dose Única",
@@ -11537,7 +11537,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Zoetis. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 60,
-    "percentage": 6.0,
+    "percentage": 6,
     "bottleVolumeMl": 0.75
   },
   {
@@ -11552,7 +11552,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 6.0
+      "canino": 6
     },
     "doseRangeText": "1 pipeta mensal tópica na pele da nuca",
     "defaultFrequency": "Dose Única",
@@ -11560,8 +11560,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Zoetis. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 120,
-    "percentage": 12.0,
-    "bottleVolumeMl": 1.0
+    "percentage": 12,
+    "bottleVolumeMl": 1
   },
   {
     "id": "revolution-plus-gatos-medio",
@@ -11575,7 +11575,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "felino": 6.0
+      "felino": 6
     },
     "doseRangeText": "1 pipeta tópica mensal: protege contra pulgas, carrapatos, ácaros de ouvido, vermes e dirofilariose",
     "defaultFrequency": "Dose Única",
@@ -11597,7 +11597,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 10.0
+      "canino": 10
     },
     "doseRangeText": "1 pipeta mensal na pele entre as escápulas",
     "defaultFrequency": "Dose Única",
@@ -11605,7 +11605,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Elanco. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 125,
-    "bottleVolumeMl": 1.0
+    "bottleVolumeMl": 1
   },
   {
     "id": "advocate-gatos-4-8",
@@ -11619,7 +11619,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "felino": 10.0
+      "felino": 10
     },
     "doseRangeText": "1 pipeta tópica mensal na nuca do gato",
     "defaultFrequency": "Dose Única",
@@ -11641,7 +11641,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 5
     },
     "doseRangeText": "1 comprimido para cada 35 kg de peso corporal em dose única",
     "defaultFrequency": "Dose Única",
@@ -11663,7 +11663,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "felino": 5.0
+      "felino": 5
     },
     "doseRangeText": "1 comprimido para cada 4 kg de peso corporal em dose única",
     "defaultFrequency": "Dose Única",
@@ -11729,7 +11729,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "felino": 2.0
+      "felino": 2
     },
     "doseRangeText": "1 comprimido para gatos de 2 a 8 kg em dose única",
     "defaultFrequency": "Dose Única",
@@ -11751,7 +11751,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0
+      "canino": 1
     },
     "doseRangeText": "1 comprimido para cada 10 kg de peso vivo em dose única",
     "defaultFrequency": "Dose Única",
@@ -11773,7 +11773,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0
+      "canino": 1
     },
     "doseRangeText": "1 comprimido para cada 30 kg de peso vivo em dose única",
     "defaultFrequency": "Dose Única",
@@ -11796,8 +11796,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0,
-      "felino": 1.0
+      "canino": 1,
+      "felino": 1
     },
     "doseRangeText": "1 comprimido para cada 3 kg de peso corporal em dose única",
     "defaultFrequency": "Dose Única",
@@ -11819,7 +11819,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0
+      "canino": 1
     },
     "doseRangeText": "1 comprimido para cada 25 kg de peso corporal em dose única",
     "defaultFrequency": "Dose Única",
@@ -11842,8 +11842,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0,
-      "felino": 1.0
+      "canino": 1,
+      "felino": 1
     },
     "doseRangeText": "1 mL para cada 1 kg de peso a partir de 15 dias de vida",
     "defaultFrequency": "Dose Única",
@@ -11866,8 +11866,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0,
-      "felino": 1.0
+      "canino": 1,
+      "felino": 1
     },
     "doseRangeText": "0,5 mL por kg de peso vivo em dose única",
     "defaultFrequency": "Dose Única",
@@ -11889,7 +11889,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0
+      "canino": 1
     },
     "doseRangeText": "1 comprimido para cada 10 kg de peso vivo",
     "defaultFrequency": "Dose Única",
@@ -11919,7 +11919,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Boehringer Ingelheim. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 10,
-    "percentage": 1.0,
+    "percentage": 1,
     "bottleVolumeMl": 50
   },
   {
@@ -11940,7 +11940,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Ourofino. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 40,
-    "percentage": 4.0,
+    "percentage": 4,
     "bottleVolumeMl": 50
   },
   {
@@ -12010,7 +12010,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Zoetis. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 10,
-    "percentage": 1.0,
+    "percentage": 1,
     "bottleVolumeMl": 50
   },
   {
@@ -12032,7 +12032,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Zoetis. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 10,
-    "percentage": 1.0,
+    "percentage": 1,
     "bottleVolumeMl": 50
   },
   {
@@ -12119,7 +12119,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "Dose inicial: 1 a 2 mg/kg uma vez ao dia pela manhã com o alimento",
     "defaultFrequency": "SID",
@@ -12141,7 +12141,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "1 a 2 mg/kg SID junto à comida",
     "defaultFrequency": "SID",
@@ -12163,7 +12163,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 2.0
+      "canino": 2
     },
     "doseRangeText": "1 a 2 mg/kg SID",
     "defaultFrequency": "SID",
@@ -12322,8 +12322,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Equino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0,
-      "felino": 3.0
+      "canino": 5,
+      "felino": 3
     },
     "doseRangeText": "Inércia uterina primária/secundária: Celas: 2 a 10 UI IM ou SC | Gatas: 1 a 3 UI IM",
     "defaultFrequency": "Dose Única",
@@ -12392,8 +12392,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0,
-      "felino": 5.0
+      "canino": 5,
+      "felino": 5
     },
     "doseRangeText": "5 a 10 mg/kg uma vez ao dia administrado junto a refeição rica em gordura",
     "defaultFrequency": "SID",
@@ -12416,8 +12416,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0,
-      "felino": 5.0
+      "canino": 5,
+      "felino": 5
     },
     "doseRangeText": "5 a 10 mg/kg SID junto com alimento",
     "defaultFrequency": "SID",
@@ -12439,7 +12439,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 5.0
+      "canino": 5
     },
     "doseRangeText": "5 a 10 mg/kg SID",
     "defaultFrequency": "SID",
@@ -12462,8 +12462,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 10.0,
-      "felino": 10.0
+      "canino": 10,
+      "felino": 10
     },
     "doseRangeText": "5 a 15 mg/kg a cada 12 a 24 horas para criptococose e candidíase sistêmica",
     "defaultFrequency": "SID",
@@ -12486,8 +12486,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 10.0,
-      "felino": 10.0
+      "canino": 10,
+      "felino": 10
     },
     "doseRangeText": "5 a 10 mg/kg IV lenta a cada 12 a 24 horas",
     "defaultFrequency": "SID",
@@ -12509,7 +12509,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 10.0
+      "canino": 10
     },
     "doseRangeText": "5 a 10 mg/kg a cada 12 a 24 horas com comida",
     "defaultFrequency": "BID",
@@ -12531,7 +12531,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 10.0
+      "canino": 10
     },
     "doseRangeText": "10 mg/kg SID com refeição",
     "defaultFrequency": "SID",
@@ -12554,8 +12554,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 30.0,
-      "felino": 30.0
+      "canino": 30,
+      "felino": 30
     },
     "doseRangeText": "20 a 40 mg/kg uma vez ao dia para Malassezia recalcitrante e dermatofitose",
     "defaultFrequency": "SID",
@@ -12847,8 +12847,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 8.0,
-      "felino": 5.0
+      "canino": 8,
+      "felino": 5
     },
     "doseRangeText": "Cães: 6 a 10 mg/kg IV lenta diluída em soro a cada 8h | Gatos: 4 a 6 mg/kg IV lenta",
     "defaultFrequency": "TID",
@@ -12871,8 +12871,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 10.0,
-      "felino": 10.0
+      "canino": 10,
+      "felino": 10
     },
     "doseRangeText": "Mucolítico: 5 a 10 mg/kg VO BID | Intoxicação por paracetamol: 140 mg/kg ataque seguido de 70 mg/kg a cada 4h por 72h",
     "defaultFrequency": "BID",
@@ -12895,8 +12895,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 140.0,
-      "felino": 140.0
+      "canino": 140,
+      "felino": 140
     },
     "doseRangeText": "Intoxicação por paracetamol: dose de ataque 140 mg/kg IV em glicose 5%, depois 70 mg/kg IV a cada 4h por 17 doses",
     "defaultFrequency": "QID",
@@ -12904,7 +12904,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Zambon. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 100,
-    "percentage": 10.0,
+    "percentage": 10,
     "bottleVolumeMl": 3
   },
   {
@@ -12920,8 +12920,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0,
-      "felino": 1.0
+      "canino": 1,
+      "felino": 1
     },
     "doseRangeText": "1 comprimido para cada 10 kg de peso corporal a cada 12 a 24 horas",
     "defaultFrequency": "SID",
@@ -12944,8 +12944,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0,
-      "felino": 1.0
+      "canino": 1,
+      "felino": 1
     },
     "doseRangeText": "1 gota para cada 1 kg de peso a cada 12 horas (BID) para suporte em anemias",
     "defaultFrequency": "BID",
@@ -12992,8 +12992,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0,
-      "felino": 1.0
+      "canino": 1,
+      "felino": 1
     },
     "doseRangeText": "Cães até 5 kg: 1 comp/dia | 5 a 10 kg: 1 comp BID nas primeiras semanas",
     "defaultFrequency": "SID",
@@ -13015,7 +13015,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0
+      "canino": 1
     },
     "doseRangeText": "1 comprimido para cada 10 a 20 kg de peso corporal",
     "defaultFrequency": "SID",
@@ -13038,8 +13038,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Felino"
     ],
     "defaultDoseMgKg": {
-      "canino": 1.0,
-      "felino": 1.0
+      "canino": 1,
+      "felino": 1
     },
     "doseRangeText": "1 comprimido para cada 10 kg de peso ao dia",
     "defaultFrequency": "SID",
@@ -13128,7 +13128,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "defaultRoute": "Oral (VO)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Zoetis. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
-    "percentage": 2.0,
+    "percentage": 2,
     "bottleVolumeMl": 14.4
   },
   {

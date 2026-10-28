@@ -1454,7 +1454,7 @@ Confirma esta dose ou deseja prescrever outro valor em mg/kg?`,
       <div className="p-3.5 rounded-2xl bg-[#F5F9FD] dark:bg-slate-800/80 border border-[#DCE7F2] dark:border-slate-700/60 text-xs text-[#52677F] dark:text-slate-400 flex items-start space-x-2.5">
         <ShieldCheck className="w-4 h-4 text-[#007F62] dark:text-emerald-500 shrink-0 mt-0.5" />
         <div className="text-[11px] leading-relaxed">
-          <strong className="text-[#14243A] dark:text-slate-200">Segurança Médico-Veterinária Obrigatória:</strong> Todas as fórmulas são executadas por funções matemáticas programadas e determinísticas, sem dependência de palpites gerados por inteligência artificial. Os dados farmacológicos são oriundos de compêndios oficiais e bulas dos fabricantes. A conferência clínica e a prescrição final são de exclusiva responsabilidade do médico-veterinário responsável com registro no CRMV.
+          <strong className="text-[#14243A] dark:text-slate-200">Segurança Médico-Veterinária Obrigatória:</strong> As contas de dose são feitas pelo motor de cálculo do app (fórmulas fixas e testadas), não pela IA. As doses de referência do cadastro vêm da literatura e das bulas, mas podem mudar: confira sempre a bula do produto. A conferência clínica e a prescrição final são de exclusiva responsabilidade do médico-veterinário responsável com registro no CRMV.
         </div>
       </div>
 

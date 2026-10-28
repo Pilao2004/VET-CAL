@@ -239,7 +239,13 @@ export const CalculatorsView: React.FC = () => {
     setDoseRoute(prod.defaultRoute);
     setIsProductListOpen(false);
 
-    showToast(`Medicamento selecionado: ${prod.brandName}. Concentração preenchida automaticamente!`);
+    const speciesKey = isCat ? 'felin' : 'canin';
+    const coversSpecies = !['Canino', 'Felino'].includes(doseSpecies) || (prod.species || []).some((s) => s.toLowerCase().startsWith(speciesKey));
+    showToast(
+      coversSpecies
+        ? `Medicamento selecionado: ${prod.brandName}. Concentração preenchida automaticamente!`
+        : `Atenção: ${prod.brandName} não tem indicação cadastrada para ${isCat ? 'gatos' : 'cães'}. Confira a bula.`,
+    );
   };
 
   // Sincronização bidirecional mg/mL <=> % m/v
@@ -487,7 +493,14 @@ export const CalculatorsView: React.FC = () => {
         const freqCount = getFrequencyCount(doseFrequency);
 
         if (isNaN(w) || w <= 0) return setValidationError('Informe o peso corporal do animal (kg) maior que zero.');
-        if (isNaN(d) || d <= 0) return setValidationError('Informe a dose prescrita maior que zero.');
+        if (isNaN(d) || d <= 0) {
+          const noSpeciesDose = selectedProductObj && ['Canino', 'Felino'].includes(doseSpecies) && !(selectedProductObj.species || []).some((s) => s.toLowerCase().startsWith(isDoseSpeciesCat ? 'felin' : 'canin'));
+          return setValidationError(
+            noSpeciesDose
+              ? `${selectedProductObj!.brandName} não tem dose cadastrada para ${isDoseSpeciesCat ? 'gatos' : 'cães'}. Confira a bula ou escolha outro produto.`
+              : 'Informe a dose prescrita maior que zero.',
+          );
+        }
 
         const doseMgKg = doseUnit === 'mcg/kg' ? d / 1000 : d;
         setSafetyAlerts(
@@ -558,13 +571,13 @@ export const CalculatorsView: React.FC = () => {
             };
           } else if (selectedProductObj?.id.includes('flamavet-inj') || selectedProductObj?.id.includes('maxicam-inj')) {
             if (conc === 2) {
-              const isCat = doseSpecies === 'cat';
+              const isCat = isDoseSpeciesCat;
               const isMaint = selectedProtocolId === 'day2-maintenance' || selectedProtocolId === 'day2';
               if (isCat) {
                 const mlPerKg = isMaint ? 0.025 : 0.05;
                 const directMl = w * mlPerKg;
                 bulaStep = {
-                  label: '7. Regra da Bula Oficial (Agener União)',
+                  label: `7. Regra da Bula (${selectedProductObj.manufacturer || 'fabricante'})`,
                   expression: isMaint
                     ? 'Gatos manutenção: 1 mL para cada 40 kg (0,025 mL/kg)'
                     : 'Gatos 1º dia / dose única: 1 mL para cada 20 kg (0,05 mL/kg)',
@@ -574,7 +587,7 @@ export const CalculatorsView: React.FC = () => {
                 const mlPerKg = isMaint ? 0.05 : 0.1;
                 const directMl = w * mlPerKg;
                 bulaStep = {
-                  label: '7. Regra da Bula Oficial (Agener União)',
+                  label: `7. Regra da Bula (${selectedProductObj.manufacturer || 'fabricante'})`,
                   expression: isMaint
                     ? 'Cães manutenção: 1 mL para cada 20 kg (0,05 mL/kg)'
                     : 'Cães 1º dia: 1 mL para cada 10 kg (0,10 mL/kg)',

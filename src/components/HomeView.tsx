@@ -88,7 +88,7 @@ export const HomeView: React.FC = () => {
       icon: Bot,
       color: 'bg-indigo-500/10 text-indigo-600',
       borderColor: 'hover:border-indigo-500',
-      tag: 'Gemini 3.8 Flash',
+      tag: 'Gemini + Groq',
     },
   ];
 

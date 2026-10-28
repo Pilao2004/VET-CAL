@@ -61,7 +61,8 @@ export const EMERGENCY_DRUGS: EmergencyDrug[] = [
   },
   {
     id: 'atipamezol', name: 'Atipamezol', group: 'Reversores', indication: 'Reversão de dexmedetomidina / medetomidina',
-    dose: { dog: 0.1, cat: 0.1 }, unit: 'mg', concentration: 5, concentrationLabel: '5 mg/mL', route: 'IV / IM',
+    dose: { dog: 0.1, cat: 0.1 }, unit: 'mg', concentration: 5, concentrationLabel: '5 mg/mL', route: 'IM',
+    note: 'Preferir IM: pela via IV pode causar hipotensão e colapso cardiovascular. Na prática, use o mesmo volume de dexmedetomidina aplicado.',
   },
   {
     id: 'diazepam', name: 'Diazepam', group: 'Convulsão', indication: 'Convulsão / status epilepticus',

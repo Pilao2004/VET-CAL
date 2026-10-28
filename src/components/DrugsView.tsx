@@ -148,11 +148,11 @@ export const DrugsView: React.FC = () => {
               </h1>
             </div>
             <p className="text-xs text-[#52677F] dark:text-slate-400 mt-1 max-w-3xl">
-              Catálogo oficial padronizado em hierarquia{' '}
+              Catálogo padronizado em hierarquia{' '}
               <strong className="text-[#14243A] dark:text-slate-200">
                 Princípio Ativo → Marca Comercial → Laboratório → Apresentação → Concentração
               </strong>
-              , com posologias de bula validadas e integração direta com a calculadora clínica.
+              , com doses de referência e integração direta com a calculadora clínica. Confira sempre a bula do produto.
             </p>
           </div>
 
@@ -509,7 +509,7 @@ export const DrugsView: React.FC = () => {
                                     <span>Bula e Orientações Clínicas ({prod.manufacturer})</span>
                                   </span>
                                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#E5FFF4] text-[#007F62] dark:bg-emerald-950 dark:text-[#00C896] font-bold">
-                                    STATUS: {prod.validationStatus || 'VALIDADO'}
+                                    CONFIRA A BULA
                                   </span>
                                 </div>
                                 <p className="text-[#52677F] dark:text-slate-300 text-[11px] leading-relaxed">
