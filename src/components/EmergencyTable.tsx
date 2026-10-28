@@ -4,13 +4,17 @@ import { useApp } from '../context/AppContext';
 import { EMERGENCY_DRUGS, EmergencyGroup, emergencyDoses, formatDose } from '../data/emergencyDrugs';
 import { saveFile } from '../utils/fileSave';
 import { PdfDoc } from '../utils/pdfDoc';
+import { PcrTimer } from './PcrTimer';
 
 const GROUPS: (EmergencyGroup | 'Todos')[] = ['Todos', 'PCR', 'Reversores', 'Convulsão', 'Metabólico', 'Anafilaxia e ICC', 'Choque'];
 
 export const EmergencyTable: React.FC = () => {
-  const { showToast } = useApp();
-  const [species, setSpecies] = useState<'dog' | 'cat'>('dog');
-  const [weightText, setWeightText] = useState('10');
+  const { showToast, sharedWeight, setSharedWeight, sharedSpecies, setSharedSpecies } = useApp();
+  // Peso e espécie são os mesmos das outras calculadoras (paciente da vez)
+  const species: 'dog' | 'cat' = sharedSpecies === 'Felino' ? 'cat' : 'dog';
+  const setSpecies = (sp: 'dog' | 'cat') => setSharedSpecies(sp === 'cat' ? 'Felino' : 'Canino');
+  const weightText = sharedWeight;
+  const setWeightText = setSharedWeight;
   const [group, setGroup] = useState<EmergencyGroup | 'Todos'>('Todos');
   const [concentrations, setConcentrations] = useState<Record<string, number>>({});
 
@@ -115,6 +119,8 @@ export const EmergencyTable: React.FC = () => {
           ))}
         </div>
       </div>
+
+      <PcrTimer adrenalineMl={validWeight ? emergencyDoses(weight, species, concentrations).find((r) => r.drug.id === 'adrenalina-baixa')?.volumeMl ?? null : null} />
 
       {!validWeight ? (
         <div className="p-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--text-secondary)]">

@@ -17,6 +17,8 @@ import {
 import { useApp } from '../context/AppContext';
 import { ActiveView, CalculatorType } from '../types';
 import { CALCULATORS_LIST } from '../data/calculators';
+import { COMMERCIAL_PRODUCTS, CommercialProduct } from '../data/commercialProducts';
+import { ProductImage } from './ProductImage';
 
 export const HomeView: React.FC = () => {
   const {
@@ -25,7 +27,27 @@ export const HomeView: React.FC = () => {
     calculationHistory,
     favoriteCalculators,
     setIsSearchOpen,
+    favoriteDrugs,
+    recentProductIds,
+    openCalculatorWithCommercialProduct,
   } = useApp();
+
+  // Atalhos: medicamentos favoritos primeiro, depois os usados por último (até 4)
+  const shortcutProducts = [
+    ...favoriteDrugs.map((id) => ({ id, fav: true })),
+    ...recentProductIds.filter((id) => !favoriteDrugs.includes(id)).map((id) => ({ id, fav: false })),
+  ]
+    .map(({ id, fav }) => ({ prod: COMMERCIAL_PRODUCTS.find((p) => p.id === id), fav }))
+    .filter((x): x is { prod: CommercialProduct; fav: boolean } => Boolean(x.prod))
+    .slice(0, 4);
+
+  // Calculadoras: favoritas, depois as usadas recentemente, completando com as principais
+  const shortcutCalcs = Array.from(
+    new Set<string>([...favoriteCalculators, ...calculationHistory.map((h) => h.type), ...CALCULATORS_LIST.map((c) => c.type)]),
+  )
+    .map((t) => CALCULATORS_LIST.find((c) => c.type === t))
+    .filter((c): c is (typeof CALCULATORS_LIST)[number] => Boolean(c))
+    .slice(0, 4);
 
   const mainButtons: {
     id: ActiveView;
@@ -48,7 +70,7 @@ export const HomeView: React.FC = () => {
     {
       id: 'drugs',
       title: '2. Medicamentos',
-      subtitle: 'Posologias validadas, princípios ativos, apresentações e botão Calcular Dose',
+      subtitle: 'Doses de referência, princípios ativos, apresentações e botão Calcular Dose',
       icon: Pill,
       color: 'bg-[var(--secondary)]/10 text-[var(--secondary)]',
       borderColor: 'hover:border-[var(--secondary)]',
@@ -261,20 +283,42 @@ export const HomeView: React.FC = () => {
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-2">
               <Star className="w-5 h-5 text-amber-400 fill-amber-400" />
-              <h3 className="font-bold text-base text-[var(--text-main)]">
-                Calculadoras em Destaque
-              </h3>
+              <h3 className="font-bold text-base text-[var(--text-main)]">Seus atalhos</h3>
             </div>
             <button
               onClick={() => setCurrentView('calculators')}
               className="text-xs font-semibold text-[var(--primary)] hover:underline"
             >
-              Ver todas as 10 →
+              Todas as calculadoras →
             </button>
           </div>
 
+          {shortcutProducts.length > 0 && (
+            <div className="mb-4">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--text-secondary)] mb-2">Medicamentos</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {shortcutProducts.map(({ prod, fav }) => (
+                  <button
+                    key={prod.id}
+                    type="button"
+                    onClick={() => openCalculatorWithCommercialProduct(prod)}
+                    className="p-2.5 rounded-2xl border border-[var(--border)] hover:border-[var(--primary)] bg-[var(--bg-main)]/50 hover:bg-[var(--primary)]/10 transition-all cursor-pointer flex items-center gap-3 text-left"
+                  >
+                    <ProductImage product={prod} size={40} />
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-xs font-bold text-[var(--text-main)] truncate">{prod.brandName.split(' (')[0]}</span>
+                      <span className="block text-[11px] text-[var(--text-secondary)] truncate">{prod.activePrinciple}</span>
+                    </span>
+                    {fav ? <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400 shrink-0" /> : <History className="w-3.5 h-3.5 text-[var(--text-secondary)] shrink-0" />}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--text-secondary)] mb-2">Calculadoras</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {CALCULATORS_LIST.slice(0, 4).map((calc) => (
+            {shortcutCalcs.map((calc) => (
               <div
                 key={calc.type}
                 onClick={() => {
@@ -297,6 +341,11 @@ export const HomeView: React.FC = () => {
               </div>
             ))}
           </div>
+          {shortcutProducts.length === 0 && (
+            <p className="mt-3 text-[11px] text-[var(--text-secondary)]">
+              Dica: toque na estrela de um medicamento para fixá-lo aqui. Os que você usar aparecem sozinhos.
+            </p>
+          )}
 
           <div className="mt-5 p-3.5 rounded-2xl bg-[var(--bg-main)] border border-[var(--border)] flex items-start space-x-3 text-xs text-[var(--text-secondary)]">
             <ShieldCheck className="w-5 h-5 text-[var(--primary)] shrink-0 mt-0.5" />

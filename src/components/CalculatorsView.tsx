@@ -30,14 +30,6 @@ import {
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ProductImage } from './ProductImage';
-
-/** Dose do cadastro para a espécie: cão e gato só usam a própria; outras espécies usam a delas ou, na falta, a de cão como ponto de partida. */
-function speciesDose(doses: Record<string, number | undefined>, species: string): number | undefined {
-  const key = species.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  if (key === 'felino' || key === 'cat') return doses.felino;
-  if (key === 'canino' || key === 'dog') return doses.canino;
-  return doses[key] ?? doses.canino;
-}
 import { CalculatorType, CalculationStep } from '../types';
 import { CALCULATORS_LIST } from '../data/calculators';
 import { EmergencyTable } from './EmergencyTable';
@@ -47,6 +39,14 @@ import { PREMIUM_CALCULATORS } from '../config/plans';
 import { SafetyAlert, speciesSafetyAlerts } from '../utils/safetyRules';
 import { COMMERCIAL_PRODUCTS, CommercialProduct } from '../data/commercialProducts';
 import { runCompleteClinicalTestSuite, TestSuiteSummary } from '../utils/clinicalTestSuite';
+
+/** Dose do cadastro para a espécie: cão e gato só usam a própria; outras espécies usam a delas ou, na falta, a de cão como ponto de partida. */
+function speciesDose(doses: Record<string, number | undefined>, species: string): number | undefined {
+  const key = species.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  if (key === 'felino' || key === 'cat') return doses.felino;
+  if (key === 'canino' || key === 'dog') return doses.canino;
+  return doses[key] ?? doses.canino;
+}
 
 export const CalculatorsView: React.FC = () => {
   const {
@@ -58,6 +58,11 @@ export const CalculatorsView: React.FC = () => {
     calculationHistory,
     clearHistory,
     showToast,
+    markProductUsed,
+    sharedWeight,
+    setSharedWeight,
+    sharedSpecies,
+    setSharedSpecies,
     isPremium,
   } = useApp();
 
@@ -77,9 +82,9 @@ export const CalculatorsView: React.FC = () => {
   // 1. CALCULADORA DE MEDICAMENTOS 
   // ==========================================
   const [dosageFormType, setDosageFormType] = useState<'liquid' | 'tablet' | 'drops'>('liquid');
-  const [doseSpecies, setDoseSpecies] = useState<string>('Canino');
+  const [doseSpecies, setDoseSpecies] = useState<string>(sharedSpecies);
   const [doseSubSpecies, setDoseSubSpecies] = useState<string>('');
-  const [doseWeight, setDoseWeight] = useState<string>('10');
+  const [doseWeight, setDoseWeight] = useState<string>(sharedWeight);
   const [dosePrescribed, setDosePrescribed] = useState<string>('0.2'); // mg/kg
   const [doseUnit, setDoseUnit] = useState<'mg/kg' | 'mcg/kg'>('mg/kg');
   const [doseRegime, setDoseRegime] = useState<'per-dose' | 'daily-divided'>('per-dose'); // Dose por tomada vs Dose diária
@@ -105,8 +110,8 @@ export const CalculatorsView: React.FC = () => {
   // ==========================================
   // 2. FLUIDOTERAPIA COMPLETA (3 PARCELAS)
   // ==========================================
-  const [fluidSpecies, setFluidSpecies] = useState<string>('Canino');
-  const [fluidWeight, setFluidWeight] = useState<string>('12');
+  const [fluidSpecies, setFluidSpecies] = useState<string>(sharedSpecies);
+  const [fluidWeight, setFluidWeight] = useState<string>(sharedWeight);
   const [fluidMaintenanceMethod, setFluidMaintenanceMethod] = useState<'metabolic' | 'standard'>('metabolic');
   const [fluidStandardRate, setFluidStandardRate] = useState<string>('50');
   const [fluidDehydrationPercent, setFluidDehydrationPercent] = useState<string>('6');
@@ -116,7 +121,7 @@ export const CalculatorsView: React.FC = () => {
   // ==========================================
   // 3. INFUSÃO CONTÍNUA NA BOLSA (CRI)
   // ==========================================
-  const [criPatientWeight, setCriPatientWeight] = useState<string>('15');
+  const [criPatientWeight, setCriPatientWeight] = useState<string>(sharedWeight);
   const [criBagVolumeMl, setCriBagVolumeMl] = useState<string>('250');
   const [criInfusionRateMlHr, setCriInfusionRateMlHr] = useState<string>('15');
   const [criDoseValue, setCriDoseValue] = useState<string>('5');
@@ -127,8 +132,8 @@ export const CalculatorsView: React.FC = () => {
   // ==========================================
   // 4. TRANSFUSÃO SANGUÍNEA
   // ==========================================
-  const [transfusionSpecies, setTransfusionSpecies] = useState<string>('Canino');
-  const [transfusionWeight, setTransfusionWeight] = useState<string>('18');
+  const [transfusionSpecies, setTransfusionSpecies] = useState<string>(sharedSpecies === 'Felino' ? 'Felino' : 'Canino');
+  const [transfusionWeight, setTransfusionWeight] = useState<string>(sharedWeight);
   const [transfusionCurrentHt, setTransfusionCurrentHt] = useState<string>('14');
   const [transfusionTargetHt, setTransfusionTargetHt] = useState<string>('25');
   const [transfusionDonorHt, setTransfusionDonorHt] = useState<string>('40');
@@ -150,7 +155,7 @@ export const CalculatorsView: React.FC = () => {
   // ==========================================
   // 7. DÉFICIT HÍDRICO ISOLADO
   // ==========================================
-  const [deficitWeight, setDeficitWeight] = useState<string>('10');
+  const [deficitWeight, setDeficitWeight] = useState<string>(sharedWeight);
   const [deficitPercent, setDeficitPercent] = useState<string>('7');
   const [deficitHours, setDeficitHours] = useState<string>('24');
 
@@ -170,8 +175,24 @@ export const CalculatorsView: React.FC = () => {
   // ==========================================
   // 10. BSA
   // ==========================================
-  const [bsaSpecies, setBsaSpecies] = useState<'dog' | 'cat'>('dog');
-  const [bsaWeight, setBsaWeight] = useState<string>('25');
+  const [bsaSpecies, setBsaSpecies] = useState<'dog' | 'cat'>(sharedSpecies === 'Felino' ? 'cat' : 'dog');
+  const [bsaWeight, setBsaWeight] = useState<string>(sharedWeight);
+
+  // Peso e espécie do paciente da vez: o que for digitado numa calculadora vale para todas
+  const weightSetters = [setDoseWeight, setFluidWeight, setCriPatientWeight, setTransfusionWeight, setDeficitWeight, setBsaWeight];
+  useEffect(() => {
+    weightSetters.forEach((set) => set(sharedWeight));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sharedWeight]);
+  useEffect(() => {
+    for (const w of [doseWeight, fluidWeight, criPatientWeight, transfusionWeight, deficitWeight, bsaWeight]) {
+      if (w !== sharedWeight && parseFloat(w.replace(',', '.')) > 0) {
+        setSharedWeight(w);
+        break;
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [doseWeight, fluidWeight, criPatientWeight, transfusionWeight, deficitWeight, bsaWeight]);
   const [bsaDosePerM2, setBsaDosePerM2] = useState<string>('30');
 
   // Result state
@@ -239,6 +260,7 @@ export const CalculatorsView: React.FC = () => {
     // Sem dose cadastrada para a espécie: o campo fica vazio para o veterinário informar
     setDosePrescribed(recDose !== undefined && !isNaN(recDose) && recDose > 0 ? String(recDose) : '');
     setDrugLabel(prod.brandName);
+    markProductUsed(prod.id);
 
     setDoseFrequency(prod.defaultFrequency);
     setDoseRoute(prod.defaultRoute);
@@ -275,6 +297,7 @@ export const CalculatorsView: React.FC = () => {
   // When species changes, update dose according to active protocol or default
   const handleSpeciesChange = (species: string) => {
     setDoseSpecies(species);
+    setSharedSpecies(species);
     setDoseSubSpecies('');
     const prod = COMMERCIAL_PRODUCTS.find((p) => p.id === selectedProductId);
     if (prod) {
@@ -283,6 +306,17 @@ export const CalculatorsView: React.FC = () => {
       setDosePrescribed(recDose && recDose > 0 ? String(recDose) : '');
     }
   };
+
+  // Espécie escolhida em outra calculadora (ou pelo paciente da vez)
+  useEffect(() => {
+    if (sharedSpecies !== doseSpecies) handleSpeciesChange(sharedSpecies);
+    setFluidSpecies(sharedSpecies);
+    if (sharedSpecies === 'Canino' || sharedSpecies === 'Felino') {
+      setTransfusionSpecies(sharedSpecies);
+      setBsaSpecies(sharedSpecies === 'Felino' ? 'cat' : 'dog');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sharedSpecies]);
 
   // When user selects a specific clinical protocol (e.g., 1º Dia / Ataque vs Manutenção)
   const handleProtocolSelect = (protocolId: string) => {
@@ -306,7 +340,8 @@ export const CalculatorsView: React.FC = () => {
       }
       if (prefilledCalculatorData.drugName) setDrugLabel(prefilledCalculatorData.drugName);
       if (prefilledCalculatorData.weight) setDoseWeight(String(prefilledCalculatorData.weight));
-      if (prefilledCalculatorData.doseMgKg) setDosePrescribed(String(prefilledCalculatorData.doseMgKg));
+      if (prefilledCalculatorData.selectedProductId) setDosePrescribed(prefilledCalculatorData.doseMgKg ? String(prefilledCalculatorData.doseMgKg) : '');
+      else if (prefilledCalculatorData.doseMgKg) setDosePrescribed(String(prefilledCalculatorData.doseMgKg));
       if (prefilledCalculatorData.concentrationMgMl) setDoseConcentration(String(prefilledCalculatorData.concentrationMgMl));
       if (prefilledCalculatorData.percentage) {
         setDosePercentageInput(String(prefilledCalculatorData.percentage));
@@ -322,6 +357,7 @@ export const CalculatorsView: React.FC = () => {
         else if (prefilledCalculatorData.frequency.includes('SID')) setDoseFrequency('SID');
         else if (prefilledCalculatorData.frequency.includes('TID')) setDoseFrequency('TID');
         else if (prefilledCalculatorData.frequency.includes('QID')) setDoseFrequency('QID');
+        else if (['Dose Única', 'Mensal', 'Infusão contínua (CRI)'].includes(prefilledCalculatorData.frequency)) setDoseFrequency(prefilledCalculatorData.frequency);
       }
       if (prefilledCalculatorData.route) setDoseRoute(prefilledCalculatorData.route);
     }
@@ -1763,7 +1799,7 @@ export const CalculatorsView: React.FC = () => {
                     </label>
                     <select
                       value={fluidSpecies}
-                      onChange={(e) => setFluidSpecies(e.target.value)}
+                      onChange={(e) => { setFluidSpecies(e.target.value); setSharedSpecies(e.target.value); }}
                       className="w-full px-3 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-[var(--text-main)] text-xs font-bold"
                     >
                       <option value="Canino">Canino (Cão)</option>
@@ -1956,7 +1992,7 @@ export const CalculatorsView: React.FC = () => {
                     </label>
                     <select
                       value={transfusionSpecies}
-                      onChange={(e) => setTransfusionSpecies(e.target.value)}
+                      onChange={(e) => { setTransfusionSpecies(e.target.value); setSharedSpecies(e.target.value); }}
                       className="w-full px-3 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-[var(--text-main)] text-xs font-bold"
                     >
                       <option value="Canino">Canino (Cão)</option>
@@ -2297,7 +2333,7 @@ export const CalculatorsView: React.FC = () => {
                   <div className="grid grid-cols-2 gap-3">
                     <button
                       type="button"
-                      onClick={() => setBsaSpecies('dog')}
+                      onClick={() => { setBsaSpecies('dog'); setSharedSpecies('Canino'); }}
                       className={`p-3 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
                         bsaSpecies === 'dog'
                           ? 'border-[#00C896] bg-[#E5FFF4] text-[#007F62] dark:border-emerald-500 dark:bg-emerald-950/60 dark:text-emerald-300'
@@ -2308,7 +2344,7 @@ export const CalculatorsView: React.FC = () => {
                     </button>
                     <button
                       type="button"
-                      onClick={() => setBsaSpecies('cat')}
+                      onClick={() => { setBsaSpecies('cat'); setSharedSpecies('Felino'); }}
                       className={`p-3 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
                         bsaSpecies === 'cat'
                           ? 'border-[#00C896] bg-[#E5FFF4] text-[#007F62] dark:border-emerald-500 dark:bg-emerald-950/60 dark:text-emerald-300'

@@ -20,10 +20,13 @@ function loadVet(): { name: string; crmv: string } {
 }
 
 export const PrescriptionActions: React.FC<{ prescriptionText: string }> = ({ prescriptionText }) => {
-  const { patients, showToast } = useApp();
+  const { patients, showToast, activePatientId } = useApp();
   const [vet, setVet] = useState(loadVet);
-  const [patientName, setPatientName] = useState('');
-  const [tutorName, setTutorName] = useState('');
+  const describe = (p: (typeof patients)[number]) => `${p.name} (${p.species}${p.breed ? ', ' + p.breed : ''}, ${p.weight} kg)`;
+  // Já vem preenchido com o paciente da vez
+  const active = patients.find((x) => x.id === activePatientId);
+  const [patientName, setPatientName] = useState(active ? describe(active) : '');
+  const [tutorName, setTutorName] = useState(active?.tutorName || '');
 
   const updateVet = (field: 'name' | 'crmv', value: string) => {
     const next = { ...vet, [field]: value };
@@ -36,7 +39,7 @@ export const PrescriptionActions: React.FC<{ prescriptionText: string }> = ({ pr
   const pickPatient = (id: string) => {
     const p = patients.find((x) => x.id === id);
     if (p) {
-      setPatientName(`${p.name} (${p.species}${p.breed ? ', ' + p.breed : ''}, ${p.weight} kg)`);
+      setPatientName(describe(p));
       setTutorName(p.tutorName || '');
     }
   };

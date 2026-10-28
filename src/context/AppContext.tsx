@@ -64,6 +64,8 @@ interface AppContextType {
   toggleFavoriteCalculator: (id: string) => void;
   favoriteDrugs: string[];
   toggleFavoriteDrug: (id: string) => void;
+  recentProductIds: string[];
+  markProductUsed: (id: string) => void;
 
   // Supabase Auth & Real Database
   user: User | null;
@@ -82,6 +84,14 @@ interface AppContextType {
 
   // Patients (Supabase PostgreSQL with safe local fallback)
   patients: PatientRecord[];
+
+  // Paciente da vez: peso e espécie compartilhados entre as calculadoras
+  sharedWeight: string;
+  setSharedWeight: (w: string) => void;
+  sharedSpecies: string;
+  setSharedSpecies: (s: string) => void;
+  activePatientId: string | null;
+  selectActivePatient: (id: string | null) => void;
   isLoadingPatients: boolean;
   patientError: string | null;
   refreshPatients: () => Promise<void>;
@@ -401,6 +411,54 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // History & Favorites storage keys
   const getStorageKey = (suffix: string) => `vetcalc_user_${currentUserEmail}_${suffix}`;
+
+  // Paciente da vez (fica salvo só nesta sessão do navegador)
+  const SHARED_KEY = 'vetcalc_shared_patient';
+  const savedShared = (() => {
+    try {
+      return JSON.parse(sessionStorage.getItem(SHARED_KEY) || '{}');
+    } catch {
+      return {};
+    }
+  })();
+  const [sharedWeight, setSharedWeight] = useState<string>(savedShared.weight || '10');
+  const [sharedSpecies, setSharedSpecies] = useState<string>(savedShared.species || 'Canino');
+  const [activePatientId, setActivePatientId] = useState<string | null>(savedShared.patientId || null);
+
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(SHARED_KEY, JSON.stringify({ weight: sharedWeight, species: sharedSpecies, patientId: activePatientId }));
+    } catch {}
+  }, [sharedWeight, sharedSpecies, activePatientId]);
+
+  const selectActivePatient = (id: string | null) => {
+    setActivePatientId(id);
+    const p = id ? patients.find((x) => x.id === id) : null;
+    if (p) {
+      if (p.weight > 0) setSharedWeight(String(p.weight));
+      const sp = String(p.species || '').toLowerCase();
+      setSharedSpecies(sp.startsWith('fel') || sp.startsWith('gat') ? 'Felino' : sp.startsWith('can') || sp.startsWith('cão') || sp.startsWith('cao') ? 'Canino' : String(p.species));
+      showToast(`Paciente da vez: ${p.name} (${p.weight} kg)`);
+    }
+  };
+
+  // Medicamentos usados por último (atalhos da tela inicial)
+  const [recentProductIds, setRecentProductIds] = useState<string[]>(() => {
+    try {
+      return JSON.parse(localStorage.getItem('vetcalc_recent_products') || '[]');
+    } catch {
+      return [];
+    }
+  });
+  const markProductUsed = (id: string) => {
+    setRecentProductIds((prev) => {
+      const next = [id, ...prev.filter((x) => x !== id)].slice(0, 8);
+      try {
+        localStorage.setItem('vetcalc_recent_products', JSON.stringify(next));
+      } catch {}
+      return next;
+    });
+  };
 
   const [calculationHistory, setCalculationHistory] = useState<CalculationHistoryItem[]>(() => {
     try {
@@ -945,11 +1003,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   // Open calculator prefilled with specific commercial product
-  const openCalculatorWithCommercialProduct = (prod: CommercialProduct, speciesPref: string = 'Canino') => {
+  const openCalculatorWithCommercialProduct = (prod: CommercialProduct, speciesPref: string = sharedSpecies) => {
     const isCat = speciesPref.toLowerCase().includes('gato') || speciesPref.toLowerCase().includes('felin');
-    const dose = isCat
-      ? (prod.defaultDoseMgKg.felino || prod.defaultDoseMgKg.canino || 1)
-      : (prod.defaultDoseMgKg.canino || prod.defaultDoseMgKg.felino || 1);
+    // Só a dose da espécie do paciente; sem dose cadastrada, o campo fica vazio
+    const dose = isCat ? prod.defaultDoseMgKg.felino : prod.defaultDoseMgKg.canino;
+    markProductUsed(prod.id);
 
     setPrefilledCalculatorData({
       drugName: prod.brandName,
@@ -1003,6 +1061,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         toggleFavoriteCalculator,
         favoriteDrugs,
         toggleFavoriteDrug,
+        recentProductIds,
+        markProductUsed,
 
         // Supabase Auth & Config
         user,
@@ -1021,6 +1081,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
         // Patients
         patients,
+        sharedWeight,
+        setSharedWeight,
+        sharedSpecies,
+        setSharedSpecies,
+        activePatientId,
+        selectActivePatient,
         isLoadingPatients,
         patientError,
         refreshPatients,

@@ -17,6 +17,7 @@ import {
 import { useApp } from '../context/AppContext';
 import { ActiveView } from '../types';
 import { Sidebar } from './Sidebar';
+import { PatientPicker } from './PatientPicker';
 
 export const Header: React.FC = () => {
   const {
@@ -59,7 +60,7 @@ export const Header: React.FC = () => {
               </div>
               <div>
                 <div className="flex items-center space-x-1.5">
-                  <span className="font-extrabold tracking-tight text-lg text-[var(--text-main)] font-mono">
+                  <span className="font-extrabold tracking-tight text-lg text-[var(--text-main)] font-mono whitespace-nowrap">
                     VET CALC
                   </span>
                   <span className="text-xs font-bold px-1.5 py-0.5 rounded bg-[var(--primary)] text-[#062C23] uppercase tracking-wider font-mono">
@@ -88,7 +89,8 @@ export const Header: React.FC = () => {
               </button>
             </div>
 
-            <div className="flex items-center space-x-1.5 sm:space-x-3">
+            <div className="flex items-center space-x-1 sm:space-x-3">
+              <PatientPicker />
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
@@ -102,7 +104,7 @@ export const Header: React.FC = () => {
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="p-2.5 text-[var(--text-secondary)] hover:text-[var(--text-main)] hover:bg-[var(--input-bg)] rounded-xl min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer transition-colors"
+                className="p-2.5 text-[var(--text-secondary)] hover:text-[var(--text-main)] hover:bg-[var(--input-bg)] rounded-xl min-w-[44px] min-h-[44px] hidden sm:flex items-center justify-center cursor-pointer transition-colors"
                 title={isDarkMode ? 'Modo claro' : 'Modo escuro'}
                 aria-label={isDarkMode ? 'Ativar modo claro' : 'Ativar modo escuro'}
               >

@@ -37,6 +37,7 @@ const STEPS: Step[] = [
     intro: 'Em 1 minuto você vai saber usar tudo. São 6 passos curtos, e o app vai mostrando cada tela no fundo.',
     items: [
       <>Para trocar de área, use a <strong>barra de navegação</strong>: fica embaixo no celular e no topo no computador.</>,
+      <>Toque na <strong>patinha</strong> no topo para escolher o <strong>Paciente da vez</strong>: o peso e a espécie dele preenchem todas as calculadoras e o nome vai para a receita. Sem paciente, o peso que você digitar numa calculadora vale para as outras.</>,
       <>Os botões <strong>Próximo</strong> e <strong>Voltar</strong> ficam no rodapé deste quadro.</>,
       <>Você pode rever este tutorial quando quiser no menu <strong>⋯</strong> &gt; <strong>Ver tutorial</strong>.</>,
     ],
@@ -65,6 +66,7 @@ const STEPS: Step[] = [
       <><strong>Tabela de Emergência por Peso</strong>: escolha cão ou gato, digite o peso e veja o volume de cada fármaco (PCR, convulsão, reversores). Dá para baixar em PDF.</>,
       <><strong>Fluidoterapia, Infusão Contínua, Transfusão, Diluição</strong> e outras: preencha os campos e o resultado aparece com a conta explicada.</>,
       <>Se a ampola for diferente, toque na <strong>concentração</strong> e ajuste: o volume é recalculado na hora.</>,
+      <>Em parada, toque em <strong>Iniciar cronômetro de RCP</strong>: ele avisa a cada 2 minutos a troca de massagista e o ciclo da adrenalina, já com o volume para o peso.</>,
     ],
   },
   {
@@ -77,6 +79,7 @@ const STEPS: Step[] = [
       <><strong>Sintomas</strong>: marque os sinais do paciente e veja perguntas de anamnese, diferenciais, exames e sinais de alerta.</>,
       <><strong>Exames</strong>: valores de referência para cão e gato e um interpretador onde você digita o resultado do paciente.</>,
       <>Para achar qualquer coisa, use a <strong>lupa</strong> no topo (no computador, <strong>Ctrl + K</strong>).</>,
+      <>Toque na <strong>estrela</strong> de um medicamento para fixá-lo em <strong>Seus atalhos</strong>, na tela inicial. Os últimos que você usou também aparecem lá.</>,
     ],
   },
   {
@@ -98,7 +101,7 @@ const STEPS: Step[] = [
     title: 'Pronto! Últimas dicas',
     intro: 'Tudo o que fica no menu ⋯ (canto superior direito):',
     items: [
-      <><strong>Minha compra</strong>: mostra o seu acesso. <strong>Modo claro / escuro</strong>: troca as cores (também pelo botão de sol e lua no topo).</>,
+      <><strong>Minha compra</strong>: mostra o seu acesso. <strong>Modo claro / escuro</strong>: troca as cores (no computador, também pelo botão de sol e lua no topo).</>,
       <><strong>Bônus</strong>: baixe o Guia de Urgências e o Checklist de Anamnese em PDF.</>,
       <><strong>Instale no celular</strong>: no navegador, toque em <strong>Compartilhar</strong> ou <strong>⋮</strong> &gt; <strong>Adicionar à tela inicial</strong>. As calculadoras funcionam até sem internet.</>,
       <>Ficou alguma dúvida? Menu ⋯ &gt; <strong>Suporte</strong>.</>,
