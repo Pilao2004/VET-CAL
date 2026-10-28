@@ -40,6 +40,7 @@ import { SafetyAlert, speciesSafetyAlerts } from '../utils/safetyRules';
 import { COMMERCIAL_PRODUCTS, CommercialProduct } from '../data/commercialProducts';
 import { runCompleteClinicalTestSuite, TestSuiteSummary } from '../utils/clinicalTestSuite';
 import { fixedPosology } from '../utils/fixedDosing';
+import { ScrollRow } from './ScrollRow';
 
 /** Dose do cadastro para a espécie: cão e gato só usam a própria; outras espécies usam a delas ou, na falta, a de cão como ponto de partida. */
 function speciesDose(doses: Record<string, number | undefined>, species: string): number | undefined {
@@ -1223,7 +1224,7 @@ export const CalculatorsView: React.FC = () => {
         </p>
 
         {/* Scrollable Calculator Tabs */}
-        <div className="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none">
+        <ScrollRow label="calculadoras" className="flex items-center space-x-2 pb-2">
           {CALCULATORS_LIST.map((calc) => {
             const isSelected = selectedCalculator === calc.type;
             return (
@@ -1248,7 +1249,7 @@ export const CalculatorsView: React.FC = () => {
               </button>
             );
           })}
-        </div>
+        </ScrollRow>
       </div>
 
       {!isPremium && PREMIUM_CALCULATORS.includes(selectedCalculator) ? (
