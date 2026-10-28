@@ -23,6 +23,16 @@ export const CALCULATORS_LIST: CalculatorMeta[] = [
     clinicalNote: 'Permite selecionar dose por tomada ou dose diária total, fracionamento em quartos e quantidade total para receita.',
   },
   {
+    type: 'emergency',
+    title: 'Tabela de Emergência por Peso (PCR e Urgências)',
+    shortDescription: 'Volumes em mL de adrenalina, atropina, reversores, anticonvulsivantes, glicose, cálcio e bolus de fluido a partir do peso, para cães e gatos.',
+    category: 'Emergência & Fluidos',
+    badge: 'Avançada',
+    icon: 'Siren',
+    formulaText: 'Dose total = Peso (kg) × Dose (por kg)\nVolume (mL) = Dose total ÷ Concentração (por mL)',
+    clinicalNote: 'Doses de referência das diretrizes RECOVER e da literatura de emergência veterinária. Confira a concentração da ampola disponível.',
+  },
+  {
     type: 'fluidotherapy',
     title: 'Fluidoterapia Completa VetSmart (3 Parcelas)',
     shortDescription: 'Cálculo integrado com as 3 parcelas clínicas: Manutenção diária + Déficit de desidratação + Perdas contínuas (êmese/diarreia) em mL/h e gotas/min.',

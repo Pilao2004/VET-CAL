@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { saveFile } from '../utils/fileSave';
+import { EvolutionComposer } from './EvolutionComposer';
 import {
   Users,
   Plus,
@@ -45,6 +46,8 @@ export const PatientsView: React.FC = () => {
     refreshPatients,
     importPatientsBackup,
   } = useApp();
+
+  const [evolutionPatient, setEvolutionPatient] = useState<PatientRecord | null>(null);
 
   // Backup em arquivo: protege os prontuários do modo local (troca de aparelho, limpeza do navegador)
   const backupInputRef = useRef<HTMLInputElement>(null);
@@ -452,11 +455,7 @@ export const PatientsView: React.FC = () => {
                       </button>
                       <button
                         type="button"
-                        onClick={() => {
-                          setSelectedPatientId(activePatient.id);
-                          setCurrentView('assistant');
-                          // TODO: Trigger clinical evolution flow
-                        }}
+                        onClick={() => setEvolutionPatient(activePatient)}
                         className="flex-1 sm:flex-initial px-3.5 py-2.5 rounded-xl bg-purple-500 hover:bg-purple-600 text-white font-bold text-xs shadow-sm flex items-center justify-center space-x-1.5 transition-colors cursor-pointer min-h-[40px]"
                       >
                         <span>Criar Evolução</span>
@@ -1041,6 +1040,7 @@ export const PatientsView: React.FC = () => {
           </div>
         </div>
       )}
+      {evolutionPatient && <EvolutionComposer patient={evolutionPatient} onClose={() => setEvolutionPatient(null)} />}
     </div>
   );
 };

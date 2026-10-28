@@ -74,7 +74,9 @@ async function askGemini(system: string, history: AgentMessage[], tools: AgentTo
         config: {
           systemInstruction: system,
           temperature: 0.4,
-          tools: [{ functionDeclarations: tools.map((t) => ({ name: t.name, description: t.description, ...(t.inputSchema ? { parameters: t.inputSchema } : {}) })) }],
+          ...(tools.length
+            ? { tools: [{ functionDeclarations: tools.map((t) => ({ name: t.name, description: t.description, ...(t.inputSchema ? { parameters: t.inputSchema } : {}) })) }] }
+            : {}),
         },
       });
       const calls = response.functionCalls || [];
@@ -125,10 +127,14 @@ async function askGroq(system: string, history: AgentMessage[], tools: AgentTool
       model: process.env.GROQ_MODEL || 'llama-3.3-70b-versatile',
       temperature: 0.4,
       messages: toOpenAIMessages(system, history),
-      tools: tools.map((t) => ({
-        type: 'function',
-        function: { name: t.name, description: t.description, parameters: t.inputSchema || { type: 'object', properties: {} } },
-      })),
+      ...(tools.length
+        ? {
+            tools: tools.map((t) => ({
+              type: 'function',
+              function: { name: t.name, description: t.description, parameters: t.inputSchema || { type: 'object', properties: {} } },
+            })),
+          }
+        : {}),
     }),
   });
   if (!res.ok) {

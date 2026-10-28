@@ -30,6 +30,9 @@ import {
 import { useApp } from '../context/AppContext';
 import { CalculatorType, CalculationStep } from '../types';
 import { CALCULATORS_LIST } from '../data/calculators';
+import { EmergencyTable } from './EmergencyTable';
+import { PrescriptionActions } from './PrescriptionActions';
+import { SafetyAlert, speciesSafetyAlerts } from '../utils/safetyRules';
 import { COMMERCIAL_PRODUCTS, CommercialProduct } from '../data/commercialProducts';
 import { runCompleteClinicalTestSuite, TestSuiteSummary } from '../utils/clinicalTestSuite';
 
@@ -163,6 +166,7 @@ export const CalculatorsView: React.FC = () => {
   const [calculationSteps, setCalculationSteps] = useState<CalculationStep[]>([]);
   const [prescriptionText, setPrescriptionText] = useState<string>('');
   const [validationError, setValidationError] = useState<string | null>(null);
+  const [safetyAlerts, setSafetyAlerts] = useState<SafetyAlert[]>([]);
   const [clinicalWarning, setClinicalWarning] = useState<string | null>(null);
   const [isHistoryExpanded, setIsHistoryExpanded] = useState<boolean>(false);
   const resultCardRef = useRef<HTMLDivElement>(null);
@@ -464,6 +468,7 @@ export const CalculatorsView: React.FC = () => {
   // ==========================================
   const calculateCurrent = () => {
     setValidationError(null);
+    setSafetyAlerts([]);
     setClinicalWarning(null);
     setCopied(false);
     setCopiedPrescription(false);
@@ -480,6 +485,15 @@ export const CalculatorsView: React.FC = () => {
         if (isNaN(d) || d <= 0) return setValidationError('Informe a dose prescrita maior que zero.');
 
         const doseMgKg = doseUnit === 'mcg/kg' ? d / 1000 : d;
+        setSafetyAlerts(
+          speciesSafetyAlerts({
+            activePrinciple: selectedProductObj?.activePrinciple || drugLabel,
+            name: drugLabel,
+            species: doseSpecies,
+            doseMgKg,
+            product: selectedProductObj,
+          }),
+        );
 
         let dosePerTakeMg = 0;
         if (doseRegime === 'per-dose') {
@@ -1068,6 +1082,7 @@ export const CalculatorsView: React.FC = () => {
     setPrescriptionText('');
     setValidationError(null);
     setClinicalWarning(null);
+    setSafetyAlerts([]);
   };
 
   const handleExplicitCalculate = () => {
@@ -1151,7 +1166,10 @@ export const CalculatorsView: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Grid: Form Left, Memory & Results Right */}
+      {selectedCalculator === 'emergency' ? (
+        <EmergencyTable />
+      ) : (
+      /* Main Grid: Form Left, Memory & Results Right */
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: Interactive Form */}
         <div className="lg:col-span-7 space-y-6">
@@ -2384,6 +2402,28 @@ export const CalculatorsView: React.FC = () => {
               </span>
             </div>
 
+            {/* Alertas de segurança por espécie */}
+            {resultSummary && safetyAlerts.length > 0 && (
+              <div className="space-y-2" role="alert">
+                {safetyAlerts.map((al, i) => (
+                  <div
+                    key={i}
+                    className={`p-3 rounded-xl border text-xs leading-relaxed flex items-start gap-2 ${
+                      al.level === 'danger'
+                        ? 'bg-red-950/50 border-red-700 text-red-200'
+                        : 'bg-amber-950/40 border-amber-700/70 text-amber-100'
+                    }`}
+                  >
+                    <AlertTriangle className={`w-4 h-4 shrink-0 mt-0.5 ${al.level === 'danger' ? 'text-red-400' : 'text-amber-400'}`} />
+                    <span>
+                      <strong className="font-extrabold">{al.level === 'danger' ? 'PERIGO: ' : 'Atenção: '}</strong>
+                      {al.text}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {/* Calculation Steps (Memória de Cálculo) */}
             {calculationSteps.length > 0 && (
               <div className="space-y-2.5 pt-1">
@@ -2433,6 +2473,7 @@ export const CalculatorsView: React.FC = () => {
                 <pre className="font-mono text-xs text-[#14243A] dark:text-slate-200 whitespace-pre-wrap break-words bg-[#F1F6FC] dark:bg-slate-950/70 p-3 rounded-xl border border-[#DCE7F2] dark:border-slate-800">
                   {prescriptionText}
                 </pre>
+                <PrescriptionActions prescriptionText={prescriptionText} />
               </div>
             )}
           </div>
@@ -2492,6 +2533,7 @@ export const CalculatorsView: React.FC = () => {
           </div>
         </div>
       </div>
+      )}
 
       {/* Modal / Laboratório de Validação Matemática e Clínica */}
       {isTestLabOpen && (

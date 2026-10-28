@@ -23,7 +23,8 @@ export type CalculatorType =
   | 'percentage-conversion'
   | 'rule-of-three'
   | 'unit-conversion'
-  | 'bsa';
+  | 'bsa'
+  | 'emergency';
 
 export interface CalculationStep {
   label: string;

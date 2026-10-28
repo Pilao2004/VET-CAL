@@ -3,6 +3,7 @@
 import { COMMERCIAL_PRODUCTS, CommercialProduct } from '../data/commercialProducts';
 import { calculateDeterministicDosage, calculateTabletDosage, calculateDropsDosage } from '../utils/calculatorEngine';
 import { PatientRecord } from '../types';
+import { speciesSafetyAlerts } from '../utils/safetyRules';
 
 export interface AITurn {
   role: 'user' | 'assistant';
@@ -125,6 +126,9 @@ function calculateDose(input: Record<string, unknown>) {
     regra_bula: protocol?.bulaRuleText,
     passos: passos.map((s) => `${s.label}: ${s.expression} = ${s.result}`),
     alertas,
+    alertas_de_seguranca: speciesSafetyAlerts({ activePrinciple: product.activePrinciple, name: product.brandName, species, doseMgKg, product }).map(
+      (a) => `${a.level === 'danger' ? 'PERIGO' : 'Atenção'}: ${a.text}`,
+    ),
   };
 }
 
@@ -191,6 +195,7 @@ DOSES E MEDICAMENTOS
 - Para qualquer dose, volume, número de comprimidos ou gotas, NUNCA calcule de cabeça: use buscar_medicamento para achar o produto e calcular_dose para obter o resultado. Informe o produto, a concentração, a dose em mg/kg usada, o resultado, a via e a frequência.
 - Se houver várias apresentações (injetável, comprimido, gotas) e o usuário não disse qual usa, pergunte, citando as opções mais prováveis.
 - Se o medicamento não estiver na biblioteca, diga isso claramente e dê a faixa de dose de referência da literatura veterinária, avisando que não foi calculado pelo app e deve ser conferido na bula.
+- Sempre repasse ao usuário os itens de alertas_de_seguranca retornados por calcular_dose, destacando os de PERIGO no início da resposta.
 - Alerte sobre contraindicações e cuidados relevantes para a espécie (ex.: AINEs em gatos, paracetamol em gatos, ivermectina em raças sensíveis ao MDR1).
 
 PACIENTES
@@ -363,4 +368,37 @@ export async function askServerAssistant(
     return { text: String(data.text || '').trim() || 'Não consegui formular uma resposta. Pode reformular?', provider: data.provider };
   }
   throw fail('upstream');
+}
+
+/** Texto simples com IA (sem ferramentas): Claude no claude.ai; no site, Gemini/Groq pelo servidor. */
+export async function generateWithAI(
+  instructions: string,
+  prompt: string,
+  options: { signal?: AbortSignal; provider?: AssistantProviderChoice } = {},
+): Promise<{ text: string; provider: string }> {
+  const sample = options.provider && options.provider !== 'auto' ? null : await getClaudeSample();
+  if (sample) {
+    const { text } = await sample([{ role: 'user', content: `${instructions}\n\n${prompt}` }], {
+      modelTier: 'quick',
+      cache: false,
+      signal: options.signal,
+    } as Record<string, unknown>);
+    return { text, provider: 'claude' };
+  }
+  const fail = (code: ServerAgentErrorCode) => Object.assign(new Error(code), { code });
+  let res: Response;
+  try {
+    res = await fetch('./api/assistant/agent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ system: instructions, history: [{ role: 'user', text: prompt }], tools: [], provider: options.provider || 'auto' }),
+      signal: options.signal,
+    });
+  } catch (e: any) {
+    throw fail(e?.name === 'AbortError' ? 'cancelled' : 'unavailable');
+  }
+  if (!(res.headers.get('content-type') || '').includes('application/json')) throw fail('unavailable');
+  const data = await res.json().catch(() => null);
+  if (!res.ok || !data?.text) throw fail(data?.error === 'quota' || data?.error === 'unconfigured' ? data.error : res.ok ? 'upstream' : res.status === 404 ? 'unavailable' : 'upstream');
+  return { text: String(data.text).trim(), provider: data.provider };
 }

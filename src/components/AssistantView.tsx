@@ -32,6 +32,7 @@ import {
   SmartCalculationResult,
   formatClinicalVolume,
 } from '../utils/assistantCalculator';
+import { EvolutionComposer } from './EvolutionComposer';
 import {
   AITurn,
   AssistantProviderChoice,
@@ -90,6 +91,7 @@ export const AssistantView: React.FC = () => {
     text: string;
   } | null>(null);
   const [isSavingEvolution, setIsSavingEvolution] = useState(false);
+  const [composerPatient, setComposerPatient] = useState<PatientRecord | null>(null);
 
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -888,19 +890,8 @@ Confirma esta dose ou deseja prescrever outro valor em mg/kg?`,
         showToast('Sugestão registrada.');
       }
     } else if (payload.action === 'draft_evolution') {
-      const patient = payload.patient;
-      const latestCons = patient.consultations?.[0];
-      const draftText = `Paciente ${patient.name} (${patient.species}, ${patient.weight} kg). ` +
-        `Evolução clínica assistida por IA em ${new Date().toLocaleDateString('pt-BR')}: ` +
-        (latestCons?.tentativeDiagnosis ? `Quadro clínico sob acompanhamento para ${latestCons.tentativeDiagnosis}. ` : '') +
-        `Paciente clinicamente estável, sob monitoramento dos parâmetros vitais e resposta à conduta terapêutica prescrita.`;
-
-      setEvolutionPreview({
-        patientId: patient.id,
-        patientName: patient.name,
-        text: draftText,
-      });
-      showToast('Prévia de evolução gerada para sua revisão.');
+      // Abre o relato livre/ditado organizado pela IA, com revisão antes de salvar
+      setComposerPatient(payload.patient);
     } else if (payload.action === 'prep_calc') {
       const patient = payload.patient;
       setPendingCalculation({
@@ -1571,6 +1562,7 @@ Confirma esta dose ou deseja prescrever outro valor em mg/kg?`,
           </div>
         </div>
       )}
+      {composerPatient && <EvolutionComposer patient={composerPatient} onClose={() => setComposerPatient(null)} />}
     </div>
   );
 };
