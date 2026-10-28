@@ -178,7 +178,7 @@ export const HomeView: React.FC = () => {
                 Bônus 01
               </span>
               <span className="text-xs text-emerald-600 dark:text-emerald-400 font-bold">
-                Bônus do Premium
+                Bônus inclusos
               </span>
             </div>
             <h3 className="text-base sm:text-lg font-extrabold text-[var(--text-main)] mt-1">
@@ -193,7 +193,7 @@ export const HomeView: React.FC = () => {
         <div className="flex items-center space-x-4 shrink-0 w-full sm:w-auto justify-between sm:justify-end">
           <div className="text-right">
             <span className="text-[10px] text-slate-400 block line-through">R$ 97,00</span>
-            <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">Incluso no Premium</span>
+            <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">Incluso na compra</span>
           </div>
           <div className="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs shadow-md transition-all flex items-center space-x-1.5">
             <span>Acessar Guia</span>

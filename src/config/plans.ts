@@ -1,29 +1,32 @@
-// O que é grátis e o que é Premium. Ajuste aqui para mudar a oferta.
+// Oferta: compra única, acesso permanente a todo o app.
 import { CalculatorType } from '../types';
 
 export const PREMIUM_CALCULATORS: CalculatorType[] = ['emergency', 'cri', 'transfusion', 'bsa'];
 
-/** Link da página de compra (Hotmart, Kiwify...). Configure VITE_CHECKOUT_URL no Netlify. */
-export const CHECKOUT_URL: string = (import.meta as any).env?.VITE_CHECKOUT_URL || '';
-/** Texto do preço exibido no app, ex.: "R$ 19,90/mês". Configure VITE_PRICE_LABEL no Netlify. */
-export const PRICE_LABEL: string = (import.meta as any).env?.VITE_PRICE_LABEL || '';
+const env = (import.meta as any).env || {};
 
-export const FREE_FEATURES = [
+/** Links de compra (compra única). Configure no Netlify. */
+export const KIWIFY_URL: string = env.VITE_KIWIFY_CHECKOUT_URL || env.VITE_CHECKOUT_URL || '';
+export const HOTMART_URL: string = env.VITE_HOTMART_CHECKOUT_URL || '';
+/** Preço exibido na página de vendas, ex.: "R$ 97,00". */
+export const PRICE_LABEL: string = env.VITE_PRICE_LABEL || '';
+/** Preço "de", riscado (opcional), ex.: "R$ 197,00". */
+export const PRICE_FROM_LABEL: string = env.VITE_PRICE_FROM_LABEL || '';
+
+export const APP_FEATURES = [
   'Calculadora de medicamentos com memória de cálculo',
-  'Fluidoterapia, diluição, gotejamento, déficit hídrico e regra de três',
+  'Fluidoterapia, diluição, gotejamento, infusão contínua, transfusão e superfície corporal',
+  'Tabela de emergência por peso (PCR, convulsão, reversores)',
   'Biblioteca com 541 apresentações comerciais',
-  'Consulta por sintomas e interpretação de exames',
-  'Alertas de segurança por espécie',
-];
-
-export const PREMIUM_FEATURES = [
   'Assistente IA: doses, dúvidas clínicas e fichas dos pacientes',
   'Prontuários, consultas e evolução clínica por voz',
   'Receita em PDF e envio pelo WhatsApp',
-  'Tabela de emergência por peso (PCR, convulsão, reversores)',
-  'Infusão contínua, transfusão e superfície corporal',
+  'Consulta por sintomas, interpretação de exames e alertas por espécie',
   'Bônus: Guia de Urgências e Checklist de Anamnese em PDF',
 ];
+
+/** Mantido para os avisos internos de recursos. */
+export const PREMIUM_FEATURES = APP_FEATURES;
 
 /** Dentro do claude.ai o app é a versão de testes do dono: tudo liberado. */
 export const isOwnerPreview = () => Boolean((window as any).claude);

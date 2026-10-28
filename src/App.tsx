@@ -17,10 +17,30 @@ import { SupportView } from './components/SupportView';
 import { PremiumGate } from './components/PremiumGate';
 import { LegalView } from './components/LegalView';
 import { TermsConsent } from './components/TermsConsent';
+import { LandingPage } from './components/LandingPage';
 import { ShieldCheck, Heart } from 'lucide-react';
 
 const AppContent: React.FC = () => {
-  const { currentView, toast, setCurrentView } = useApp();
+  const { currentView, toast, setCurrentView, isPremium } = useApp();
+
+  // App inteiro pago: sem acesso liberado, mostra a página de vendas (os Termos continuam abertos)
+  if (!isPremium) {
+    return currentView === 'legal' ? (
+      <main className="min-h-screen bg-[var(--bg-main)] text-[var(--text-main)] max-w-4xl mx-auto px-4 py-8 space-y-4">
+        <button type="button" onClick={() => setCurrentView('home')} className="text-sm font-bold text-[var(--primary)] cursor-pointer">
+          ← Voltar
+        </button>
+        <LegalView />
+      </main>
+    ) : (
+      <>
+        <LandingPage />
+        {toast && (
+          <div className="fixed bottom-6 right-4 z-50 bg-emerald-500 text-slate-950 px-4 py-3 rounded-2xl shadow-2xl text-xs font-semibold">{toast}</div>
+        )}
+      </>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[var(--bg-main)] text-[var(--text-main)] flex flex-col transition-colors selection:bg-emerald-500/20 selection:text-emerald-800">

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Licenças VET CALC PRO</title>
+<title>Painel VET CALC PRO</title>
 <style>
   :root { --bg: #060D1C; --surface: #10213B; --line: #243D58; --fg: #F4F7FB; --muted: #9AADC6; --accent: #00D6A0; --warn: #FBBF24; color-scheme: dark; }
   * { box-sizing: border-box; }
@@ -26,8 +26,8 @@
 <body>
 <main>
   <div>
-    <h1>Gerar código de acesso Premium</h1>
-    <p>Use após cada venda. O comprador ativa no app com o e-mail da compra e este código.</p>
+    <h1>Gerar código de acesso</h1>
+    <p>Só é preciso se o aviso automático da Kiwify/Hotmart não chegou. O comprador usa em Já comprei &gt; Recebi um código de acesso.</p>
   </div>
   <form id="form">
     <label>Senha de administrador
@@ -38,11 +38,9 @@
     </label>
     <label>Validade
       <select id="days">
-        <option value="31">1 mês</option>
-        <option value="93">3 meses</option>
-        <option value="186">6 meses</option>
-        <option value="366" selected>1 ano</option>
-        <option value="3650">Vitalício (10 anos)</option>
+        <option value="27000" selected>Permanente (compra única)</option>
+        <option value="7">7 dias (teste)</option>
+        <option value="31">1 mês (cortesia)</option>
       </select>
     </label>
     <button type="submit" id="submit">Gerar código</button>
@@ -54,6 +52,19 @@
     <button type="button" class="secondary" id="copy">Copiar mensagem para o comprador</button>
     <p class="hint" id="copied" hidden>Mensagem copiada.</p>
   </section>
+  <div>
+    <h1>Avisos de venda</h1>
+    <p>Últimos avisos recebidos da Kiwify e da Hotmart. Informe um e-mail para ver a situação do comprador.</p>
+  </div>
+  <form id="log-form">
+    <label>E-mail do comprador (opcional)
+      <input id="log-email" type="email" autocomplete="off">
+    </label>
+    <button type="submit">Consultar</button>
+    <p id="log-error" class="error" hidden></p>
+    <p id="log-buyer" hidden></p>
+    <div id="log-list" style="display:grid;gap:8px;font-size:.85rem"></div>
+  </form>
 </main>
 <script>
   const $ = (id) => document.getElementById(id);
@@ -74,7 +85,8 @@
       $('r-email').textContent = data.email;
       $('r-exp').textContent = exp;
       $('r-key').textContent = data.key;
-      message = `Olá! Seu acesso ao VET CALC PRO Premium está liberado.\n\n1. Abra ${location.origin}\n2. Menu (três pontinhos) > Seja Premium > Já comprei\n3. E-mail: ${data.email}\n4. Código: ${data.key}\n\nVálido até ${exp}. Bons estudos e bons plantões!`;
+      const validity = data.expiresAt >= '2090' ? 'Acesso permanente.' : `Válido até ${exp}.`;
+      message = `Olá! Seu acesso ao VET CALC PRO está liberado.\n\n1. Abra ${location.origin}\n2. Toque em Já comprei > Recebi um código de acesso\n3. E-mail: ${data.email}\n4. Código: ${data.key}\n\n${validity} Bons estudos e bons plantões!`;
       $('result').hidden = false;
       $('copied').hidden = true;
     } catch (err) {
@@ -82,6 +94,32 @@
       $('error').hidden = false;
     } finally {
       $('submit').disabled = false;
+    }
+  });
+  $('log-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    $('log-error').hidden = true;
+    try {
+      const res = await fetch('./api/admin/purchases', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: $('password').value, email: $('log-email').value }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Não foi possível consultar. Preencha a senha de administrador acima.');
+      const p = data.purchase;
+      $('log-buyer').hidden = !$('log-email').value;
+      $('log-buyer').textContent = p
+        ? `${p.email}: ${p.status === 'active' ? 'acesso liberado' : 'acesso bloqueado'} (${p.platform}, pedidos ${p.orders.join(', ') || '-'})`
+        : 'Nenhuma compra registrada para este e-mail.';
+      $('log-list').replaceChildren(...(data.log.length ? data.log : [null]).map((l) => {
+        const div = document.createElement('div');
+        div.textContent = l ? `${new Date(l.at).toLocaleString('pt-BR')} · ${l.platform} · ${l.event} · ${l.email || '-'} · ${l.order || '-'} → ${l.result}` : 'Nenhum aviso recebido ainda.';
+        return div;
+      }));
+    } catch (err) {
+      $('log-error').textContent = err.message;
+      $('log-error').hidden = false;
     }
   });
   $('copy').addEventListener('click', async () => {

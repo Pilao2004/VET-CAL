@@ -57,21 +57,49 @@ export function verifyLicense(email: string, rawKey: string): LicenseCheck {
   return { ok: true, expiry };
 }
 
-/** Token guardado no aparelho e enviado à IA do servidor para provar o Premium. */
-export function issueToken(email: string, expiry: string) {
-  const payload = Buffer.from(JSON.stringify({ e: normalizeEmail(email), x: expiry })).toString('base64url');
-  return `${payload}.${hmac(`token|${payload}`).slice(0, 32)}`;
+export type TokenSource = 'buy' | 'lic';
+export interface TokenData {
+  email: string;
+  expiry: string;
+  source: TokenSource;
+  licenseExpiry: string;
 }
 
-export function verifyToken(token: unknown): { email: string; expiry: string } | null {
+const TOKEN_DAYS = 7;
+const REFRESH_GRACE_DAYS = 120;
+
+/** Token guardado no aparelho e enviado ao servidor para provar o acesso. Vale 7 dias e é renovado sempre que o app abre com internet. */
+export function issueToken(email: string, licenseExpiry: string, source: TokenSource) {
+  const shortExpiry = expiryFromDays(TOKEN_DAYS);
+  const payloadObj = { e: normalizeEmail(email), x: shortExpiry < licenseExpiry ? shortExpiry : licenseExpiry, s: source, l: licenseExpiry };
+  const payload = Buffer.from(JSON.stringify(payloadObj)).toString('base64url');
+  return { token: `${payload}.${hmac(`token|${payload}`).slice(0, 32)}`, tokenExpiry: payloadObj.x };
+}
+
+function readToken(token: unknown): TokenData | null {
   if (!licensingConfigured() || typeof token !== 'string' || !token.includes('.')) return null;
   const [payload, sig] = token.split('.');
   if (!safeEqual(hmac(`token|${payload}`).slice(0, 32), sig || '')) return null;
   try {
-    const { e, x } = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
-    if (typeof x !== 'string' || x < todayStamp()) return null;
-    return { email: String(e), expiry: x };
+    const { e, x, s, l } = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
+    if (typeof x !== 'string') return null;
+    return { email: String(e), expiry: x, source: s === 'buy' ? 'buy' : 'lic', licenseExpiry: typeof l === 'string' ? l : x };
   } catch {
     return null;
   }
 }
+
+/** Token válido e dentro da validade (exigido pelas rotas de IA). */
+export function verifyToken(token: unknown): TokenData | null {
+  const data = readToken(token);
+  return data && data.expiry >= todayStamp() ? data : null;
+}
+
+/** Token autêntico, mesmo vencido há até 120 dias (para renovar quem ficou um tempo offline). */
+export function verifyTokenForRefresh(token: unknown): TokenData | null {
+  const data = readToken(token);
+  return data && data.expiry >= expiryFromDays(-REFRESH_GRACE_DAYS) ? data : null;
+}
+
+export const LIFETIME_EXPIRY = '20991231';
+export { todayStamp };

@@ -2,7 +2,8 @@ import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { GoogleGenAI } from '@google/genai';
 import { AgentError, runAgentRound } from './agent';
-import { expiryFromDays, issueToken, licensingConfigured, normalizeEmail, signLicense, stampToIso, verifyLicense, verifyToken } from './license';
+import { expiryFromDays, issueToken, licensingConfigured, LIFETIME_EXPIRY, normalizeEmail, signLicense, stampToIso, todayStamp, verifyLicense, verifyToken, verifyTokenForRefresh } from './license';
+import { applyPurchaseEvent, getPurchase, getWebhookLog, hotmartAuthorized, kiwifyAuthorized, parseHotmart, parseKiwify } from './purchases';
 
 dotenv.config();
 
@@ -46,8 +47,83 @@ router.post('/subscription/activate', (req: Request, res: Response) => {
     tier: 'premium',
     message: 'Premium ativado. Bom trabalho!',
     expiresAt: stampToIso(check.expiry),
-    token: licensingConfigured() ? issueToken(cleanEmail, check.expiry) : undefined,
+    token: licensingConfigured() ? issueToken(cleanEmail, check.expiry, 'lic').token : undefined,
   });
+});
+
+const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+const cleanOrder = (v: unknown) => String(v || '').trim().replace(/^#/, '').toUpperCase();
+
+// Compra única (Kiwify/Hotmart): o comprador informa o e-mail e o nº do pedido e o app é liberado
+router.post('/subscription/claim', async (req: Request, res: Response) => {
+  const cleanEmail = normalizeEmail(req.body?.email);
+  const order = cleanOrder(req.body?.order);
+  if (!EMAIL_RE.test(cleanEmail)) return res.status(400).json({ success: false, message: 'Informe o e-mail usado na compra.' });
+  if (!order) return res.status(400).json({ success: false, message: 'Informe o número do pedido (está no e-mail da compra).' });
+  if (!licensingConfigured()) return res.status(503).json({ success: false, message: 'A liberação ainda não foi configurada no servidor do app.' });
+  try {
+    const purchase = await getPurchase(cleanEmail);
+    const orderMatches = purchase?.orders.some((o) => cleanOrder(o) === order);
+    if (!purchase || !orderMatches) {
+      return res.status(404).json({
+        success: false,
+        message: 'Ainda não encontramos essa compra. Se o pagamento acabou de ser aprovado, aguarde 1 a 2 minutos e tente de novo. Confira também o e-mail e o nº do pedido.',
+      });
+    }
+    if (purchase.status !== 'active') {
+      return res.status(403).json({ success: false, message: 'Esta compra foi reembolsada ou cancelada, por isso o acesso foi encerrado.' });
+    }
+    return res.json({
+      success: true,
+      tier: 'premium',
+      message: 'Compra confirmada. Acesso liberado para sempre neste e-mail!',
+      expiresAt: null,
+      token: issueToken(cleanEmail, LIFETIME_EXPIRY, 'buy').token,
+    });
+  } catch (err: any) {
+    console.warn('claim:', err?.message || err);
+    return res.status(500).json({ success: false, message: 'Não foi possível consultar a compra agora. Tente novamente.' });
+  }
+});
+
+// Renova o token guardado no aparelho (bloqueia quem foi reembolsado)
+router.post('/subscription/refresh', async (req: Request, res: Response) => {
+  const data = verifyTokenForRefresh(req.body?.token);
+  if (!data) return res.status(401).json({ valid: false, reason: 'invalid' });
+  try {
+    if (data.source === 'buy') {
+      const purchase = await getPurchase(data.email);
+      if (!purchase || purchase.status !== 'active') return res.status(403).json({ valid: false, reason: 'revoked' });
+    } else if (data.licenseExpiry < todayStamp()) {
+      return res.status(403).json({ valid: false, reason: 'expired' });
+    }
+  } catch (err: any) {
+    console.warn('refresh:', err?.message || err);
+    return res.status(503).json({ valid: true, retry: true });
+  }
+  return res.json({ valid: true, token: issueToken(data.email, data.licenseExpiry, data.source).token });
+});
+
+// Avisos de venda, reembolso e chargeback
+router.post('/webhooks/kiwify', async (req: Request, res: Response) => {
+  if (!kiwifyAuthorized((req as any).rawBody, req.query.signature)) return res.status(401).json({ error: 'assinatura inválida' });
+  const result = await applyPurchaseEvent('kiwify', parseKiwify(req.body));
+  return res.json({ ok: true, result });
+});
+
+router.post('/webhooks/hotmart', async (req: Request, res: Response) => {
+  if (!hotmartAuthorized(req.headers['x-hotmart-hottok'], req.body)) return res.status(401).json({ error: 'hottok inválido' });
+  const result = await applyPurchaseEvent('hotmart', parseHotmart(req.body));
+  return res.json({ ok: true, result });
+});
+
+// Painel: últimos avisos recebidos e consulta de um comprador
+router.post('/admin/purchases', async (req: Request, res: Response) => {
+  const adminPassword = process.env.ADMIN_PASSWORD || '';
+  if (!adminPassword) return res.status(503).json({ error: 'Configure ADMIN_PASSWORD no Netlify.' });
+  if (String(req.body?.password || '') !== adminPassword) return res.status(401).json({ error: 'Senha incorreta.' });
+  const email = normalizeEmail(req.body?.email);
+  return res.json({ purchase: email ? await getPurchase(email) : null, log: await getWebhookLog() });
 });
 
 router.post('/subscription/validate', (req: Request, res: Response) => {
@@ -64,7 +140,7 @@ router.post('/admin/license', (req: Request, res: Response) => {
   }
   if (String(password || '') !== adminPassword) return res.status(401).json({ error: 'Senha incorreta.' });
   const cleanEmail = normalizeEmail(email);
-  const validDays = Math.min(Math.max(Number(days) || 365, 1), 3650);
+  const validDays = Math.min(Math.max(Number(days) || 27000, 1), 27000);
   if (!cleanEmail.includes('@')) return res.status(400).json({ error: 'E-mail inválido.' });
   const expiry = expiryFromDays(validDays);
   return res.json({ email: cleanEmail, key: signLicense(cleanEmail, expiry), expiresAt: stampToIso(expiry) });
@@ -355,7 +431,9 @@ router.post('/assistant/agent', async (req: Request, res: Response) => {
 
 export function createApiApp() {
   const app = express();
-  app.use(express.json({ limit: '10mb' }));
+  // rawBody é usado para conferir a assinatura dos avisos da Kiwify
+  app.use(express.json({ limit: '10mb', verify: (req: any, _res, buf) => { req.rawBody = buf; } }));
+  app.use(express.urlencoded({ extended: true, limit: '1mb', verify: (req: any, _res, buf) => { req.rawBody = buf; } }));
   // '/api' para o servidor local; '/.netlify/functions/api' quando o Netlify repassa o caminho reescrito
   app.use(['/api', '/.netlify/functions/api'], router);
   return app;

@@ -56,7 +56,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             className="flex items-center space-x-3 w-full p-3 hover:bg-[var(--input-bg)] rounded-xl cursor-pointer"
           >
             <Crown className="w-5 h-5 text-amber-400" />
-            <span>{isPremium ? 'Meu Premium' : 'Seja Premium'}</span>
+            <span>Minha compra</span>
           </button>
           <div className="border-t border-[var(--border)] my-2" />
           <button 

@@ -50,8 +50,11 @@ Netlify > **Site configuration** > **Environment variables** > **Add a variable*
 | `ADMIN_PASSWORD` | A senha da sua página de geração de códigos. |
 | `GEMINI_API_KEY` | Chave criada em aistudio.google.com/apikey, num projeto **sem faturamento ativado** (plano gratuito). |
 | `GROQ_API_KEY` | Chave criada em console.groq.com > API Keys (gratuita, sem cartão). É a IA de reserva. |
-| `VITE_CHECKOUT_URL` | Link da página de compra do produto na Hotmart ou Kiwify. |
-| `VITE_PRICE_LABEL` | Texto do preço mostrado no app, por exemplo `R$ 19,90/mês`. |
+| `VITE_KIWIFY_CHECKOUT_URL` | Link do checkout do produto na Kiwify. |
+| `VITE_HOTMART_CHECKOUT_URL` | Link do checkout do produto na Hotmart. Pode usar só uma das duas plataformas. |
+| `VITE_PRICE_LABEL` | Preço mostrado na página de vendas, por exemplo `R$ 97,00`. |
+| `KIWIFY_TOKEN` | Token do webhook criado na Kiwify (passo 6). |
+| `HOTMART_HOTTOK` | Hottok da sua conta Hotmart (passo 6). |
 | `VITE_LEGAL_NAME` | Seu nome completo ou razão social (aparece nos Termos e na Política de Privacidade). |
 | `VITE_LEGAL_DOC` | Seu CPF ou CNPJ (opcional, recomendado). |
 | `VITE_LEGAL_EMAIL` | E-mail de contato para assuntos de privacidade (padrão: suporte.vetcalcpro@gmail.com). |
@@ -60,8 +63,8 @@ Netlify > **Site configuration** > **Environment variables** > **Add a variable*
 
 | Variável | Para que serve |
 |---|---|
+| `VITE_PRICE_FROM_LABEL` | Preço "de", riscado, ex.: `R$ 197,00`. |
 | `PROMO_KEYS` | Códigos de campanha válidos para qualquer e-mail, no formato `CODIGO:AAAAMMDD`, separados por vírgula. Ex.: `LANCAMENTO:20261231`. |
-| `PREMIUM_AI` | Coloque `off` para liberar a IA também no plano grátis. |
 | `GEMINI_MODELS` / `GROQ_MODEL` | Trocar os modelos de IA, se o Google ou o Groq aposentarem os atuais. |
 | `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` | Ativam os prontuários na nuvem (passo 7). |
 
@@ -69,24 +72,35 @@ Netlify > **Site configuration** > **Environment variables** > **Add a variable*
 
 ## 5. Testar o site depois do deploy
 
-- [ ] O site abre e pede o aceite dos Termos.
-- [ ] Sem Premium: Assistente, Pacientes, Tabela de Emergência, Infusão contínua, Transfusão, Superfície corporal, Receita e PDFs dos bônus aparecem bloqueados.
-- [ ] Abra `https://vetcalculatorpro.netlify.app/admin-licencas.html`, gere um código para o seu e-mail e ative no app (menu > Seja Premium > Já comprei).
-- [ ] Com Premium: tudo libera; na Assistente, envie "Bom dia" com as opções Padrão, Gemini e Groq.
+- [ ] O site abre na página de vendas, com o preço e os botões de compra.
+- [ ] Faça uma compra de teste (ou use o webhook de teste da plataforma) e confira em **Avisos de venda** na página `admin-licencas.html` se aparece "acesso liberado".
+- [ ] Na página de vendas, toque em **Já comprei**, informe o e-mail e o nº do pedido: o app abre e pede o aceite dos Termos.
+- [ ] Na Assistente, envie "Bom dia" com as opções Padrão, Gemini e Groq.
 - [ ] No celular: menu do navegador > **Adicionar à tela inicial**, abra pelo ícone e teste sem internet (calculadoras e biblioteca funcionam).
 
 ---
 
-## 6. Vendendo
+## 6. Vendendo (compra única, liberação automática)
 
-1. Crie o produto na Hotmart ou na Kiwify (assinatura mensal, anual ou acesso vitalício) e coloque o link em `VITE_CHECKOUT_URL`.
-2. A cada venda, abra `/admin-licencas.html`, digite a senha de administrador e o e-mail do comprador, escolha a validade e clique em **Gerar código**.
-3. Clique em **Copiar mensagem para o comprador** e envie por e-mail ou WhatsApp. A mensagem já explica como ativar.
-4. Renovação: gere um novo código com a nova validade para o mesmo e-mail.
+O app inteiro é pago. Quem entra no site vê a página de vendas; depois de pagar, libera o acesso para sempre. Reembolso ou chargeback bloqueia o acesso automaticamente; uma nova compra libera de novo.
 
-Mais adiante, dá para automatizar o envio do código com o webhook da Hotmart ou da Kiwify. Peça quando o volume de vendas justificar.
+### Kiwify
+1. Crie o produto com **pagamento único** e copie o link do checkout para `VITE_KIWIFY_CHECKOUT_URL`.
+2. **Apps** > **Webhooks** > **Criar webhook**: URL `https://vetcalculatorpro.netlify.app/api/webhooks/kiwify`, produto VET CALC PRO, eventos **Compra aprovada**, **Reembolso** e **Chargeback**.
+3. Copie o **token** do webhook para `KIWIFY_TOKEN` e faça um novo deploy.
 
----
+### Hotmart
+1. Crie o produto com **pagamento único** e copie o link do checkout para `VITE_HOTMART_CHECKOUT_URL`.
+2. **Ferramentas** > **Webhook (API e notificações)** > **Cadastrar webhook**: URL `https://vetcalculatorpro.netlify.app/api/webhooks/hotmart`, versão 2.0, eventos **Compra aprovada**, **Compra completa**, **Compra reembolsada**, **Chargeback** e **Compra cancelada**.
+3. Copie o **Hottok** da mesma tela para `HOTMART_HOTTOK` e faça um novo deploy.
+
+### Página de obrigado (recomendado)
+Nas duas plataformas, configure a página de obrigado/redirecionamento para `https://vetcalculatorpro.netlify.app/?ativar=1`. O comprador cai direto no formulário **Já comprei**.
+
+### Conferir e resolver problemas
+- `admin-licencas.html` > **Avisos de venda**: mostra os últimos avisos recebidos e o status de um e-mail.
+- Se um aviso não chegou, gere um código manual na mesma página e envie ao comprador; ele usa **Já comprei** > **Recebi um código de acesso**.
+- Após o reembolso, o app bloqueia na próxima vez que o comprador abrir com internet (no máximo em 7 dias se ficar offline).
 
 ## 7. Prontuários na nuvem (opcional, gratuito)
 

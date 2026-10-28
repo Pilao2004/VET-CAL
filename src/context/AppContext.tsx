@@ -103,6 +103,7 @@ interface AppContextType {
   // Subscription
   subscription: SubscriptionInfo;
   activateSubscriptionServer: (key: string, email?: string) => Promise<{ success: boolean; message: string }>;
+  claimPurchase: (email: string, order: string) => Promise<{ success: boolean; message: string }>;
   deactivateSubscription: () => void;
   isPremium: boolean;
   checkIsFeatureUnlocked: (badge: 'Básica' | 'Avançada') => boolean;
@@ -822,28 +823,31 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       subscription.isActive &&
       (!subscription.expiresAt || subscription.expiresAt >= new Date().toISOString().slice(0, 10)));
 
+  const saveSubscription = (subData: SubscriptionInfo) => {
+    setSubscription(subData);
+    try {
+      localStorage.setItem('vet_calc_pro_sub', JSON.stringify(subData));
+    } catch {}
+  };
+
+  const postJson = async (url: string, body: unknown) => {
+    const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    return { response, data: await response.json().catch(() => null) };
+  };
+
   const activateSubscriptionServer = async (key: string, email?: string): Promise<{ success: boolean; message: string }> => {
     try {
-      const response = await fetch('./api/subscription/activate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ licenseKey: key, email }),
-      });
-      const data = await response.json().catch(() => null);
+      const { response, data } = await postJson('./api/subscription/activate', { licenseKey: key, email });
       if (response.ok && data?.success) {
-        const subData: SubscriptionInfo = {
+        saveSubscription({
           tier: 'premium',
           isActive: true,
           licenseKey: key.trim().toUpperCase(),
           expiresAt: data.expiresAt,
           email: (email || '').trim().toLowerCase(),
           token: data.token,
-        };
-        setSubscription(subData);
-        try {
-          localStorage.setItem('vet_calc_pro_sub', JSON.stringify(subData));
-        } catch {}
-        showToast('Premium ativado!');
+        });
+        showToast('Acesso liberado!');
         return { success: true, message: data.message };
       }
       return { success: false, message: data?.message || 'Não foi possível ativar. Confira o código e o e-mail.' };
@@ -852,12 +856,50 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
+  // Compra única na Kiwify/Hotmart: libera com e-mail + nº do pedido
+  const claimPurchase = async (email: string, order: string): Promise<{ success: boolean; message: string }> => {
+    try {
+      const { response, data } = await postJson('./api/subscription/claim', { email, order });
+      if (response.ok && data?.success) {
+        saveSubscription({ tier: 'premium', isActive: true, licenseKey: order.trim().toUpperCase(), email: email.trim().toLowerCase(), token: data.token });
+        showToast('Acesso liberado!');
+        return { success: true, message: data.message };
+      }
+      return { success: false, message: data?.message || 'Não foi possível confirmar a compra. Confira o e-mail e o nº do pedido.' };
+    } catch {
+      return { success: false, message: 'Sem conexão com o servidor. Verifique a internet e tente de novo.' };
+    }
+  };
+
+  // Ao abrir com internet, renova o token; reembolso ou chargeback bloqueia o acesso
+  useEffect(() => {
+    if (isOwnerPreview() || !subscription.token) return;
+    let cancelled = false;
+    postJson('./api/subscription/refresh', { token: subscription.token })
+      .then(({ response, data }) => {
+        if (cancelled) return;
+        if (response.ok && data?.token) saveSubscription({ ...subscription, token: data.token });
+        else if (response.status === 401 || response.status === 403) {
+          setSubscription(FREE_PLAN);
+          try {
+            localStorage.removeItem('vet_calc_pro_sub');
+          } catch {}
+          showToast(data?.reason === 'revoked' ? 'Acesso encerrado: a compra foi reembolsada ou cancelada.' : 'Seu acesso precisa ser ativado novamente.');
+        }
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const deactivateSubscription = () => {
     setSubscription(FREE_PLAN);
     try {
       localStorage.removeItem('vet_calc_pro_sub');
     } catch {}
-    showToast('Premium removido deste aparelho.');
+    showToast('Acesso removido deste aparelho.');
   };
 
   const checkIsFeatureUnlocked = (badge: 'Básica' | 'Avançada'): boolean => badge !== 'Avançada' || isPremium;
@@ -991,6 +1033,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
         subscription,
         activateSubscriptionServer,
+        claimPurchase,
         deactivateSubscription,
         isPremium,
         checkIsFeatureUnlocked,
