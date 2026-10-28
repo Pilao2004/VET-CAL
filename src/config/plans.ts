@@ -28,6 +28,9 @@ export const APP_FEATURES = [
 /** Mantido para os avisos internos de recursos. */
 export const PREMIUM_FEATURES = APP_FEATURES;
 
+/** Prévia da página de vendas (aba fixada no claude.ai): a página definida com window.__VCP_LANDING__. */
+export const isLandingPreview = () => Boolean((window as any).__VCP_LANDING__);
+
 /** Dentro do claude.ai o app é a versão de testes do dono: tudo liberado. */
 export const isOwnerPreview = () => Boolean((window as any).claude);
 

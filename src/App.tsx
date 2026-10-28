@@ -18,13 +18,14 @@ import { PremiumGate } from './components/PremiumGate';
 import { LegalView } from './components/LegalView';
 import { TermsConsent } from './components/TermsConsent';
 import { LandingPage } from './components/LandingPage';
+import { isLandingPreview } from './config/plans';
 import { ShieldCheck, Heart } from 'lucide-react';
 
 const AppContent: React.FC = () => {
   const { currentView, toast, setCurrentView, isPremium } = useApp();
 
   // App inteiro pago: sem acesso liberado, mostra a página de vendas (os Termos continuam abertos)
-  if (!isPremium) {
+  if (!isPremium || isLandingPreview()) {
     return currentView === 'legal' ? (
       <main className="min-h-screen bg-[var(--bg-main)] text-[var(--text-main)] max-w-4xl mx-auto px-4 py-8 space-y-4">
         <button type="button" onClick={() => setCurrentView('home')} className="text-sm font-bold text-[var(--primary)] cursor-pointer">

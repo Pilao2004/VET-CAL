@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Calculator, Check, ChevronDown, ClipboardList, FileText, KeyRound, MessageCircle, Pill, ShieldCheck, Siren, Smartphone, Stethoscope } from 'lucide-react';
 import { useApp } from '../context/AppContext';
-import { APP_FEATURES, HOTMART_URL, KIWIFY_URL, PRICE_FROM_LABEL, PRICE_LABEL } from '../config/plans';
+import { APP_FEATURES, HOTMART_URL, isLandingPreview, KIWIFY_URL, PRICE_FROM_LABEL, PRICE_LABEL } from '../config/plans';
+
+const PREVIEW = isLandingPreview();
 
 const LOGO = './assets/aistudio/_cone_Vet_Calc_Pro_com_Patinha_Calculadora_42b4d775.png';
 
@@ -52,6 +54,10 @@ export const LandingPage: React.FC = () => {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !order.trim()) return;
+    if (PREVIEW) {
+      setFeedback({ success: true, message: 'Prévia: no site, este formulário confere a compra e libera o app.' });
+      return;
+    }
     setLoading(true);
     setFeedback(null);
     const res = useCode ? await activateSubscriptionServer(order.trim(), email.trim()) : await claimPurchase(email.trim(), order.trim());
@@ -64,21 +70,24 @@ export const LandingPage: React.FC = () => {
     }
   };
 
-  const hasCheckout = Boolean(KIWIFY_URL || HOTMART_URL);
+  // Na prévia, mostra os botões mesmo sem os links configurados
+  const kiwifyUrl = KIWIFY_URL || (PREVIEW ? '#comprar' : '');
+  const hotmartUrl = HOTMART_URL || (PREVIEW ? '#comprar' : '');
+  const hasCheckout = Boolean(kiwifyUrl || hotmartUrl);
   const inputCls =
     'w-full px-3.5 py-3 rounded-xl bg-[var(--input-bg)] border border-[var(--border)] text-sm text-[var(--text-main)] focus:outline-none focus:border-[var(--primary)]';
 
   const BuyButtons = () =>
     hasCheckout ? (
       <div className="flex flex-col sm:flex-row gap-2.5 w-full">
-        {KIWIFY_URL && (
-          <a href={KIWIFY_URL} target="_blank" rel="noopener noreferrer" className="flex-1 py-3.5 px-5 rounded-xl bg-[var(--primary)] hover:brightness-110 text-[#062C23] text-sm font-extrabold text-center">
-            Comprar agora{HOTMART_URL ? ' (Kiwify)' : ''}
+        {kiwifyUrl && (
+          <a href={kiwifyUrl} target={PREVIEW ? undefined : '_blank'} rel="noopener noreferrer" className="flex-1 py-3.5 px-5 rounded-xl bg-[var(--primary)] hover:brightness-110 text-[#062C23] text-sm font-extrabold text-center">
+            Comprar agora{hotmartUrl ? ' (Kiwify)' : ''}
           </a>
         )}
-        {HOTMART_URL && (
-          <a href={HOTMART_URL} target="_blank" rel="noopener noreferrer" className={`flex-1 py-3.5 px-5 rounded-xl text-sm font-extrabold text-center ${KIWIFY_URL ? 'border border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)]/10' : 'bg-[var(--primary)] text-[#062C23] hover:brightness-110'}`}>
-            Comprar agora{KIWIFY_URL ? ' (Hotmart)' : ''}
+        {hotmartUrl && (
+          <a href={hotmartUrl} target={PREVIEW ? undefined : '_blank'} rel="noopener noreferrer" className={`flex-1 py-3.5 px-5 rounded-xl text-sm font-extrabold text-center ${kiwifyUrl ? 'border border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)]/10' : 'bg-[var(--primary)] text-[#062C23] hover:brightness-110'}`}>
+            Comprar agora{kiwifyUrl ? ' (Hotmart)' : ''}
           </a>
         )}
       </div>
@@ -156,7 +165,7 @@ export const LandingPage: React.FC = () => {
           <div className="text-center space-y-1">
             <p className="text-sm font-bold text-[var(--primary)]">VET CALC PRO completo · compra única</p>
             {PRICE_FROM_LABEL && <p className="text-sm text-[var(--text-secondary)] line-through">{PRICE_FROM_LABEL}</p>}
-            {PRICE_LABEL && <p className="text-4xl font-extrabold">{PRICE_LABEL}</p>}
+            {(PRICE_LABEL || PREVIEW) && <p className="text-4xl font-extrabold">{PRICE_LABEL || 'R$ 97,00'}</p>}
             <p className="text-xs text-[var(--text-secondary)]">Pagamento único. Sem mensalidade.</p>
           </div>
           <ul className="space-y-2">
