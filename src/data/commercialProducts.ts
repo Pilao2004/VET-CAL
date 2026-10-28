@@ -15,7 +15,7 @@ export interface CommercialProduct {
   activePrinciple: string; // Ex: Meloxicam
   manufacturer?: string; // Ex: Agener União
   category: string;
-  formType: 'liquid' | 'tablet' | 'drops' | 'topical' | 'spray' | 'paste' | string;
+  formType: 'liquid' | 'tablet' | 'drops' | 'topical' | 'spray' | 'paste' | 'vaccine' | string;
   presentationText?: string; // Ex: Frasco-ampola de 20 mL
   concentrationMgMl?: number;
   percentage?: number;
@@ -37,6 +37,10 @@ export interface CommercialProduct {
   clinicalNotes?: string;
   protocols?: DosageProtocol[];
   validationStatus?: 'VALIDADO' | 'PENDENTE DE VALIDAÇÃO' | 'DIVERGÊNCIA IDENTIFICADA';
+  /** Posologia fixa (não calculada por kg), ex.: "1 gota no olho afetado a cada 6h". */
+  fixedDosing?: string;
+  /** Esquema de vacinação (vacinas). */
+  vaccineSchedule?: string;
 }
 
 export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
@@ -3212,10 +3216,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino",
       "Felino"
     ],
-    "defaultDoseMgKg": {
-      "canino": 1,
-      "felino": 1
-    },
+    "defaultDoseMgKg": {},
     "doseRangeText": "1 gota em cada olho afetado a cada 4 a 8 horas",
     "defaultFrequency": "TID",
     "defaultRoute": "Oftálmica",
@@ -3230,16 +3231,12 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "brandName": "Pomada Oftálmica Terramicina® com Polimixina B (Zoetis)",
     "activePrinciple": "Oxitetraciclina + Polimixina B",
     "category": "Antimicrobiano Oftálmico em Pomada",
-    "formType": "tablet",
-    "tabletMg": 10,
+    "formType": "paste",
     "species": [
       "Canino",
       "Felino"
     ],
-    "defaultDoseMgKg": {
-      "canino": 1,
-      "felino": 1
-    },
+    "defaultDoseMgKg": {},
     "doseRangeText": "Aplicar pequena quantidade no saco conjuntival a cada 8 horas",
     "defaultFrequency": "TID",
     "defaultRoute": "Oftálmica",
@@ -3247,7 +3244,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Padrão ouro em conjuntivites infecciosas e úlceras superficiais de córnea.",
     "validationStatus": "VALIDADO",
     "manufacturer": "Zoetis",
-    "presentationText": "Cartucho com 1 comprimidos"
+    "presentationText": "Bisnaga de pomada oftálmica"
   },
   {
     "id": "tramadol-gotas-100",
@@ -3829,10 +3826,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Bovino",
       "Equino"
     ],
-    "defaultDoseMgKg": {
-      "canino": 1,
-      "bovino": 1
-    },
+    "defaultDoseMgKg": {},
     "doseRangeText": "Pulverizar a área afetada a uma distância de 15 a 20 cm, 1 a 2 vezes ao dia",
     "defaultFrequency": "SID",
     "defaultRoute": "Tópica",
@@ -3840,7 +3834,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Cria película protetora respirável sobre feridas cirúrgicas e traumáticas.",
     "validationStatus": "VALIDADO",
     "manufacturer": "Biofarm",
-    "presentationText": "Frasco-ampola de 250 mL"
+    "presentationText": "Frasco-ampola de 250 mL",
+    "fixedDosing": "Pulverizar a ferida limpa a uma distância de 15 a 20 cm, 1 a 2 vezes ao dia."
   },
   {
     "id": "bio-oto-gotas",
@@ -3854,10 +3849,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino",
       "Felino"
     ],
-    "defaultDoseMgKg": {
-      "canino": 1,
-      "felino": 1
-    },
+    "defaultDoseMgKg": {},
     "doseRangeText": "Cães até 15 kg: 4 gotas em cada ouvido a cada 12h; acima de 15 kg: 8 gotas",
     "defaultFrequency": "BID",
     "defaultRoute": "Otológica",
@@ -3879,10 +3871,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Canino",
       "Felino"
     ],
-    "defaultDoseMgKg": {
-      "canino": 1,
-      "felino": 1
-    },
+    "defaultDoseMgKg": {},
     "doseRangeText": "1 a 2 gotas em cada olho afetado a cada 6 a 8 horas",
     "defaultFrequency": "TID",
     "defaultRoute": "Oftálmica",
@@ -4124,9 +4113,7 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Aves",
       "Pequenos Mamíferos"
     ],
-    "defaultDoseMgKg": {
-      "canino": 1
-    },
+    "defaultDoseMgKg": {},
     "doseRangeText": "1 gota por kg de peso corporal a cada 12h VO",
     "defaultFrequency": "BID",
     "defaultRoute": "Oral (VO)",
@@ -4134,7 +4121,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Suplemento líquido altamente palatável para suporte em anemias carenciais e convalescença.",
     "validationStatus": "VALIDADO",
     "manufacturer": "Ourofino",
-    "presentationText": "Frasco conta-gotas de 30 mL"
+    "presentationText": "Frasco conta-gotas de 30 mL",
+    "fixedDosing": "1 gota por kg de peso, por via oral, uma vez ao dia (conforme bula)."
   },
   {
     "id": "simparica-trio-10",
@@ -5223,7 +5211,10 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Equino",
       "Bovino"
     ],
-    "defaultDoseMgKg": {},
+    "defaultDoseMgKg": {
+      "equino": 2.2,
+      "bovino": 2.2
+    },
     "doseRangeText": "Equinos e Bovinos: 2,2 mg/kg IV ou IM SID por 1 a 3 dias",
     "defaultFrequency": "SID",
     "defaultRoute": "Intravenosa (IV)",
@@ -5989,7 +5980,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Corticoide diéster inovador metabolizado na própria pele sem absorção sistêmica significativa.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 0.584,
-    "bottleVolumeMl": 76
+    "bottleVolumeMl": 76,
+    "fixedDosing": "2 borrifadas para cada 100 cm² de área de pele uma vez ao dia por 7 dias"
   },
   {
     "id": "vetalog-plus-inj",
@@ -7558,7 +7550,11 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Suíno",
       "Ovino"
     ],
-    "defaultDoseMgKg": {},
+    "defaultDoseMgKg": {
+      "bovino": 20,
+      "ovino": 20,
+      "suino": 20
+    },
     "doseRangeText": "200 mg oxitetraciclina + 10 mg diclofenaco por mL. 1 mL para cada 10 kg IM profunda",
     "defaultFrequency": "Dose Única",
     "defaultRoute": "Intramuscular (IM)",
@@ -7580,7 +7576,11 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Ovino",
       "Suíno"
     ],
-    "defaultDoseMgKg": {},
+    "defaultDoseMgKg": {
+      "bovino": 20,
+      "ovino": 20,
+      "suino": 20
+    },
     "doseRangeText": "20 mg/kg IM profunda (1 mL para cada 10 kg de peso vivo)",
     "defaultFrequency": "Dose Única",
     "defaultRoute": "Intramuscular (IM)",
@@ -7601,8 +7601,11 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Bovino",
       "Suíno"
     ],
-    "defaultDoseMgKg": {},
-    "doseRangeText": "20 mg/kg IM a cada 48h ou 40 mg/kg SC dose única",
+    "defaultDoseMgKg": {
+      "bovino": 20,
+      "suino": 15
+    },
+    "doseRangeText": "Bovinos: 20 mg/kg IM a cada 48h ou 40 mg/kg SC dose única | Suínos: 15 mg/kg IM a cada 48h",
     "defaultFrequency": "Dose Única",
     "defaultRoute": "Subcutânea (SC)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório MSD Saúde Animal. Respeitar indicações e contraindicações de bula.",
@@ -7622,8 +7625,11 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Bovino",
       "Suíno"
     ],
-    "defaultDoseMgKg": {},
-    "doseRangeText": "20 mg/kg IM a cada 48h ou 40 mg/kg SC dose única",
+    "defaultDoseMgKg": {
+      "bovino": 20,
+      "suino": 15
+    },
+    "doseRangeText": "Bovinos: 20 mg/kg IM a cada 48h ou 40 mg/kg SC dose única | Suínos: 15 mg/kg IM a cada 48h",
     "defaultFrequency": "Dose Única",
     "defaultRoute": "Subcutânea (SC)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Ourofino. Respeitar indicações e contraindicações de bula.",
@@ -7642,11 +7648,13 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "species": [
       "Bovino"
     ],
-    "defaultDoseMgKg": {},
+    "defaultDoseMgKg": {
+      "bovino": 10
+    },
     "doseRangeText": "10 mg/kg SC dose única exclusivamente (1 mL para cada 30 kg de peso)",
     "defaultFrequency": "Dose Única",
     "defaultRoute": "Subcutânea (SC)",
-    "clinicalNotes": "ATENÇÃO: Uso exclusivo bovino por via SC. Letal para equinos, suínos e primatas por cardiotoxicidade.",
+    "clinicalNotes": "Nunca aplicar IV. Tóxico para suínos, equinos e caprinos. A injeção acidental em pessoas pode ser fatal: manusear com extremo cuidado. ATENÇÃO: Uso exclusivo bovino por via SC. Letal para equinos, suínos e primatas por cardiotoxicidade.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 300,
     "bottleVolumeMl": 100
@@ -7694,7 +7702,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório MSD Saúde Animal. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 250,
-    "bottleVolumeMl": 50
+    "bottleVolumeMl": 50,
+    "fixedDosing": "1 mL para cada 20-30 kg de peso vivo via IM profunda"
   },
   {
     "id": "agrovet-5-milhoes",
@@ -7715,7 +7724,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Ourofino. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 200,
-    "bottleVolumeMl": 50
+    "bottleVolumeMl": 50,
+    "fixedDosing": "1 mL para cada 25 kg IM profunda"
   },
   {
     "id": "dorless-comp-12",
@@ -11079,16 +11089,15 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "species": [
       "Canino"
     ],
-    "defaultDoseMgKg": {
-      "canino": 1
-    },
+    "defaultDoseMgKg": {},
     "doseRangeText": "1 comprimido para cada 10 kg de peso vivo em dose única",
     "defaultFrequency": "Dose Única",
     "defaultRoute": "Oral (VO)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Virbac. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "tabletMg": 900,
-    "tabletsPerBox": 2
+    "tabletsPerBox": 2,
+    "fixedDosing": "1 comprimido para cada 10 kg de peso, em dose única (repetir conforme o protocolo de vermifugação)."
   },
   {
     "id": "endogard-30-comp",
@@ -11101,16 +11110,15 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "species": [
       "Canino"
     ],
-    "defaultDoseMgKg": {
-      "canino": 1
-    },
+    "defaultDoseMgKg": {},
     "doseRangeText": "1 comprimido para cada 30 kg de peso vivo em dose única",
     "defaultFrequency": "Dose Única",
     "defaultRoute": "Oral (VO)",
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Virbac. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "tabletMg": 2700,
-    "tabletsPerBox": 2
+    "tabletsPerBox": 2,
+    "fixedDosing": "1 comprimido para cada 30 kg de peso, em dose única (repetir conforme o protocolo de vermifugação)."
   },
   {
     "id": "vermivet-composto-comp",
@@ -11241,7 +11249,11 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Ovino",
       "Suíno"
     ],
-    "defaultDoseMgKg": {},
+    "defaultDoseMgKg": {
+      "bovino": 0.2,
+      "ovino": 0.2,
+      "suino": 0.3
+    },
     "doseRangeText": "1% = 10 mg/mL. Bovinos e Ovinos: 0,2 mg/kg SC (1 mL para cada 50 kg)",
     "defaultFrequency": "Dose Única",
     "defaultRoute": "Subcutânea (SC)",
@@ -11270,7 +11282,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 40,
     "percentage": 4,
-    "bottleVolumeMl": 50
+    "bottleVolumeMl": 50,
+    "fixedDosing": "4% = 40 mg/mL. 1 mL para cada 50 kg SC (0,8 mg/kg)"
   },
   {
     "id": "ivercanis-comp-3",
@@ -11357,7 +11370,10 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
       "Bovino",
       "Ovino"
     ],
-    "defaultDoseMgKg": {},
+    "defaultDoseMgKg": {
+      "bovino": 0.2,
+      "ovino": 0.2
+    },
     "doseRangeText": "0,2 mg/kg SC (1 mL para cada 50 kg)",
     "defaultFrequency": "Dose Única",
     "defaultRoute": "Subcutânea (SC)",
@@ -11684,7 +11700,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Ourofino. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 0.075,
-    "bottleVolumeMl": 20
+    "bottleVolumeMl": 20,
+    "fixedDosing": "Sincronização de estro e luteólise: Bovinos 2 mL IM | Equinos 1 mL IM"
   },
   {
     "id": "lutalyse-inj-30",
@@ -12402,7 +12419,8 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "clinicalNotes": "Produto registrado oficialmente pelo laboratório Zoetis. Respeitar indicações e contraindicações de bula.",
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 200,
-    "bottleVolumeMl": 500
+    "bottleVolumeMl": 500,
+    "fixedDosing": "Hipocalcemia / Febre vitular: 250 a 500 mL IV lento ou SC"
   },
   {
     "id": "equalan-pasta-642",
@@ -12415,7 +12433,9 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "species": [
       "Equino"
     ],
-    "defaultDoseMgKg": {},
+    "defaultDoseMgKg": {
+      "equino": 0.2
+    },
     "doseRangeText": "0,2 mg/kg VO (1 seringa trata até 600 kg de peso vivo em dose única)",
     "defaultFrequency": "Dose Única",
     "defaultRoute": "Oral (VO)",
@@ -12436,7 +12456,9 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "species": [
       "Equino"
     ],
-    "defaultDoseMgKg": {},
+    "defaultDoseMgKg": {
+      "equino": 0.2
+    },
     "doseRangeText": "1 seringa para 600 kg de peso em dose única",
     "defaultFrequency": "Dose Única",
     "defaultRoute": "Oral (VO)",
@@ -12456,7 +12478,9 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "species": [
       "Equino"
     ],
-    "defaultDoseMgKg": {},
+    "defaultDoseMgKg": {
+      "equino": 0.4
+    },
     "doseRangeText": "0,4 mg/kg VO em dose única",
     "defaultFrequency": "Dose Única",
     "defaultRoute": "Oral (VO)",
@@ -12476,7 +12500,9 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "species": [
       "Equino"
     ],
-    "defaultDoseMgKg": {},
+    "defaultDoseMgKg": {
+      "equino": 7.5
+    },
     "doseRangeText": "7,5 mg/kg VO dose única (ou 10 mg/kg SID por 5 dias para ciatostomíneos encistados)",
     "defaultFrequency": "Dose Única",
     "defaultRoute": "Oral (VO)",
@@ -12496,7 +12522,9 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "species": [
       "Equino"
     ],
-    "defaultDoseMgKg": {},
+    "defaultDoseMgKg": {
+      "equino": 0.01
+    },
     "doseRangeText": "Equinos: 10 a 40 mcg/kg (0,01 a 0,04 mg/kg) IV ou IM para sedação profunda e alívio de cólica",
     "defaultFrequency": "Dose Única",
     "defaultRoute": "Intravenosa (IV)",
@@ -12516,7 +12544,9 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "species": [
       "Equino"
     ],
-    "defaultDoseMgKg": {},
+    "defaultDoseMgKg": {
+      "equino": 0.01
+    },
     "doseRangeText": "10 a 40 mcg/kg IV ou IM",
     "defaultFrequency": "Dose Única",
     "defaultRoute": "Intravenosa (IV)",
@@ -13249,5 +13279,484 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "bottleVolumeMl": 20,
     "presentationText": "Frasco-ampola de 20 mL",
     "clinicalNotes": "NUNCA aplicar por via intravenosa (cardiotóxica). Aspirar antes de injetar. Somar todas as doses de anestésicos locais usadas no paciente."
+  },
+  {
+    "formType": "paste",
+    "defaultRoute": "Tópica Oftálmica",
+    "manufacturer": "MSD Saúde Animal",
+    "species": [
+      "Canino"
+    ],
+    "defaultDoseMgKg": {},
+    "id": "optimmune-pomada",
+    "brandName": "Optimmune® Pomada Oftálmica 0,2% (MSD)",
+    "activePrinciple": "Ciclosporina",
+    "category": "Imunomodulador Oftálmico (Ceratoconjuntivite Seca)",
+    "doseRangeText": "Aplicar cerca de 0,5 cm de pomada no olho afetado a cada 12 horas.",
+    "defaultFrequency": "BID",
+    "presentationText": "Bisnaga de 3,5 g",
+    "clinicalNotes": "Tratamento contínuo da ceratoconjuntivite seca. Reavaliar o teste lacrimal de Schirmer em 4 a 8 semanas."
+  },
+  {
+    "formType": "drops",
+    "defaultRoute": "Tópica Oftálmica",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {},
+    "id": "tropicamida-1",
+    "brandName": "Tropicamida 1% Colírio",
+    "activePrinciple": "Tropicamida",
+    "category": "Midriático de Curta Duração (Diagnóstico)",
+    "concentrationMgMl": 10,
+    "percentage": 1,
+    "doseRangeText": "Para exame de fundo de olho: 1 gota; repetir após 15 a 20 minutos, se necessário. Midríase em 15 a 30 minutos.",
+    "defaultFrequency": "Dose Única",
+    "presentationText": "Frasco conta-gotas de 5 mL",
+    "clinicalNotes": "Não usar em glaucoma ou luxação anterior do cristalino. Gatos podem salivar muito pelo gosto amargo."
+  },
+  {
+    "formType": "drops",
+    "defaultRoute": "Tópica Oftálmica",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {},
+    "id": "proximetacaina-05",
+    "brandName": "Cloridrato de Proximetacaína 0,5% Colírio",
+    "activePrinciple": "Cloridrato de Proximetacaína",
+    "category": "Anestésico Tópico Oftálmico",
+    "concentrationMgMl": 5,
+    "percentage": 0.5,
+    "doseRangeText": "1 a 2 gotas no olho, antes de exame ou procedimento. Efeito em cerca de 1 minuto, com duração de 10 a 20 minutos.",
+    "defaultFrequency": "Dose Única",
+    "presentationText": "Frasco conta-gotas de 5 mL (manter refrigerado)",
+    "clinicalNotes": "Uso apenas diagnóstico: não prescrever para casa (atrasa a cicatrização da córnea)."
+  },
+  {
+    "formType": "drops",
+    "defaultRoute": "Tópica Oftálmica",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {},
+    "id": "atropina-colirio-1",
+    "brandName": "Sulfato de Atropina 1% Colírio",
+    "activePrinciple": "Sulfato de Atropina",
+    "category": "Midriático e Cicloplégico (Uveíte)",
+    "concentrationMgMl": 10,
+    "percentage": 1,
+    "doseRangeText": "1 gota no olho afetado a cada 8 a 24 horas até obter midríase; depois, a menor frequência que a mantenha.",
+    "defaultFrequency": "BID",
+    "presentationText": "Frasco conta-gotas de 5 mL",
+    "clinicalNotes": "Contraindicado em glaucoma e na ceratoconjuntivite seca (reduz a lágrima). Gatos salivam muito pelo gosto amargo."
+  },
+  {
+    "formType": "drops",
+    "defaultRoute": "Tópica Oftálmica",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {},
+    "id": "prednisolona-colirio-1",
+    "brandName": "Acetato de Prednisolona 1% Colírio (suspensão)",
+    "activePrinciple": "Acetato de Prednisolona",
+    "category": "Corticoide Oftálmico",
+    "concentrationMgMl": 10,
+    "percentage": 1,
+    "doseRangeText": "1 gota no olho afetado a cada 6 a 12 horas (agitar antes de usar).",
+    "defaultFrequency": "TID",
+    "presentationText": "Frasco conta-gotas de 5 mL",
+    "clinicalNotes": "NUNCA usar com úlcera de córnea: faça o teste de fluoresceína antes. Retirada gradual."
+  },
+  {
+    "formType": "drops",
+    "defaultRoute": "Tópica Oftálmica",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {},
+    "id": "dorzolamida-2",
+    "brandName": "Cloridrato de Dorzolamida 2% Colírio",
+    "activePrinciple": "Cloridrato de Dorzolamida",
+    "category": "Antiglaucomatoso (Inibidor da Anidrase Carbônica)",
+    "concentrationMgMl": 20,
+    "percentage": 2,
+    "doseRangeText": "1 gota no olho afetado a cada 8 horas.",
+    "defaultFrequency": "TID",
+    "presentationText": "Frasco conta-gotas de 5 mL",
+    "clinicalNotes": "Medir a pressão intraocular para ajustar. Pode arder e causar blefarite."
+  },
+  {
+    "formType": "drops",
+    "defaultRoute": "Tópica Oftálmica",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "species": [
+      "Canino"
+    ],
+    "defaultDoseMgKg": {},
+    "id": "latanoprosta-0005",
+    "brandName": "Latanoprosta 0,005% Colírio",
+    "activePrinciple": "Latanoprosta",
+    "category": "Antiglaucomatoso (Análogo de Prostaglandina)",
+    "concentrationMgMl": 0.05,
+    "percentage": 0.005,
+    "doseRangeText": "Cães: 1 gota no olho afetado a cada 12 a 24 horas.",
+    "defaultFrequency": "BID",
+    "presentationText": "Frasco conta-gotas de 2,5 mL (manter refrigerado)",
+    "clinicalNotes": "Contraindicado em uveíte e luxação anterior do cristalino. Pouco eficaz em gatos."
+  },
+  {
+    "formType": "drops",
+    "defaultRoute": "Tópica Oftálmica",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {},
+    "id": "diclofenaco-colirio-01",
+    "brandName": "Diclofenaco Sódico 0,1% Colírio",
+    "activePrinciple": "Diclofenaco Sódico",
+    "category": "Anti-inflamatório Não Esteroidal Oftálmico",
+    "concentrationMgMl": 1,
+    "percentage": 0.1,
+    "doseRangeText": "1 gota no olho afetado a cada 6 a 8 horas.",
+    "defaultFrequency": "TID",
+    "presentationText": "Frasco conta-gotas de 5 mL",
+    "clinicalNotes": "Usar com cautela em úlcera de córnea (pode atrasar a cicatrização). Em gatos, usar pelo menor tempo possível e evitar se houver doença renal ou outro AINE em uso."
+  },
+  {
+    "formType": "drops",
+    "defaultRoute": "Tópica Oftálmica",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {},
+    "id": "carmelose-05",
+    "brandName": "Carmelose Sódica 0,5% Colírio (Lágrima Artificial)",
+    "activePrinciple": "Carmelose Sódica",
+    "category": "Lubrificante Ocular",
+    "concentrationMgMl": 5,
+    "percentage": 0.5,
+    "doseRangeText": "1 gota em cada olho a cada 4 a 8 horas ou conforme a necessidade.",
+    "defaultFrequency": "QID",
+    "presentationText": "Frasco conta-gotas de 15 mL",
+    "clinicalNotes": "Complemento no olho seco e na proteção da córnea em pacientes anestesiados."
+  },
+  {
+    "formType": "vaccine",
+    "defaultRoute": "Subcutânea (SC)",
+    "defaultFrequency": "Dose Única",
+    "defaultDoseMgKg": {},
+    "presentationText": "Frasco-ampola de 1 dose",
+    "id": "vanguard-plus",
+    "brandName": "Vanguard® Plus (Zoetis)",
+    "activePrinciple": "Vacina polivalente canina (cinomose, adenovírus, parainfluenza, parvovírus, coronavírus e leptospiras)",
+    "manufacturer": "Zoetis",
+    "category": "Vacina Canina Polivalente",
+    "species": [
+      "Canino"
+    ],
+    "doseRangeText": "1 dose (1 mL) SC, independentemente do peso.",
+    "vaccineSchedule": "Filhotes: a partir de 6 a 8 semanas, repetir a cada 3 a 4 semanas até 16 semanas de idade ou mais. Reforço aos 6 a 12 meses e depois anual (o componente de leptospira exige reforço anual).",
+    "clinicalNotes": "Vacinar apenas animais saudáveis. Observar o paciente por 30 minutos após a aplicação (reação alérgica). Outras marcas polivalentes seguem o mesmo esquema."
+  },
+  {
+    "formType": "vaccine",
+    "defaultRoute": "Subcutânea (SC) ou Intramuscular (IM)",
+    "defaultFrequency": "Dose Única",
+    "defaultDoseMgKg": {},
+    "presentationText": "Frasco-ampola de 1 dose",
+    "id": "nobivac-raiva",
+    "brandName": "Nobivac® Raiva (MSD)",
+    "activePrinciple": "Vacina inativada contra a raiva",
+    "manufacturer": "MSD Saúde Animal",
+    "category": "Vacina Antirrábica",
+    "species": [
+      "Canino",
+      "Felino",
+      "Bovino",
+      "Equino"
+    ],
+    "doseRangeText": "1 dose (1 mL) SC ou IM, independentemente do peso.",
+    "vaccineSchedule": "Dose única a partir de 12 semanas de idade e reforço anual (exigência legal no Brasil).",
+    "clinicalNotes": "Registrar lote e data no cartão de vacinação (documento exigido em viagens)."
+  },
+  {
+    "formType": "vaccine",
+    "defaultRoute": "Subcutânea (SC) ou Intramuscular (IM)",
+    "defaultFrequency": "Dose Única",
+    "defaultDoseMgKg": {},
+    "presentationText": "Frasco-ampola de 1 dose",
+    "id": "defensor-raiva",
+    "brandName": "Defensor® (Zoetis)",
+    "activePrinciple": "Vacina inativada contra a raiva",
+    "manufacturer": "Zoetis",
+    "category": "Vacina Antirrábica",
+    "species": [
+      "Canino",
+      "Felino",
+      "Bovino",
+      "Equino"
+    ],
+    "doseRangeText": "1 dose (1 mL) SC ou IM, independentemente do peso.",
+    "vaccineSchedule": "Dose única a partir de 12 semanas de idade e reforço anual (exigência legal no Brasil).",
+    "clinicalNotes": "Registrar lote e data no cartão de vacinação."
+  },
+  {
+    "formType": "vaccine",
+    "defaultRoute": "Subcutânea (SC) ou Intramuscular (IM)",
+    "defaultFrequency": "Dose Única",
+    "defaultDoseMgKg": {},
+    "presentationText": "Frasco-ampola de 1 dose",
+    "id": "rabisin-raiva",
+    "brandName": "Rabisin® (Boehringer Ingelheim)",
+    "activePrinciple": "Vacina inativada contra a raiva",
+    "manufacturer": "Boehringer Ingelheim",
+    "category": "Vacina Antirrábica",
+    "species": [
+      "Canino",
+      "Felino",
+      "Bovino",
+      "Equino"
+    ],
+    "doseRangeText": "1 dose (1 mL) SC ou IM, independentemente do peso.",
+    "vaccineSchedule": "Dose única a partir de 12 semanas de idade e reforço anual (exigência legal no Brasil).",
+    "clinicalNotes": "Registrar lote e data no cartão de vacinação."
+  },
+  {
+    "formType": "vaccine",
+    "defaultRoute": "Intranasal",
+    "defaultFrequency": "Dose Única",
+    "defaultDoseMgKg": {},
+    "presentationText": "Frasco-ampola de 1 dose",
+    "id": "nobivac-kc",
+    "brandName": "Nobivac® KC (MSD)",
+    "activePrinciple": "Vacina viva contra Bordetella bronchiseptica e parainfluenza canina",
+    "manufacturer": "MSD Saúde Animal",
+    "category": "Vacina contra Tosse dos Canis (Intranasal)",
+    "species": [
+      "Canino"
+    ],
+    "doseRangeText": "1 dose (0,4 mL) por via intranasal, independentemente do peso.",
+    "vaccineSchedule": "Dose única a partir de 3 semanas de idade e reforço anual. Indicada para cães que frequentam creches, hotéis, exposições e adestramento.",
+    "clinicalNotes": "Pode causar espirros leves por alguns dias. Não aplicar por via injetável."
+  },
+  {
+    "formType": "vaccine",
+    "defaultRoute": "Subcutânea (SC)",
+    "defaultFrequency": "Dose Única",
+    "defaultDoseMgKg": {},
+    "presentationText": "Frasco-ampola de 1 dose",
+    "id": "leish-tec",
+    "brandName": "Leish-Tec® (Ceva)",
+    "activePrinciple": "Vacina recombinante contra a leishmaniose visceral canina",
+    "manufacturer": "Ceva",
+    "category": "Vacina contra Leishmaniose Visceral",
+    "species": [
+      "Canino"
+    ],
+    "doseRangeText": "1 dose (1 mL) SC, independentemente do peso.",
+    "vaccineSchedule": "Cães a partir de 4 meses, com sorologia negativa: 3 doses com intervalo de 21 dias e reforço anual.",
+    "clinicalNotes": "Vacinar apenas cães sorologicamente negativos. Manter coleira repelente: a vacina não substitui a proteção contra o mosquito."
+  },
+  {
+    "formType": "vaccine",
+    "defaultRoute": "Subcutânea (SC)",
+    "defaultFrequency": "Dose Única",
+    "defaultDoseMgKg": {},
+    "presentationText": "Frasco-ampola de 1 dose",
+    "id": "felocell-cvr",
+    "brandName": "Felocell® CVR (Zoetis)",
+    "activePrinciple": "Vacina felina tríplice (rinotraqueíte, calicivirose e panleucopenia)",
+    "manufacturer": "Zoetis",
+    "category": "Vacina Felina Polivalente",
+    "species": [
+      "Felino"
+    ],
+    "doseRangeText": "1 dose (1 mL) SC, independentemente do peso.",
+    "vaccineSchedule": "Filhotes: a partir de 6 a 8 semanas, repetir a cada 3 a 4 semanas até 16 semanas de idade ou mais. Reforço aos 6 a 12 meses e depois a cada 1 a 3 anos, conforme o risco de exposição.",
+    "clinicalNotes": "Em gatos, aplicar em locais padronizados (membros) e registrar o local, pela prevenção do sarcoma de aplicação."
+  },
+  {
+    "id": "eprinex-pour-on",
+    "brandName": "Eprinex® Pour-on 0,5% (Boehringer Ingelheim)",
+    "activePrinciple": "Eprinomectina",
+    "manufacturer": "Boehringer Ingelheim",
+    "category": "Antiparasitário Endectocida Pour-on",
+    "formType": "liquid",
+    "concentrationMgMl": 5,
+    "percentage": 0.5,
+    "species": [
+      "Bovino"
+    ],
+    "defaultDoseMgKg": {
+      "bovino": 0.5
+    },
+    "doseRangeText": "Bovinos: 0,5 mg/kg (1 mL para cada 10 kg) aplicado ao longo da linha do dorso.",
+    "defaultFrequency": "Dose Única",
+    "defaultRoute": "Pour-on (dorso)",
+    "bottleVolumeMl": 1000,
+    "presentationText": "Frasco de 1 L",
+    "clinicalNotes": "Não aplicar em pele molhada ou suja. Respeite o período de carência para carne e leite indicado na bula do produto."
+  },
+  {
+    "id": "topline-pour-on",
+    "brandName": "Topline® Pour-on 1% (Boehringer Ingelheim)",
+    "activePrinciple": "Fipronil",
+    "manufacturer": "Boehringer Ingelheim",
+    "category": "Carrapaticida e Mosquicida Pour-on",
+    "formType": "liquid",
+    "concentrationMgMl": 10,
+    "percentage": 1,
+    "species": [
+      "Bovino"
+    ],
+    "defaultDoseMgKg": {
+      "bovino": 1
+    },
+    "doseRangeText": "Bovinos: 1 mg/kg (1 mL para cada 10 kg) aplicado ao longo da linha do dorso.",
+    "defaultFrequency": "Dose Única",
+    "defaultRoute": "Pour-on (dorso)",
+    "bottleVolumeMl": 1000,
+    "presentationText": "Frasco de 1 L",
+    "clinicalNotes": "Não usar em vacas em lactação produzindo leite para consumo humano. Respeite o período de carência para carne e leite indicado na bula do produto."
+  },
+  {
+    "id": "valbazen-10",
+    "brandName": "Valbazen® 10% Suspensão Oral (Zoetis)",
+    "activePrinciple": "Albendazol",
+    "manufacturer": "Zoetis",
+    "category": "Anti-helmíntico Benzimidazol",
+    "formType": "liquid",
+    "concentrationMgMl": 100,
+    "percentage": 10,
+    "species": [
+      "Bovino",
+      "Ovino",
+      "Caprino"
+    ],
+    "defaultDoseMgKg": {
+      "bovino": 7.5,
+      "ovino": 5,
+      "caprino": 10
+    },
+    "doseRangeText": "Bovinos: 7,5 mg/kg (10 mg/kg para Fasciola) | Ovinos: 5 mg/kg (7,5 mg/kg para Fasciola) | Caprinos: 10 mg/kg, VO em dose única",
+    "defaultFrequency": "Dose Única",
+    "defaultRoute": "Oral (VO)",
+    "bottleVolumeMl": 1000,
+    "presentationText": "Frasco de 1 L",
+    "clinicalNotes": "Não usar no primeiro terço da gestação (risco de malformação). Respeite o período de carência para carne e leite indicado na bula do produto."
+  },
+  {
+    "id": "baycox-5",
+    "brandName": "Baycox® 5% Suspensão Oral (Elanco)",
+    "activePrinciple": "Toltrazurila",
+    "manufacturer": "Elanco",
+    "category": "Anticoccidiano",
+    "formType": "liquid",
+    "concentrationMgMl": 50,
+    "percentage": 5,
+    "species": [
+      "Suíno",
+      "Bovino"
+    ],
+    "defaultDoseMgKg": {
+      "suino": 20,
+      "bovino": 15
+    },
+    "doseRangeText": "Leitões: 20 mg/kg (0,4 mL/kg) aos 3 a 5 dias de vida | Bezerros: 15 mg/kg (0,3 mL/kg), VO em dose única",
+    "defaultFrequency": "Dose Única",
+    "defaultRoute": "Oral (VO)",
+    "bottleVolumeMl": 250,
+    "presentationText": "Frasco de 250 mL",
+    "clinicalNotes": "Agitar antes de usar. Prevenção de coccidiose (Isospora suis e Eimeria spp.). Respeite o período de carência para carne e leite indicado na bula do produto."
+  },
+  {
+    "id": "fenbendazol-susp-10",
+    "brandName": "Fenbendazol 10% Suspensão Oral",
+    "activePrinciple": "Fenbendazol",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "category": "Anti-helmíntico Benzimidazol",
+    "formType": "liquid",
+    "concentrationMgMl": 100,
+    "percentage": 10,
+    "species": [
+      "Bovino",
+      "Ovino",
+      "Equino",
+      "Canino"
+    ],
+    "defaultDoseMgKg": {
+      "bovino": 7.5,
+      "ovino": 5,
+      "equino": 7.5,
+      "canino": 50
+    },
+    "doseRangeText": "Bovinos e equinos: 7,5 mg/kg | Ovinos: 5 mg/kg, VO em dose única | Cães: 50 mg/kg SID por 3 a 5 dias (giardíase e nematódeos)",
+    "defaultFrequency": "Dose Única",
+    "defaultRoute": "Oral (VO)",
+    "bottleVolumeMl": 1000,
+    "presentationText": "Frasco de 1 L",
+    "clinicalNotes": "Agitar antes de usar. Respeite o período de carência para carne e leite indicado na bula do produto."
+  },
+  {
+    "id": "triclabendazol-10",
+    "brandName": "Triclabendazol 10% Suspensão Oral",
+    "activePrinciple": "Triclabendazol",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "category": "Fasciolicida",
+    "formType": "liquid",
+    "concentrationMgMl": 100,
+    "percentage": 10,
+    "species": [
+      "Bovino",
+      "Ovino"
+    ],
+    "defaultDoseMgKg": {
+      "bovino": 12,
+      "ovino": 10
+    },
+    "doseRangeText": "Bovinos: 12 mg/kg | Ovinos: 10 mg/kg, VO em dose única (Fasciola hepatica, formas jovens e adultas)",
+    "defaultFrequency": "Dose Única",
+    "defaultRoute": "Oral (VO)",
+    "bottleVolumeMl": 1000,
+    "presentationText": "Frasco de 1 L",
+    "clinicalNotes": "Não usar em fêmeas em lactação produzindo leite para consumo humano. Respeite o período de carência para carne e leite indicado na bula do produto."
+  },
+  {
+    "id": "ivermectina-315-la",
+    "brandName": "Ivermectina 3,15% Longa Ação Injetável",
+    "activePrinciple": "Ivermectina Longa Ação",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "category": "Antiparasitário Endectocida de Longa Duração",
+    "formType": "liquid",
+    "concentrationMgMl": 31.5,
+    "percentage": 3.15,
+    "species": [
+      "Bovino"
+    ],
+    "defaultDoseMgKg": {
+      "bovino": 0.63
+    },
+    "doseRangeText": "Bovinos: 0,63 mg/kg (1 mL para cada 50 kg) SC em dose única",
+    "defaultFrequency": "Dose Única",
+    "defaultRoute": "Subcutânea (SC)",
+    "bottleVolumeMl": 500,
+    "presentationText": "Frasco de 500 mL",
+    "clinicalNotes": "Carência longa: não usar em vacas em lactação nem nos últimos meses antes do abate. Respeite o período de carência para carne e leite indicado na bula do produto."
   }
 ];

@@ -39,6 +39,7 @@ import { PREMIUM_CALCULATORS } from '../config/plans';
 import { SafetyAlert, speciesSafetyAlerts } from '../utils/safetyRules';
 import { COMMERCIAL_PRODUCTS, CommercialProduct } from '../data/commercialProducts';
 import { runCompleteClinicalTestSuite, TestSuiteSummary } from '../utils/clinicalTestSuite';
+import { fixedPosology } from '../utils/fixedDosing';
 
 /** Dose do cadastro para a espécie: cão e gato só usam a própria; outras espécies usam a delas ou, na falta, a de cão como ponto de partida. */
 function speciesDose(doses: Record<string, number | undefined>, species: string): number | undefined {
@@ -268,8 +269,11 @@ export const CalculatorsView: React.FC = () => {
 
     const speciesKey = isCat ? 'felin' : 'canin';
     const coversSpecies = !['Canino', 'Felino'].includes(doseSpecies) || (prod.species || []).some((s) => s.toLowerCase().startsWith(speciesKey));
+    const fixed = fixedPosology(prod);
     showToast(
-      coversSpecies && !(recDose && recDose > 0)
+      fixed
+        ? `${prod.brandName}: dose fixa (${fixed.posology.replace(/\.$/, '').slice(0, 70)}${fixed.posology.length > 70 ? '…' : ''}). Toque em CALCULAR para montar a receita.`
+        : coversSpecies && !(recDose && recDose > 0)
         ? `${prod.brandName}: sem dose em mg/kg cadastrada para esta espécie (uso tópico ou conforme bula). Informe a dose se for calcular.`
         : coversSpecies
         ? `Medicamento selecionado: ${prod.brandName}. Concentração preenchida automaticamente!`
@@ -474,8 +478,11 @@ export const CalculatorsView: React.FC = () => {
 
   const commercialManufacturer = selectedProductObj?.manufacturer || 'Não informado';
 
+  const selectedFixed = selectedProductObj ? fixedPosology(selectedProductObj) : null;
   let commercialConcentrationText = 'Não informado';
-  if (selectedProductObj) {
+  if (selectedProductObj && selectedFixed) {
+    commercialConcentrationText = selectedProductObj.formType === 'vaccine' ? 'Vacina' : selectedProductObj.percentage ? `${selectedProductObj.percentage}%` : 'Dose fixa';
+  } else if (selectedProductObj) {
     if (selectedProductObj.formType === 'tablet') {
       commercialConcentrationText = selectedProductObj.tabletMg ? `${selectedProductObj.tabletMg} mg` : 'Não informado';
     } else if (selectedProductObj.formType === 'drops') {
@@ -502,9 +509,7 @@ export const CalculatorsView: React.FC = () => {
   if (dosePrescribed && dosePrescribed !== 'undefined' && !isNaN(Number(dosePrescribed)) && Number(dosePrescribed) > 0) {
     activeDoseReferenceLine2 = `${dosePrescribed} mg/kg`;
   } else if (selectedProductObj) {
-    const defaultDose = isDoseSpeciesCat
-      ? (selectedProductObj.defaultDoseMgKg?.felino ?? selectedProductObj.defaultDoseMgKg?.canino)
-      : (selectedProductObj.defaultDoseMgKg?.canino ?? selectedProductObj.defaultDoseMgKg?.felino);
+    const defaultDose = speciesDose(selectedProductObj.defaultDoseMgKg || {}, doseSpecies);
     if (defaultDose !== undefined && !isNaN(defaultDose)) {
       activeDoseReferenceLine2 = `${defaultDose} mg/kg`;
     }
@@ -523,6 +528,31 @@ export const CalculatorsView: React.FC = () => {
     try {
       // 1. DOSAGEM
       if (selectedCalculator === 'dosage') {
+        // Colírios, otológicos, pomadas, pastas com seringa graduada e vacinas: posologia fixa, sem conta por kg
+        const fixed = selectedProductObj ? fixedPosology(selectedProductObj) : null;
+        if (fixed && selectedProductObj) {
+          const days = parseInt(treatmentDays) || 0;
+          setSafetyAlerts(speciesSafetyAlerts({ activePrinciple: selectedProductObj.activePrinciple, name: selectedProductObj.brandName, species: doseSpecies, product: selectedProductObj }));
+          const steps: CalculationStep[] = [
+            { label: '1. Posologia (dose fixa, não depende do peso)', expression: selectedProductObj.defaultRoute, result: fixed.posology },
+            ...(fixed.schedule ? [{ label: '2. Esquema de vacinação', expression: 'Diretrizes WSAVA e bula do fabricante', result: fixed.schedule }] : []),
+            ...(selectedProductObj.clinicalNotes ? [{ label: `${fixed.schedule ? 3 : 2}. Observações`, expression: selectedProductObj.manufacturer || '', result: selectedProductObj.clinicalNotes }] : []),
+          ];
+          setResultSummary(fixed.posology);
+          setCalculationSteps(steps);
+          setPrescriptionText(
+            `USO ${selectedProductObj.defaultRoute.toUpperCase()}\n1. ${selectedProductObj.brandName}\n   ${fixed.posology}${days > 1 && !fixed.schedule ? ` Durante ${days} dias.` : ''}${fixed.schedule ? `\n   Esquema: ${fixed.schedule}` : ''}`,
+          );
+          addCalculationToHistory({
+            type: 'dosage',
+            title: `${selectedProductObj.brandName} (dose fixa)`,
+            inputs: { especie: doseSpecies },
+            resultSummary: fixed.posology,
+            steps,
+          });
+          return;
+        }
+
         const w = parseFloat(doseWeight.replace(',', '.'));
         const d = parseFloat(dosePrescribed.replace(',', '.'));
         const days = parseInt(treatmentDays) || 1;
@@ -1408,11 +1438,17 @@ export const CalculatorsView: React.FC = () => {
                       </div>
 
                       {/* Linha Secundária: Concentração: X mg/mL • Dose de referência: X mg/kg */}
+                      {selectedFixed ? (
+                        <p className="text-xs text-[#475569] dark:text-slate-300 mt-1 leading-normal font-normal">
+                          Dose fixa (não depende do peso): <strong className="font-semibold text-[#0F172A] dark:text-white">{selectedFixed.posology}</strong>
+                        </p>
+                      ) : (
                       <p className="text-xs text-[#475569] dark:text-slate-300 mt-1 leading-normal font-normal">
                         Concentração: <strong className="font-semibold text-[#0F172A] dark:text-white">{activeConcentrationLine2}</strong>
                         <span className="mx-1.5 text-[#64748B] dark:text-slate-400 font-bold">•</span>
                         Dose de referência: <strong className="font-semibold text-[#0F172A] dark:text-white">{activeDoseReferenceLine2}</strong>
                       </p>
+                      )}
                     </div>
                   </div>
 

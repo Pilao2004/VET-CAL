@@ -1,6 +1,7 @@
 // Assistente conversacional: usa o Claude do visualizador (capability `sample`) quando o app
 // roda como artifact no claude.ai. As doses saem sempre do motor de cálculo do app, via ferramentas.
 import { COMMERCIAL_PRODUCTS, CommercialProduct } from '../data/commercialProducts';
+import { fixedPosology } from '../utils/fixedDosing';
 import { calculateDeterministicDosage, calculateTabletDosage, calculateDropsDosage } from '../utils/calculatorEngine';
 import { PatientRecord } from '../types';
 import { speciesSafetyAlerts } from '../utils/safetyRules';
@@ -76,7 +77,22 @@ function calculateDose(input: Record<string, unknown>) {
   const species = String(input.especie || '').trim();
   const weightKg = Number(input.peso_kg);
   if (!species) throw new Error('Falta a espécie do paciente.');
-  if (!(weightKg > 0)) throw new Error('Falta o peso do paciente em kg.');
+  if (!(weightKg > 0) && !fixedPosology(product)) throw new Error('Falta o peso do paciente em kg.');
+
+  // Colírios, otológicos, pomadas e vacinas: posologia fixa, sem conta por kg
+  const fixed = fixedPosology(product);
+  if (fixed) {
+    return {
+      produto: product.brandName,
+      principio_ativo: product.activePrinciple,
+      especie: species,
+      resultado: `Dose fixa (não depende do peso): ${fixed.posology}`,
+      esquema_vacinal: fixed.schedule,
+      via: product.defaultRoute,
+      observacoes: product.clinicalNotes,
+      alertas_de_seguranca: speciesSafetyAlerts({ activePrinciple: product.activePrinciple, name: product.brandName, species, product }).map((a) => a.text),
+    };
+  }
 
   const key = speciesKey(species);
   const protocol = product.protocols?.find((pr) => pr.id === String(input.protocolo_id || ''));
