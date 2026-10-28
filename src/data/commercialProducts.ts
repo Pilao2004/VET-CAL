@@ -12524,5 +12524,730 @@ export const COMMERCIAL_PRODUCTS: CommercialProduct[] = [
     "validationStatus": "VALIDADO",
     "concentrationMgMl": 10,
     "bottleVolumeMl": 20
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "metronidazol-comp-250",
+    "brandName": "Metronidazol 250 mg Comprimidos",
+    "activePrinciple": "Metronidazol",
+    "category": "Antimicrobiano Nitroimidazol / Antiprotozoário",
+    "tabletMg": 250,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 15,
+      "felino": 10
+    },
+    "doseRangeText": "Cães e gatos: 10 a 15 mg/kg a cada 12h (não passar de 25 mg/kg por tomada)",
+    "defaultFrequency": "BID",
+    "tabletsPerBox": 20,
+    "presentationText": "Cartucho com 20 comprimidos",
+    "clinicalNotes": "Doses altas ou uso prolongado podem causar sinais neurológicos (ataxia, nistagmo). Sabor amargo: gatos salivam muito; prefira manipular em cápsula ou suspensão."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "metronidazol-comp-400",
+    "brandName": "Metronidazol 400 mg Comprimidos",
+    "activePrinciple": "Metronidazol",
+    "category": "Antimicrobiano Nitroimidazol / Antiprotozoário",
+    "tabletMg": 400,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 15,
+      "felino": 10
+    },
+    "doseRangeText": "Cães e gatos: 10 a 15 mg/kg a cada 12h (não passar de 25 mg/kg por tomada)",
+    "defaultFrequency": "BID",
+    "tabletsPerBox": 20,
+    "presentationText": "Cartucho com 20 comprimidos",
+    "clinicalNotes": "Doses altas ou uso prolongado podem causar sinais neurológicos (ataxia, nistagmo). Sabor amargo: gatos salivam muito; prefira manipular em cápsula ou suspensão."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "amoxicilina-caps-500",
+    "brandName": "Amoxicilina 500 mg Cápsulas",
+    "activePrinciple": "Amoxicilina",
+    "category": "Antimicrobiano Betalactâmico",
+    "tabletMg": 500,
+    "species": [
+      "Canino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 20
+    },
+    "doseRangeText": "Cães: 10 a 20 mg/kg a cada 12h",
+    "defaultFrequency": "BID",
+    "tabletsPerBox": 21,
+    "presentationText": "Cartucho com 21 cápsulas",
+    "clinicalNotes": "Cápsula não deve ser fracionada: para cães pequenos e gatos, use a suspensão oral."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "cefadroxila-caps-500",
+    "brandName": "Cefadroxila 500 mg Cápsulas",
+    "activePrinciple": "Cefadroxila",
+    "category": "Antimicrobiano Cefalosporina 1ª geração",
+    "tabletMg": 500,
+    "species": [
+      "Canino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 22
+    },
+    "doseRangeText": "Cães: 22 mg/kg a cada 12h",
+    "defaultFrequency": "BID",
+    "tabletsPerBox": 8,
+    "presentationText": "Cartucho com 8 cápsulas",
+    "clinicalNotes": "Cápsula não deve ser fracionada."
+  },
+  {
+    "formType": "liquid",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "ampicilina-inj-1g",
+    "brandName": "Ampicilina Sódica 1 g Injetável",
+    "activePrinciple": "Ampicilina Sódica",
+    "category": "Antimicrobiano Betalactâmico",
+    "concentrationMgMl": 100,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 22,
+      "felino": 22
+    },
+    "doseRangeText": "Cães e gatos: 20 a 22 mg/kg IV, IM ou SC a cada 6 a 8h",
+    "defaultFrequency": "TID",
+    "defaultRoute": "Intravenosa (IV) / IM / SC",
+    "bottleVolumeMl": 10,
+    "presentationText": "Frasco-ampola de 1 g (pó) para reconstituir em 10 mL",
+    "clinicalNotes": "Concentração de 100 mg/mL considera a reconstituição com 10 mL. Se usar outro volume de diluente, ajuste a concentração. Usar logo após reconstituir."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "smz-tmp-400-80",
+    "brandName": "Sulfametoxazol + Trimetoprima 400/80 mg Comprimidos",
+    "activePrinciple": "Sulfametoxazol + Trimetoprima",
+    "category": "Antimicrobiano Sulfonamida Potencializada",
+    "tabletMg": 480,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 15,
+      "felino": 15
+    },
+    "doseRangeText": "Cães e gatos: 15 a 30 mg/kg (soma dos dois ativos) a cada 12h",
+    "defaultFrequency": "BID",
+    "tabletsPerBox": 20,
+    "presentationText": "Cartucho com 20 comprimidos",
+    "clinicalNotes": "Dose calculada pela soma dos ativos (400 + 80 = 480 mg por comprimido). Uso prolongado em cães pode causar ceratoconjuntivite seca: avaliar o teste lacrimal."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "fanciclovir-250",
+    "brandName": "Fanciclovir 250 mg Comprimidos",
+    "activePrinciple": "Fanciclovir",
+    "category": "Antiviral",
+    "tabletMg": 250,
+    "species": [
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "felino": 40
+    },
+    "doseRangeText": "Gatos (herpesvírus felino): 40 a 90 mg/kg a cada 8 a 12h",
+    "defaultFrequency": "BID",
+    "tabletsPerBox": 10,
+    "presentationText": "Cartucho com 10 comprimidos",
+    "clinicalNotes": "Usado em ceratite e rinotraqueíte por herpesvírus felino. Reduzir a dose em gatos com doença renal."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "famotidina-20",
+    "brandName": "Famotidina 20 mg Comprimidos",
+    "activePrinciple": "Famotidina",
+    "category": "Protetor Gástrico Antagonista H2",
+    "tabletMg": 20,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 1,
+      "felino": 1
+    },
+    "doseRangeText": "Cães e gatos: 0,5 a 1 mg/kg a cada 12h",
+    "defaultFrequency": "BID",
+    "tabletsPerBox": 10,
+    "presentationText": "Cartucho com 10 comprimidos",
+    "clinicalNotes": "Menos potente que o omeprazol para proteção gástrica prolongada. Reduzir a dose em doença renal."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "famotidina-40",
+    "brandName": "Famotidina 40 mg Comprimidos",
+    "activePrinciple": "Famotidina",
+    "category": "Protetor Gástrico Antagonista H2",
+    "tabletMg": 40,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 1,
+      "felino": 1
+    },
+    "doseRangeText": "Cães e gatos: 0,5 a 1 mg/kg a cada 12h",
+    "defaultFrequency": "BID",
+    "tabletsPerBox": 10,
+    "presentationText": "Cartucho com 10 comprimidos",
+    "clinicalNotes": "Menos potente que o omeprazol para proteção gástrica prolongada. Reduzir a dose em doença renal."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "ursodiol-150",
+    "brandName": "Ácido Ursodesoxicólico 150 mg Comprimidos",
+    "activePrinciple": "Ácido Ursodesoxicólico",
+    "category": "Hepatoprotetor Colerético",
+    "tabletMg": 150,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 10,
+      "felino": 10
+    },
+    "doseRangeText": "Cães e gatos: 10 a 15 mg/kg uma vez ao dia, com alimento",
+    "defaultFrequency": "SID",
+    "tabletsPerBox": 30,
+    "presentationText": "Cartucho com 30 comprimidos",
+    "clinicalNotes": "Contraindicado em obstrução biliar extra-hepática. Mais eficaz junto da refeição."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "ursodiol-300",
+    "brandName": "Ácido Ursodesoxicólico 300 mg Comprimidos",
+    "activePrinciple": "Ácido Ursodesoxicólico",
+    "category": "Hepatoprotetor Colerético",
+    "tabletMg": 300,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 10,
+      "felino": 10
+    },
+    "doseRangeText": "Cães e gatos: 10 a 15 mg/kg uma vez ao dia, com alimento",
+    "defaultFrequency": "SID",
+    "tabletsPerBox": 30,
+    "presentationText": "Cartucho com 30 comprimidos",
+    "clinicalNotes": "Contraindicado em obstrução biliar extra-hepática. Mais eficaz junto da refeição."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "same-200",
+    "brandName": "S-Adenosilmetionina (SAMe) 200 mg Comprimidos",
+    "activePrinciple": "S-Adenosilmetionina",
+    "category": "Hepatoprotetor Antioxidante",
+    "tabletMg": 200,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 20,
+      "felino": 20
+    },
+    "doseRangeText": "Cães e gatos: 20 mg/kg uma vez ao dia, em jejum",
+    "defaultFrequency": "SID",
+    "tabletsPerBox": 20,
+    "presentationText": "Cartucho com 20 comprimidos revestidos",
+    "clinicalNotes": "Comprimido revestido: não partir nem triturar. Dar em jejum, 1 hora antes da refeição."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "anlodipino-5",
+    "brandName": "Besilato de Anlodipino 5 mg Comprimidos",
+    "activePrinciple": "Besilato de Anlodipino",
+    "category": "Anti-hipertensivo Bloqueador dos Canais de Cálcio",
+    "tabletMg": 5,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 0.2,
+      "felino": 0.18
+    },
+    "doseRangeText": "Cães: 0,1 a 0,25 mg/kg SID (até 0,5 mg/kg) | Gatos: 0,625 a 1,25 mg por gato SID",
+    "defaultFrequency": "SID",
+    "tabletsPerBox": 30,
+    "presentationText": "Cartucho com 30 comprimidos",
+    "clinicalNotes": "Para gatos, a apresentação de 1,25 mg facilita o fracionamento. Reavaliar a pressão arterial em 7 a 14 dias."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "diltiazem-30",
+    "brandName": "Cloridrato de Diltiazem 30 mg Comprimidos",
+    "activePrinciple": "Cloridrato de Diltiazem",
+    "category": "Antiarrítmico Bloqueador dos Canais de Cálcio",
+    "tabletMg": 30,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 1,
+      "felino": 2
+    },
+    "doseRangeText": "Cães: 0,5 a 1,5 mg/kg a cada 8h | Gatos: 7,5 mg por gato a cada 8h",
+    "defaultFrequency": "TID",
+    "tabletsPerBox": 50,
+    "presentationText": "Cartucho com 50 comprimidos",
+    "clinicalNotes": "Controle de frequência na fibrilação atrial e taquicardias supraventriculares. Pode causar hipotensão e bradicardia."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "clopidogrel-75",
+    "brandName": "Clopidogrel 75 mg Comprimidos",
+    "activePrinciple": "Bissulfato de Clopidogrel",
+    "category": "Antiagregante Plaquetário",
+    "tabletMg": 75,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 2,
+      "felino": 4.7
+    },
+    "doseRangeText": "Cães: 1 a 2 mg/kg SID | Gatos: 18,75 mg por gato (1/4 de comprimido) SID",
+    "defaultFrequency": "SID",
+    "tabletsPerBox": 28,
+    "presentationText": "Cartucho com 28 comprimidos",
+    "clinicalNotes": "Prevenção de tromboembolismo (cardiomiopatia felina). Sabor amargo: oferecer em cápsula de gelatina."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "sildenafila-20",
+    "brandName": "Citrato de Sildenafila 20 mg Comprimidos",
+    "activePrinciple": "Citrato de Sildenafila",
+    "category": "Vasodilatador Pulmonar (Inibidor da PDE-5)",
+    "tabletMg": 20,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 1,
+      "felino": 1
+    },
+    "doseRangeText": "Cães e gatos: 1 a 2 mg/kg a cada 8 a 12h",
+    "defaultFrequency": "TID",
+    "tabletsPerBox": 30,
+    "presentationText": "Cartucho com 30 comprimidos",
+    "clinicalNotes": "Hipertensão pulmonar. Não associar a nitratos."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "hidroclorotiazida-25",
+    "brandName": "Hidroclorotiazida 25 mg Comprimidos",
+    "activePrinciple": "Hidroclorotiazida",
+    "category": "Diurético Tiazídico",
+    "tabletMg": 25,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 2,
+      "felino": 1
+    },
+    "doseRangeText": "Cães: 2 a 4 mg/kg a cada 12h | Gatos: 1 a 2 mg/kg a cada 12h",
+    "defaultFrequency": "BID",
+    "tabletsPerBox": 30,
+    "presentationText": "Cartucho com 30 comprimidos",
+    "clinicalNotes": "Associação à furosemida na ICC refratária exige monitorar potássio, sódio e função renal."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "fludrocortisona-01",
+    "brandName": "Acetato de Fludrocortisona 0,1 mg Comprimidos",
+    "activePrinciple": "Acetato de Fludrocortisona",
+    "category": "Mineralocorticoide (Hipoadrenocorticismo)",
+    "tabletMg": 0.1,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 0.01,
+      "felino": 0.01
+    },
+    "doseRangeText": "Cães: 0,01 a 0,02 mg/kg por dia (SID ou dividido) | Gatos: 0,1 mg por gato SID",
+    "defaultFrequency": "SID",
+    "tabletsPerBox": 14,
+    "presentationText": "Cartucho com 14 comprimidos",
+    "clinicalNotes": "Ajustar pela dosagem de sódio e potássio a cada 1 a 2 semanas no início. Pode ser necessário prednisolona em dose baixa junto."
+  },
+  {
+    "formType": "liquid",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "hidrocortisona-succ-100",
+    "brandName": "Succinato Sódico de Hidrocortisona 100 mg Injetável",
+    "activePrinciple": "Succinato Sódico de Hidrocortisona",
+    "category": "Glicocorticoide Emergencial",
+    "concentrationMgMl": 50,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 2,
+      "felino": 2
+    },
+    "doseRangeText": "Crise addisoniana: 2 a 4 mg/kg IV (ou infusão contínua de 0,5 a 0,625 mg/kg/h)",
+    "defaultFrequency": "Dose Única",
+    "defaultRoute": "Intravenosa (IV)",
+    "bottleVolumeMl": 2,
+    "presentationText": "Frasco-ampola de 100 mg (pó) + diluente de 2 mL",
+    "clinicalNotes": "Concentração de 50 mg/mL após reconstituir com 2 mL. Tem ação mineralocorticoide, útil na crise addisoniana."
+  },
+  {
+    "formType": "liquid",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "insulina-nph-100",
+    "brandName": "Insulina Humana NPH 100 UI/mL",
+    "activePrinciple": "Insulina Humana NPH (Isófana)",
+    "category": "Hipoglicemiante (Insulina de ação intermediária)",
+    "concentrationMgMl": 100,
+    "species": [
+      "Canino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 0.25
+    },
+    "doseRangeText": "Cães: dose inicial de 0,25 UI/kg SC a cada 12h, junto da refeição (o cálculo em \"mg\" equivale a UI)",
+    "defaultFrequency": "BID",
+    "defaultRoute": "Subcutânea (SC)",
+    "bottleVolumeMl": 10,
+    "presentationText": "Frasco-ampola de 10 mL",
+    "clinicalNotes": "Usar seringa de insulina U-100. Em gatos, prefira glargina ou insulina PZI. Reavaliar com curva glicêmica em 7 a 14 dias."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "gabapentina-100",
+    "brandName": "Gabapentina 100 mg Cápsulas",
+    "activePrinciple": "Gabapentina",
+    "category": "Analgésico Neuropático / Anticonvulsivante",
+    "tabletMg": 100,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 10,
+      "felino": 10
+    },
+    "doseRangeText": "Cães e gatos: 5 a 20 mg/kg a cada 8 a 12h | Gatos (antes da consulta): 50 a 100 mg por gato 1 a 2h antes",
+    "defaultFrequency": "TID",
+    "tabletsPerBox": 30,
+    "presentationText": "Cartucho com 30 cápsulas",
+    "clinicalNotes": "Pode causar sedação e ataxia. Não usar a solução oral humana com xilitol em cães. Reduzir a dose em doença renal."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "amantadina-100",
+    "brandName": "Cloridrato de Amantadina 100 mg Comprimidos",
+    "activePrinciple": "Cloridrato de Amantadina",
+    "category": "Analgésico Adjuvante (Antagonista NMDA)",
+    "tabletMg": 100,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 3,
+      "felino": 3
+    },
+    "doseRangeText": "Cães e gatos: 3 a 5 mg/kg uma vez ao dia",
+    "defaultFrequency": "SID",
+    "tabletsPerBox": 20,
+    "presentationText": "Cartucho com 20 comprimidos",
+    "clinicalNotes": "Adjuvante para dor crônica (osteoartrite), junto de AINE. Para gatos, normalmente é preciso manipular."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "dipirona-comp-500",
+    "brandName": "Dipirona Sódica 500 mg Comprimidos",
+    "activePrinciple": "Dipirona Sódica",
+    "category": "Analgésico e Antipirético",
+    "tabletMg": 500,
+    "species": [
+      "Canino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 25
+    },
+    "doseRangeText": "Cães: 25 mg/kg a cada 8h",
+    "defaultFrequency": "TID",
+    "tabletsPerBox": 10,
+    "presentationText": "Cartucho com 10 comprimidos",
+    "clinicalNotes": "Para gatos e cães pequenos, prefira as gotas (500 mg/mL), que permitem dose exata."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "paracetamol-500-caes",
+    "brandName": "Paracetamol 500 mg Comprimidos (somente cães)",
+    "activePrinciple": "Paracetamol",
+    "category": "Analgésico e Antipirético",
+    "tabletMg": 500,
+    "species": [
+      "Canino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 10
+    },
+    "doseRangeText": "Cães: 10 a 15 mg/kg a cada 8 a 12h",
+    "defaultFrequency": "BID",
+    "tabletsPerBox": 20,
+    "presentationText": "Cartucho com 20 comprimidos",
+    "clinicalNotes": "TÓXICO PARA GATOS em qualquer dose. Em cães, evitar em doença hepática."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "trazodona-50",
+    "brandName": "Cloridrato de Trazodona 50 mg Comprimidos",
+    "activePrinciple": "Cloridrato de Trazodona",
+    "category": "Ansiolítico (Comportamento e Pré-consulta)",
+    "tabletMg": 50,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 5,
+      "felino": 12
+    },
+    "doseRangeText": "Cães: 3 a 7 mg/kg 1 a 2h antes do evento ou a cada 12h | Gatos: 50 a 100 mg por gato 1 a 2h antes do transporte",
+    "defaultFrequency": "BID",
+    "tabletsPerBox": 30,
+    "presentationText": "Cartucho com 30 comprimidos",
+    "clinicalNotes": "Não associar a outros serotoninérgicos (fluoxetina, tramadol, selegilina) sem cautela: risco de síndrome serotoninérgica."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "trazodona-100",
+    "brandName": "Cloridrato de Trazodona 100 mg Comprimidos",
+    "activePrinciple": "Cloridrato de Trazodona",
+    "category": "Ansiolítico (Comportamento e Pré-consulta)",
+    "tabletMg": 100,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 5,
+      "felino": 12
+    },
+    "doseRangeText": "Cães: 3 a 7 mg/kg 1 a 2h antes do evento ou a cada 12h | Gatos: 50 a 100 mg por gato 1 a 2h antes do transporte",
+    "defaultFrequency": "BID",
+    "tabletsPerBox": 30,
+    "presentationText": "Cartucho com 30 comprimidos",
+    "clinicalNotes": "Não associar a outros serotoninérgicos (fluoxetina, tramadol, selegilina) sem cautela: risco de síndrome serotoninérgica."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "fluoxetina-20",
+    "brandName": "Cloridrato de Fluoxetina 20 mg Cápsulas",
+    "activePrinciple": "Cloridrato de Fluoxetina",
+    "category": "Antidepressivo ISRS (Comportamento)",
+    "tabletMg": 20,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 1,
+      "felino": 0.5
+    },
+    "doseRangeText": "Cães: 1 a 2 mg/kg SID | Gatos: 0,5 a 1 mg/kg SID",
+    "defaultFrequency": "SID",
+    "tabletsPerBox": 30,
+    "presentationText": "Cartucho com 30 cápsulas",
+    "clinicalNotes": "Efeito completo em 4 a 6 semanas. Não associar a tramadol, trazodona ou selegilina sem cautela."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "amitriptilina-25",
+    "brandName": "Cloridrato de Amitriptilina 25 mg Comprimidos",
+    "activePrinciple": "Cloridrato de Amitriptilina",
+    "category": "Antidepressivo Tricíclico",
+    "tabletMg": 25,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 1,
+      "felino": 1
+    },
+    "doseRangeText": "Cães: 1 a 2 mg/kg a cada 12 a 24h | Gatos (cistite idiopática): 2,5 a 12,5 mg por gato SID, à noite",
+    "defaultFrequency": "SID",
+    "tabletsPerBox": 30,
+    "presentationText": "Cartucho com 30 comprimidos",
+    "clinicalNotes": "Pode causar sedação e retenção urinária. Para gatos, normalmente é preciso manipular em dose menor."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "cetirizina-10",
+    "brandName": "Dicloridrato de Cetirizina 10 mg Comprimidos",
+    "activePrinciple": "Dicloridrato de Cetirizina",
+    "category": "Anti-histamínico H1",
+    "tabletMg": 10,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 1,
+      "felino": 1.25
+    },
+    "doseRangeText": "Cães: 1 mg/kg SID (ou 0,5 mg/kg a cada 12h) | Gatos: 5 mg por gato SID",
+    "defaultFrequency": "SID",
+    "tabletsPerBox": 12,
+    "presentationText": "Cartucho com 12 comprimidos",
+    "clinicalNotes": "Usar apenas a cetirizina pura: produtos com pseudoefedrina são tóxicos para cães e gatos."
+  },
+  {
+    "formType": "tablet",
+    "defaultRoute": "Oral (VO)",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "hidroxizina-25",
+    "brandName": "Cloridrato de Hidroxizina 25 mg Comprimidos",
+    "activePrinciple": "Cloridrato de Hidroxizina",
+    "category": "Anti-histamínico H1",
+    "tabletMg": 25,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 2,
+      "felino": 2
+    },
+    "doseRangeText": "Cães: 2 mg/kg a cada 8 a 12h | Gatos: 5 a 10 mg por gato a cada 12h",
+    "defaultFrequency": "BID",
+    "tabletsPerBox": 30,
+    "presentationText": "Cartucho com 30 comprimidos",
+    "clinicalNotes": "Pode causar sedação. Evitar em pacientes com epilepsia."
+  },
+  {
+    "formType": "liquid",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "glicopirrolato-02",
+    "brandName": "Glicopirrolato 0,2 mg/mL Injetável",
+    "activePrinciple": "Glicopirrolato",
+    "category": "Anticolinérgico",
+    "concentrationMgMl": 0.2,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 0.01,
+      "felino": 0.01
+    },
+    "doseRangeText": "Cães e gatos: 0,005 a 0,01 mg/kg IV, IM ou SC",
+    "defaultFrequency": "Dose Única",
+    "defaultRoute": "Intravenosa (IV) / IM / SC",
+    "bottleVolumeMl": 1,
+    "presentationText": "Ampola de 1 mL",
+    "clinicalNotes": "Não atravessa a barreira hematoencefálica nem a placenta (alternativa à atropina em cesariana). Início mais lento que a atropina."
+  },
+  {
+    "formType": "liquid",
+    "manufacturer": "Genérico (vários laboratórios)",
+    "id": "bupivacaina-05",
+    "brandName": "Cloridrato de Bupivacaína 0,5% sem Vasoconstritor",
+    "activePrinciple": "Cloridrato de Bupivacaína",
+    "category": "Anestésico Local de Longa Duração",
+    "concentrationMgMl": 5,
+    "percentage": 0.5,
+    "species": [
+      "Canino",
+      "Felino"
+    ],
+    "defaultDoseMgKg": {
+      "canino": 1,
+      "felino": 0.5
+    },
+    "doseRangeText": "Bloqueios locorregionais — dose MÁXIMA total: cães 2 mg/kg | gatos 1 mg/kg",
+    "defaultFrequency": "Dose Única",
+    "defaultRoute": "Perineural / Infiltrativa (nunca IV)",
+    "bottleVolumeMl": 20,
+    "presentationText": "Frasco-ampola de 20 mL",
+    "clinicalNotes": "NUNCA aplicar por via intravenosa (cardiotóxica). Aspirar antes de injetar. Somar todas as doses de anestésicos locais usadas no paciente."
   }
 ];

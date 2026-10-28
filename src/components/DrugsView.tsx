@@ -345,7 +345,7 @@ export const DrugsView: React.FC = () => {
         <div className="space-y-4">
           <div className="flex items-center justify-between px-2">
             <p className="text-xs font-bold text-[#52677F] dark:text-slate-400">
-              Exibindo <span className="text-[#14243A] dark:text-white font-extrabold">{groupedByPrinciple.length}</span> princípios ativos com <span className="text-[#007F62] dark:text-[#00C896] font-extrabold">{filteredProducts.length}</span> formulações comerciais reais
+              Exibindo <span className="text-[#14243A] dark:text-white font-extrabold">{groupedByPrinciple.length}</span> princípios ativos com <span className="text-[#007F62] dark:text-[#00C896] font-extrabold">{filteredProducts.length}</span> formulações cadastradas
             </p>
             <span className="text-[11px] text-[#52677F] dark:text-slate-400 italic">
               Clique em um princípio para visualizar suas marcas, laboratórios e concentrações
