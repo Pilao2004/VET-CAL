@@ -11,6 +11,8 @@ import {
   Home,
   ShieldCheck,
   Gift,
+  Sun,
+  Moon,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ActiveView } from '../types';
@@ -21,6 +23,8 @@ export const Header: React.FC = () => {
     currentView,
     setCurrentView,
     setIsSearchOpen,
+    isDarkMode,
+    toggleTheme,
   } = useApp();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -93,6 +97,16 @@ export const Header: React.FC = () => {
                 aria-label="Abrir busca"
               >
                 <Search className="w-5 h-5 text-[var(--secondary)]" />
+              </button>
+
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="p-2.5 text-[var(--text-secondary)] hover:text-[var(--text-main)] hover:bg-[var(--input-bg)] rounded-xl min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer transition-colors"
+                title={isDarkMode ? 'Modo claro' : 'Modo escuro'}
+                aria-label={isDarkMode ? 'Ativar modo claro' : 'Ativar modo escuro'}
+              >
+                {isDarkMode ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-[var(--secondary)]" />}
               </button>
 
               <button

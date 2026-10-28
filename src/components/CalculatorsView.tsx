@@ -2451,8 +2451,8 @@ export const CalculatorsView: React.FC = () => {
                         {step.label}
                       </div>
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between font-mono text-[var(--text-secondary)] gap-1">
-                        <span className="break-words">{step.expression}</span>
-                        <span className="font-bold text-[var(--primary)] text-xs sm:text-sm shrink-0">
+                        <span className="break-words min-w-0">{step.expression}</span>
+                        <span className={`font-bold text-[var(--primary)] text-xs sm:text-sm min-w-0 break-words ${String(step.result).length > 24 ? 'sm:text-right sm:max-w-[60%]' : 'shrink-0'}`}>
                           = {step.result}
                         </span>
                       </div>

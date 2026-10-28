@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, User, Crown, HelpCircle, LogOut, Users, Bot, Gift, ShieldCheck } from 'lucide-react';
+import { X, User, Crown, HelpCircle, LogOut, Users, Bot, Gift, ShieldCheck, Sun, Moon } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 interface SidebarProps {
@@ -8,7 +8,7 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
-  const { setCurrentView, setIsSubscriptionModalOpen, isPremium } = useApp();
+  const { setCurrentView, setIsSubscriptionModalOpen, isDarkMode, toggleTheme } = useApp();
 
   return (
     <>
@@ -57,6 +57,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           >
             <Crown className="w-5 h-5 text-amber-400" />
             <span>Minha compra</span>
+          </button>
+          <button
+            onClick={toggleTheme}
+            className="flex items-center space-x-3 w-full p-3 hover:bg-[var(--input-bg)] rounded-xl cursor-pointer"
+          >
+            {isDarkMode ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-[var(--secondary)]" />}
+            <span>{isDarkMode ? 'Modo claro' : 'Modo escuro'}</span>
           </button>
           <div className="border-t border-[var(--border)] my-2" />
           <button 

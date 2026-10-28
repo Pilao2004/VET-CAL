@@ -1,14 +1,28 @@
 @import "tailwindcss";
 
-/* O app é sempre escuro: o variant dark: segue a classe .dark do <html>, não o tema do sistema */
+/* O variant dark: segue a classe .dark do <html> (escolha do usuário), não o tema do sistema */
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
-  :root,
-  html,
-  body,
+  /* Modo claro */
+  :root {
+    --bg-main: #F3F7FB;
+    --surface: #FFFFFF;
+    --input-bg: #EDF3F9;
+    --text-main: #0F1B2D;
+    --text-secondary: #52677F;
+    --primary: #00A27B;
+    --secondary: #0E8C9A;
+    --border: #D6E2EE;
+    --result-bg: #FFFFFF;
+    --header-bg: #FFFFFF;
+    --banner-from: #DDF5EC;
+    --banner-to: #DCEFF7;
+    color-scheme: light;
+  }
+
+  /* Modo escuro (padrão) */
   .dark {
-    /* Default Dark Theme - Vet Calc Pro */
     --bg-main: #060D1C;
     --surface: #10213B;
     --input-bg: #172A46;
@@ -21,6 +35,7 @@
     --header-bg: #10213B;
     --banner-from: #15345B;
     --banner-to: #124C50;
+    color-scheme: dark;
   }
 
   body {

@@ -242,17 +242,25 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [selectedCalculator, setSelectedCalculator] = useState<CalculatorType>('dosage');
   const [prefilledCalculatorData, setPrefilledCalculatorData] = useState<PrefillData | null>(null);
 
-  // Fixed Dark Theme (Default)
-  const isDarkMode = true;
-  const toggleTheme = () => {};
+  // Tema: escuro por padrão; a escolha fica salva no aparelho
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('vet_calc_pro_theme') !== 'light';
+    } catch {
+      return true;
+    }
+  });
+  const toggleTheme = () => setIsDarkMode((d) => !d);
 
   useEffect(() => {
+    const root = document.documentElement;
+    root.classList.toggle('dark', isDarkMode);
+    root.classList.toggle('light', !isDarkMode);
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', isDarkMode ? '#0B1D3A' : '#FFFFFF');
     try {
-      localStorage.removeItem('vet_calc_pro_theme');
-      document.documentElement.classList.add('dark');
-      document.documentElement.classList.remove('light');
+      localStorage.setItem('vet_calc_pro_theme', isDarkMode ? 'dark' : 'light');
     } catch {}
-  }, []);
+  }, [isDarkMode]);
 
   // Modals & Search
   const [isSearchOpen, setIsSearchOpen] = useState(false);
