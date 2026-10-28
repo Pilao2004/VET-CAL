@@ -18,6 +18,7 @@ import { PremiumGate } from './components/PremiumGate';
 import { LegalView } from './components/LegalView';
 import { TermsConsent } from './components/TermsConsent';
 import { LandingPage } from './components/LandingPage';
+import { OnboardingTutorial } from './components/OnboardingTutorial';
 import { isLandingPreview } from './config/plans';
 import { ShieldCheck, Heart } from 'lucide-react';
 
@@ -50,6 +51,7 @@ const AppContent: React.FC = () => {
       <SearchModal />
       <SubscriptionModal />
       <TermsConsent />
+      <OnboardingTutorial />
 
       {/* Main Content View */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-20">

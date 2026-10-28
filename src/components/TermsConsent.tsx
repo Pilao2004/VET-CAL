@@ -5,7 +5,7 @@ import { TERMS_VERSION } from './LegalView';
 
 const KEY = 'vetcalc_terms_accepted';
 
-function alreadyAccepted() {
+export function termsAlreadyAccepted() {
   try {
     return JSON.parse(localStorage.getItem(KEY) || '{}').version === TERMS_VERSION;
   } catch {
@@ -16,7 +16,7 @@ function alreadyAccepted() {
 /** Aceite dos Termos e da Política de Privacidade no primeiro uso (e a cada nova versão). */
 export const TermsConsent: React.FC = () => {
   const { setCurrentView, currentView } = useApp();
-  const [accepted, setAccepted] = useState(alreadyAccepted);
+  const [accepted, setAccepted] = useState(termsAlreadyAccepted);
   const [checked, setChecked] = useState(false);
   if (accepted || currentView === 'legal') return null;
 
@@ -25,6 +25,7 @@ export const TermsConsent: React.FC = () => {
       localStorage.setItem(KEY, JSON.stringify({ version: TERMS_VERSION, at: new Date().toISOString() }));
     } catch {}
     setAccepted(true);
+    window.dispatchEvent(new Event('vetcalc:terms-accepted'));
   };
 
   return (

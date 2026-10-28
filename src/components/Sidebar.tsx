@@ -1,5 +1,6 @@
 import React from 'react';
-import { X, User, Crown, HelpCircle, LogOut, Users, Bot, Gift, ShieldCheck, Sun, Moon } from 'lucide-react';
+import { X, User, Crown, HelpCircle, LogOut, Users, Bot, Gift, ShieldCheck, Sun, Moon, GraduationCap } from 'lucide-react';
+import { openTutorial } from './OnboardingTutorial';
 import { useApp } from '../context/AppContext';
 
 interface SidebarProps {
@@ -72,6 +73,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           >
             <User className="w-5 h-5 text-[var(--secondary)]" />
             <span>Perfil</span>
+          </button>
+          <button
+            onClick={() => { openTutorial(); onClose(); }}
+            className="flex items-center space-x-3 w-full p-3 hover:bg-[var(--input-bg)] rounded-xl cursor-pointer"
+          >
+            <GraduationCap className="w-5 h-5 text-[var(--secondary)]" />
+            <span>Ver tutorial</span>
           </button>
           <button 
             onClick={() => { setCurrentView('support'); onClose(); }}
