@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { GoogleGenAI } from '@google/genai';
+import { AgentError, runAgentRound } from './agent';
 
 dotenv.config();
 
@@ -334,6 +335,21 @@ Retorne EXCLUSIVAMENTE um objeto JSON válido (sem tags markdown ou texto fora d
       error: 'Falha na pesquisa externa farmacológica.',
       details: error?.message,
     });
+  }
+});
+
+// API: uma rodada da Assistente conversacional (ferramentas executadas no navegador)
+router.post('/assistant/agent', async (req: Request, res: Response) => {
+  const { system, history, tools } = req.body || {};
+  if (typeof system !== 'string' || !Array.isArray(history) || !Array.isArray(tools)) {
+    return res.status(400).json({ error: 'invalid_request' });
+  }
+  try {
+    return res.json(await runAgentRound(system, history.slice(-40), tools));
+  } catch (err: any) {
+    const code = err instanceof AgentError ? err.code : 'upstream';
+    console.warn('Assistente IA:', err?.message || err);
+    return res.status(code === 'quota' ? 429 : code === 'unconfigured' ? 503 : 502).json({ error: code });
   }
 });
 

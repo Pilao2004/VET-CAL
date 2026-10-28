@@ -175,7 +175,7 @@ function patientRecord(p: PatientRecord) {
   };
 }
 
-function buildRules(patients: PatientRecord[]) {
+export function buildRules(patients: PatientRecord[]) {
   const today = new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
   const hour = new Date().getHours();
   return `Você é a Assistente do VET CALC PRO, um app de apoio à Medicina Veterinária usado por médicos-veterinários, estagiários e estudantes no Brasil. Hoje é ${today}, ${hour}h.
@@ -302,4 +302,63 @@ export async function askVetAssistant(
     onText: ({ text }: { text: string }) => handlers.onText(text),
   } as Record<string, unknown>);
   return text;
+}
+
+// ---------- Site (Netlify): Gemini gratuito, com Groq gratuito de reserva, via /api/assistant/agent ----------
+
+type ServerMessage =
+  | { role: 'user'; text: string }
+  | { role: 'assistant'; text?: string; toolCalls?: { id: string; name: string; args: Record<string, unknown> }[] }
+  | { role: 'tool'; id: string; name: string; result: unknown };
+
+export type ServerAgentErrorCode = 'quota' | 'unavailable' | 'unconfigured' | 'upstream' | 'cancelled';
+
+const MAX_TOOL_ROUNDS = 6;
+
+/** Conversa com a IA do servidor; as ferramentas rodam aqui, com os dados do aparelho. */
+export async function askServerAssistant(
+  history: AITurn[],
+  getPatients: () => PatientRecord[],
+  handlers: { onProgress: (label: string) => void; signal?: AbortSignal },
+): Promise<{ text: string; provider: string }> {
+  const tools = buildTools(getPatients, handlers.onProgress);
+  const schemas = tools.map(({ name, description, inputSchema }) => ({ name, description, inputSchema }));
+  const work: ServerMessage[] = history.slice(-20).map((t) => ({ role: t.role, text: t.content }));
+  const fail = (code: ServerAgentErrorCode) => Object.assign(new Error(code), { code });
+
+  for (let round = 0; round < MAX_TOOL_ROUNDS; round++) {
+    let res: Response;
+    try {
+      res = await fetch('./api/assistant/agent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ system: buildRules(getPatients()), history: work, tools: schemas }),
+        signal: handlers.signal,
+      });
+    } catch (e: any) {
+      throw fail(e?.name === 'AbortError' ? 'cancelled' : 'unavailable');
+    }
+    if (!(res.headers.get('content-type') || '').includes('application/json')) throw fail('unavailable');
+    const data = await res.json().catch(() => null);
+    if (!res.ok || !data) {
+      const code = data?.error;
+      throw fail(code === 'quota' || code === 'unconfigured' ? code : res.status === 404 ? 'unavailable' : 'upstream');
+    }
+    if (data.toolCalls?.length) {
+      work.push({ role: 'assistant', text: data.text, toolCalls: data.toolCalls });
+      for (const call of data.toolCalls) {
+        const tool = tools.find((t) => t.name === call.name);
+        let result: unknown;
+        try {
+          result = tool ? await tool.execute(call.args || {}) : `Ferramenta desconhecida: ${call.name}`;
+        } catch (e: any) {
+          result = `Erro: ${e?.message || e}`;
+        }
+        work.push({ role: 'tool', id: call.id, name: call.name, result });
+      }
+      continue;
+    }
+    return { text: String(data.text || '').trim() || 'Não consegui formular uma resposta. Pode reformular?', provider: data.provider };
+  }
+  throw fail('upstream');
 }

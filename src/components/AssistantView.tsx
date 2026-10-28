@@ -32,7 +32,7 @@ import {
   SmartCalculationResult,
   formatClinicalVolume,
 } from '../utils/assistantCalculator';
-import { AITurn, askVetAssistant, errorMessage, getClaudeSample } from '../services/vetAssistantAI';
+import { AITurn, askServerAssistant, askVetAssistant, errorMessage, getClaudeSample } from '../services/vetAssistantAI';
 
 interface PendingCalculationState {
   drug: CommercialProduct | null;
@@ -103,6 +103,8 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
   const patientsRef = useRef<PatientRecord[]>(patients);
   patientsRef.current = patients;
   const [aiAvailable, setAiAvailable] = useState(false);
+  // Fica true quando o site não tem a IA do servidor publicada ou configurada
+  const serverAgentDownRef = useRef(false);
 
   useEffect(() => {
     let active = true;
@@ -207,6 +209,12 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
     }
   };
 
+  // Resposta do modo automático quando nenhuma IA está disponível
+  const offlineReply = (text: string) =>
+    /^(oi|ol[aá]|bom dia|boa tarde|boa noite|tudo bem|e a[ií])/i.test(text.trim())
+      ? 'Olá! 👋 No momento estou no modo automático, sem a IA de conversa. Consigo calcular doses: me diga o medicamento, a espécie e o peso, por exemplo "Agemoxi, cão, 12 kg". Para ver um paciente, digite o código dele, como VET-100001.'
+      : 'No momento a IA de conversa está indisponível, então não consigo responder perguntas abertas. No modo automático eu calculo doses: me diga o medicamento, a espécie e o peso, por exemplo "Dipirona, gato, 4 kg".';
+
   const sendToChatApi = async (textToSend: string) => {
     setLoading(true);
     try {
@@ -235,7 +243,7 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
         {
           id: 'err-' + Date.now(),
           role: 'assistant',
-          content: 'Falha na comunicação com o servidor de IA. Tente novamente em instantes.',
+          content: offlineReply(textToSend),
           timestamp: new Date().toISOString(),
         },
       ]);
@@ -284,11 +292,53 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
     }
   };
 
+  // Site: Gemini gratuito (Groq gratuito de reserva) no servidor. false = usar o modo automático
+  const chatWithServer = async (textToSend: string): Promise<boolean> => {
+    const replyId = 'ai-' + Date.now();
+    setMessages((prev) => [...prev, { id: replyId, role: 'assistant', content: '⏳ Pensando…', timestamp: new Date().toISOString() }]);
+    const ctl = new AbortController();
+    aiAbortRef.current = ctl;
+    setLoading(true);
+    try {
+      const { text } = await askServerAssistant([...aiTurnsRef.current, { role: 'user', content: textToSend }], () => patientsRef.current, {
+        signal: ctl.signal,
+        onProgress: (label) => updateMessageContent(replyId, `⏳ ${label}`),
+      });
+      aiTurnsRef.current.push({ role: 'user', content: textToSend }, { role: 'assistant', content: text });
+      updateMessageContent(replyId, text);
+      setAiAvailable(true);
+      return true;
+    } catch (e: any) {
+      const code = e?.code;
+      if (code === 'cancelled') {
+        updateMessageContent(replyId, 'Resposta interrompida.');
+        return true;
+      }
+      if (code === 'unavailable' || code === 'unconfigured') {
+        serverAgentDownRef.current = true;
+        setMessages((prev) => prev.filter((m) => m.id !== replyId));
+        return false;
+      }
+      if (code === 'quota') {
+        updateMessageContent(replyId, '⚠️ A IA gratuita atingiu o limite de uso de hoje. Sigo no modo automático, que calcula doses a partir de frases como "Agemoxi, cão, 12 kg".');
+        return false;
+      }
+      updateMessageContent(replyId, '⚠️ Não consegui responder agora. Tente enviar de novo.');
+      return true;
+    } finally {
+      setLoading(false);
+      aiAbortRef.current = null;
+    }
+  };
+
   // Fluxo de análise da mensagem
   const processUserMessage = async (textToSend: string) => {
     const sample = await getClaudeSample();
     if (sample) {
       await chatWithAI(sample, textToSend);
+      return;
+    }
+    if (!serverAgentDownRef.current && (await chatWithServer(textToSend))) {
       return;
     }
 
