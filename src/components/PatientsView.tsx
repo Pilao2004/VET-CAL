@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { saveFile } from '../utils/fileSave';
 import {
   Users,
   Plus,
@@ -42,7 +43,38 @@ export const PatientsView: React.FC = () => {
     isLoadingPatients,
     patientError,
     refreshPatients,
+    importPatientsBackup,
   } = useApp();
+
+  // Backup em arquivo: protege os prontuários do modo local (troca de aparelho, limpeza do navegador)
+  const backupInputRef = useRef<HTMLInputElement>(null);
+  const exportBackup = async () => {
+    const payload = { app: 'VET CALC PRO', version: 1, exportedAt: new Date().toISOString(), patients };
+    const date = new Date().toISOString().slice(0, 10);
+    const outcome = await saveFile(
+      `VetCalcPro_backup_prontuarios_${date}.json`,
+      new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }),
+    );
+    if (outcome === 'saved') showToast(`Backup de ${patients.length} paciente(s) salvo. Guarde o arquivo em local seguro.`);
+    else if (outcome === 'declined') showToast('Backup cancelado.');
+    else showToast('Não foi possível salvar o backup aqui.');
+  };
+  const importBackup = async (file: File) => {
+    try {
+      const data = JSON.parse(await file.text());
+      const list: PatientRecord[] = (Array.isArray(data) ? data : data?.patients || [])
+        .filter((p: any) => p && typeof p.name === 'string' && p.name.trim())
+        .map((p: any) => ({ ...p, id: String(p.id || `pat-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`), consultations: Array.isArray(p.consultations) ? p.consultations : [] }));
+      if (list.length === 0) {
+        showToast('O arquivo não contém pacientes do VET CALC PRO.');
+        return;
+      }
+      const count = await importPatientsBackup(list);
+      showToast(`${count} paciente(s) restaurado(s) do backup.`);
+    } catch {
+      showToast('Arquivo de backup inválido. Use um arquivo .json gerado pelo app.');
+    }
+  };
 
   const [searchQuery, setSearchQuery] = useState('');
   const [isNewPatientModalOpen, setIsNewPatientModalOpen] = useState(false);
@@ -267,6 +299,44 @@ export const PatientsView: React.FC = () => {
           >
             Gerenciar Conexão &gt;
           </button>
+        )}
+      </div>
+
+      {/* Backup dos prontuários */}
+      <div className="flex flex-wrap items-center gap-2 text-xs">
+        <button
+          type="button"
+          onClick={exportBackup}
+          disabled={patients.length === 0}
+          className="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 font-bold flex items-center gap-1.5 cursor-pointer hover:border-teal-500 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <FileDown className="w-4 h-4" />
+          Fazer backup
+        </button>
+        <button
+          type="button"
+          onClick={() => backupInputRef.current?.click()}
+          className="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 font-bold flex items-center gap-1.5 cursor-pointer hover:border-teal-500"
+        >
+          <Plus className="w-4 h-4" />
+          Restaurar backup
+        </button>
+        <input
+          ref={backupInputRef}
+          id="backup-file"
+          type="file"
+          accept="application/json,.json"
+          className="hidden"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) importBackup(file);
+            e.target.value = '';
+          }}
+        />
+        {!user && (
+          <span className="text-slate-500 dark:text-slate-400">
+            No modo local, faça backup com frequência: os dados ficam só neste aparelho.
+          </span>
         )}
       </div>
 

@@ -1,5 +1,6 @@
 import { jsPDF } from 'jspdf';
 import { PatientRecord, ClinicalConsultation } from '../types';
+import { saveFile } from './fileSave';
 
 export function exportPatientRecordToPdf(patient: PatientRecord, consultation?: ClinicalConsultation) {
   const doc = new jsPDF({
@@ -250,5 +251,5 @@ export function exportPatientRecordToPdf(patient: PatientRecord, consultation?: 
   );
 
   const cleanFileName = `Prontuario_${patient.name.replace(/[^a-zA-Z0-9]/g, '_')}_${docDate.replace(/\//g, '-')}.pdf`;
-  doc.save(cleanFileName);
+  return saveFile(cleanFileName, doc.output('blob'));
 }

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Gift, ShieldCheck, Zap, Download, CheckCircle2, AlertTriangle, Activity, Stethoscope, HeartPulse, CheckSquare } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { saveFile } from '../utils/fileSave';
 
 export const BonusView: React.FC = () => {
   const { showToast } = useApp();
   const [downloadedBonus1, setDownloadedBonus1] = useState(false);
   const [downloadedBonus3, setDownloadedBonus3] = useState(false);
+  const [generating, setGenerating] = useState<'guia' | 'checklist' | null>(null);
   const [checklistState, setChecklistState] = useState<Record<string, boolean>>({
     anamnese: false,
     identificacao: false,
@@ -21,14 +23,28 @@ export const BonusView: React.FC = () => {
     setChecklistState((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
-  const handleDownloadBonus1 = () => {
-    setDownloadedBonus1(true);
-    showToast('Guia de Urgências e Emergências Clínicas (Bônus 01) baixado com sucesso!');
-  };
-
-  const handleDownloadBonus3 = () => {
-    setDownloadedBonus3(true);
-    showToast('Checklist de Anamnese e Exame Físico (Bônus 03) baixado com sucesso!');
+  const downloadBonus = async (which: 'guia' | 'checklist') => {
+    setGenerating(which);
+    try {
+      const pdfs = await import('../utils/bonusPdfs');
+      const isGuide = which === 'guia';
+      const outcome = await saveFile(
+        isGuide ? 'VetCalcPro_Guia_Urgencias_Emergencias.pdf' : 'VetCalcPro_Checklist_Anamnese_Exame_Fisico.pdf',
+        isGuide ? pdfs.buildEmergencyGuidePdf() : pdfs.buildChecklistPdf(),
+      );
+      if (outcome === 'saved') {
+        (isGuide ? setDownloadedBonus1 : setDownloadedBonus3)(true);
+        showToast(isGuide ? 'Guia de Urgências e Emergências baixado.' : 'Checklist de Anamnese e Exame Físico baixado.');
+      } else if (outcome === 'declined') {
+        showToast('Download cancelado.');
+      } else {
+        showToast('Não foi possível baixar o arquivo aqui.');
+      }
+    } catch {
+      showToast('Não foi possível gerar o PDF. Tente novamente.');
+    } finally {
+      setGenerating(null);
+    }
   };
 
   return (
@@ -100,11 +116,12 @@ export const BonusView: React.FC = () => {
 
         <div className="flex justify-end pt-2">
           <button
-            onClick={handleDownloadBonus1}
-            className="px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs shadow-md transition-all flex items-center space-x-2 cursor-pointer"
+            onClick={() => downloadBonus('guia')}
+            disabled={generating !== null}
+            className="px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs shadow-md transition-all flex items-center space-x-2 cursor-pointer disabled:opacity-60 disabled:cursor-wait"
           >
             <Download className="w-4 h-4" />
-            <span>{downloadedBonus1 ? 'Guia 01 Baixado com Sucesso!' : 'Baixar Guia de Urgências (PDF)'}</span>
+            <span>{generating === 'guia' ? 'Gerando PDF…' : downloadedBonus1 ? 'Guia baixado · baixar de novo' : 'Baixar Guia de Urgências (PDF)'}</span>
           </button>
         </div>
       </div>
@@ -180,11 +197,12 @@ export const BonusView: React.FC = () => {
 
         <div className="flex justify-end pt-2">
           <button
-            onClick={handleDownloadBonus3}
-            className="px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs shadow-md transition-all flex items-center space-x-2 cursor-pointer"
+            onClick={() => downloadBonus('checklist')}
+            disabled={generating !== null}
+            className="px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs shadow-md transition-all flex items-center space-x-2 cursor-pointer disabled:opacity-60 disabled:cursor-wait"
           >
             <Download className="w-4 h-4" />
-            <span>{downloadedBonus3 ? 'Checklist 03 Baixado com Sucesso!' : 'Baixar Checklist de Anamnese (PDF)'}</span>
+            <span>{generating === 'checklist' ? 'Gerando PDF…' : downloadedBonus3 ? 'Checklist baixado · baixar de novo' : 'Baixar Checklist de Anamnese (PDF)'}</span>
           </button>
         </div>
       </div>

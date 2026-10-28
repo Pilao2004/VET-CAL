@@ -91,6 +91,7 @@ interface AppContextType {
   setSelectedPatientId: (id: string | null) => void;
   addConsultationToPatient: (patientId: string, consultation: any) => Promise<void>;
   addClinicalEvolutionToPatient: (patientId: string, evolutionText: string, source?: 'ai_assistant' | 'manual') => Promise<void>;
+  importPatientsBackup: (list: PatientRecord[]) => Promise<number>;
 
   // Migration & Backups
   localPatientsCount: number;
@@ -641,6 +642,25 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     });
   };
 
+  // Restaura um backup em arquivo: na nuvem cria os pacientes; no modo local mescla por id
+  const importPatientsBackup = async (list: PatientRecord[]): Promise<number> => {
+    if (user && isSupabaseReady) {
+      const summary = await patientService.migrateFromLocalStorage(list, user.id);
+      await refreshPatients();
+      return summary.migratedCount;
+    }
+    setPatients((prev) => {
+      const byId = new Map(prev.map((p) => [p.id, p]));
+      for (const p of list) byId.set(p.id, p);
+      const updated = Array.from(byId.values());
+      try {
+        localStorage.setItem(getStorageKey('patients'), JSON.stringify(updated));
+      } catch {}
+      return updated;
+    });
+    return list.length;
+  };
+
   // Migration from localStorage
   const migrateLocalPatients = async (): Promise<MigrationSummary> => {
     if (!user) throw new Error('É necessário estar autenticado para migrar os prontuários.');
@@ -941,6 +961,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setSelectedPatientId,
         addConsultationToPatient,
         addClinicalEvolutionToPatient,
+        importPatientsBackup,
 
         // Migration & Backups
         localPatientsCount,

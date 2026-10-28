@@ -15,9 +15,8 @@ import {
 import { CLINICAL_SYMPTOMS } from '../data/symptoms';
 import { SymptomInfo, VeterinarySpecies } from '../types';
 
-const SPECIES_OPTIONS: VeterinarySpecies[] = [
-  'Canino', 'Felino', 'Bovino', 'Equino', 'Ovino', 'Caprino', 'Suíno', 'Bubalino', 'Coelho', 'Aves', 'Répteis', 'Pequenos Mamíferos', 'Animais Silvestres e Exóticos', 'Outros Animais'
-];
+// Só as espécies com conteúdo cadastrado em CLINICAL_SYMPTOMS
+const SPECIES_OPTIONS: VeterinarySpecies[] = ['Canino', 'Felino'];
 
 export const SymptomsView: React.FC = () => {
   const [selectedSymptomIds, setSelectedSymptomIds] = useState<string[]>(['vomito']);
@@ -63,11 +62,7 @@ export const SymptomsView: React.FC = () => {
           <div className="relative">
             <select
               value={patientSpecies}
-              onChange={(e) => {
-                setPatientSpecies(e.target.value as VeterinarySpecies);
-                // Reset active symptom if it's not compatible with new species? 
-                // Let's keep it simple for now or reset selection if invalid.
-              }}
+              onChange={(e) => setPatientSpecies(e.target.value as VeterinarySpecies)}
               className="appearance-none bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-bold py-2 pl-4 pr-10 rounded-xl cursor-pointer border border-slate-200 dark:border-slate-700"
             >
               {SPECIES_OPTIONS.map(s => <option key={s} value={s}>{s}</option>)}
@@ -75,6 +70,9 @@ export const SymptomsView: React.FC = () => {
             <ChevronDown className="absolute right-3 top-2.5 w-4 h-4 text-slate-500 pointer-events-none" />
           </div>
         </div>
+        <p className="text-[11px] text-slate-500 dark:text-slate-400 -mt-2">
+          Conteúdo disponível para cães e gatos. Outras espécies serão adicionadas nas próximas versões.
+        </p>
 
         {/* Symptoms Multi-Select Buttons */}
         <div>
