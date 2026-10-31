@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+:root {
+  --color-navy: #0D172D;
+  --color-navy-dark: #142743;
+  --color-tech-green: #00DFA2;
+  --color-accent-green: #00C896;
+  --color-light-bg: #F3F7FB;
+  --color-muted: #64748B;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  color: #0D172D;
+  background-color: #FFFFFF;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.reveal {
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(18px);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.paw-texture {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='%230D172D' fill-opacity='0.035'%3E%3Cg transform='translate(36 40) rotate(-15)'%3E%3Cellipse cx='0' cy='7' rx='8' ry='6.5'/%3E%3Cellipse cx='-8.5' cy='-3' rx='3.2' ry='4.2'/%3E%3Cellipse cx='-3' cy='-8' rx='3.2' ry='4.2'/%3E%3Cellipse cx='3.5' cy='-8' rx='3.2' ry='4.2'/%3E%3Cellipse cx='9' cy='-3' rx='3.2' ry='4.2'/%3E%3C/g%3E%3Cpath d='M114 102h6v-6h4v6h6v4h-6v6h-4v-6h-6z'/%3E%3Cg transform='translate(120 30) rotate(20) scale(.7)'%3E%3Cellipse cx='0' cy='7' rx='8' ry='6.5'/%3E%3Cellipse cx='-8.5' cy='-3' rx='3.2' ry='4.2'/%3E%3Cellipse cx='-3' cy='-8' rx='3.2' ry='4.2'/%3E%3Cellipse cx='3.5' cy='-8' rx='3.2' ry='4.2'/%3E%3Cellipse cx='9' cy='-3' rx='3.2' ry='4.2'/%3E%3C/g%3E%3Cpath d='M28 124h4v-4h3v4h4v3h-4v4h-3v-4h-4z'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+.photo-strip,
+.feedback-strip {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6% 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6% 94%, transparent);
+}
+
+.photo-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: photo-slide 55s linear infinite;
+}
+
+.photo-track:hover {
+  animation-play-state: paused;
+}
+
+.feedback-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: feedback-slide 40s linear infinite;
+}
+
+.feedback-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes photo-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes feedback-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
