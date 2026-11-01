@@ -70,7 +70,7 @@ const DEFAULT_OFFERS: OfferPlan[] = [
       'Assistente IA veterinário',
       'Atualizações automáticas'
     ],
-    hotmartUrl: 'https://pay.hotmart.com/EXEMPLO_UNICO',
+    hotmartUrl: 'https://mpago.li/1bku2Ff',
     popular: true
   }
 ];
@@ -169,7 +169,7 @@ const FAQS = [
   },
   {
     q: 'Como recebo meu acesso depois da compra?',
-    a: 'Assim que o pagamento for confirmado pela Hotmart, você receberá automaticamente em seu e-mail cadastrado os dados de login e link direto para acessar a plataforma.'
+    a: 'Assim que o pagamento for confirmado pelo Mercado Pago, você recebe o seu código de acesso para liberar todas as ferramentas da plataforma.'
   },
   {
     q: 'Por quanto tempo terei acesso?',
@@ -177,11 +177,11 @@ const FAQS = [
   },
   {
     q: 'Quais são as formas de pagamento?',
-    a: 'Você pode pagar via Pix (liberação imediata), Cartão de Crédito (com opção de parcelamento em até 3x) ou Boleto Bancário através do ambiente 100% seguro da Hotmart.'
+    a: 'Você pode pagar via Pix, cartão de crédito (com opção de parcelamento em até 3x) ou cartão de débito, pelo ambiente 100% seguro do Mercado Pago.'
   },
   {
     q: 'Posso solicitar reembolso?',
-    a: 'Sim! Você conta com garantia incondicional de 7 dias garantida pela Hotmart. Se não gostar por qualquer motivo, seu dinheiro é devolvido sem burocracia.'
+    a: 'Sim! Você conta com garantia incondicional de 7 dias. Se não gostar por qualquer motivo, é só pedir o reembolso e seu dinheiro é devolvido sem burocracia.'
   },
   {
     q: 'Os medicamentos possuem diferentes marcas e concentrações?',
@@ -207,7 +207,7 @@ function FeedbackPlaceholder({ badge }: { badge: string }) {
 
 export default function App() {
   const [offers, setOffers] = useState<OfferPlan[]>(() => {
-    const saved = localStorage.getItem('vet_calc_offers');
+    const saved = localStorage.getItem('vet_calc_offers_mp');
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -266,7 +266,7 @@ export default function App() {
   };
 
   const handleSaveOffers = () => {
-    localStorage.setItem('vet_calc_offers', JSON.stringify(offers));
+    localStorage.setItem('vet_calc_offers_mp', JSON.stringify(offers));
     setSaveSuccess(true);
     setTimeout(() => {
       setSaveSuccess(false);
@@ -750,7 +750,7 @@ export default function App() {
 
                 <div className="mt-4 text-center">
                   <span className="text-[11px] text-slate-400 flex items-center justify-center gap-1">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#00C896]" /> Pagamento 100% Seguro pela Hotmart
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#00C896]" /> Pagamento 100% seguro pelo Mercado Pago
                   </span>
                 </div>
               </div>
@@ -837,7 +837,7 @@ export default function App() {
             </span>
             <h3 className="text-2xl sm:text-3xl font-bold text-[#0D172D]">Sua compra com mais tranquilidade.</h3>
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-              Você tem até <strong className="text-[#0D172D]">7 dias</strong> após a confirmação do pagamento para testar todas as funcionalidades do VET CALC PRO. Se por qualquer motivo você não ficar satisfeito, poderá solicitar o reembolso integral de forma rápida e descomplicada diretamente pela Hotmart.
+              Você tem até <strong className="text-[#0D172D]">7 dias</strong> após a confirmação do pagamento para testar todas as funcionalidades do VET CALC PRO. Se por qualquer motivo você não ficar satisfeito, poderá solicitar o reembolso integral de forma rápida e descomplicada.
             </p>
           </div>
         </div>
@@ -975,7 +975,7 @@ export default function App() {
                     className="hover:text-[#00DFA2] transition-colors text-left flex items-center gap-1.5 mt-2 text-xs text-slate-400"
                   >
                     <Settings className="w-3.5 h-3.5" />
-                    <span>Configurar Links Hotmart</span>
+                    <span>Configurar link de pagamento</span>
                   </button>
                 </li>
               </ul>
@@ -999,14 +999,14 @@ export default function App() {
         </div>
       </footer>
 
-      {/* Hotmart Configuration Modal */}
+      {/* Payment link configuration modal */}
       {showConfigModal && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl text-[#0D172D] max-h-[90vh] overflow-y-auto animate-scaleUp">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold flex items-center gap-2">
                 <SlidersVertical className="w-5 h-5 text-[#00C896]" />
-                <span>Configurar Ofertas & Hotmart</span>
+                <span>Configurar link de pagamento</span>
               </h3>
               <button
                 onClick={() => setShowConfigModal(false)}
@@ -1017,7 +1017,7 @@ export default function App() {
             </div>
 
             <p className="text-xs text-slate-500 mb-6">
-              Insira abaixo os links reais de checkout da Hotmart para o plano da sua página de vendas. Eles serão salvos e vinculados aos botões de compra.
+              Insira abaixo o link de pagamento do Mercado Pago para o plano da sua página de vendas. Ele será salvo e vinculado aos botões de compra.
             </p>
 
             <div className="space-y-6">
@@ -1028,7 +1028,7 @@ export default function App() {
                   </h4>
                   <div>
                     <label className="block text-xs font-semibold text-slate-600 mb-1">
-                      Link de Checkout Hotmart:
+                      Link de pagamento (Mercado Pago):
                     </label>
                     <input
                       type="text"
@@ -1038,7 +1038,7 @@ export default function App() {
                         updated[index].hotmartUrl = e.target.value;
                         setOffers(updated);
                       }}
-                      placeholder="https://pay.hotmart.com/..."
+                      placeholder="https://mpago.li/..."
                       className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 focus:outline-none focus:border-[#00C896] bg-white"
                     />
                   </div>
