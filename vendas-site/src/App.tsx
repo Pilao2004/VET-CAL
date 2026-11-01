@@ -80,14 +80,14 @@ const BONUSES: BonusItem[] = [
     id: 'b1',
     title: 'Guia de Urgências e Emergências Clínicas',
     description: 'Manual digital prático com fluxograma de atendimento inicial para pacientes críticos em cães e gatos.',
-    value: 'R$ 97,00',
+    value: 'R$ 25,00',
     img: './media/bonus-guia.jpg'
   },
   {
     id: 'b2',
     title: 'Checklist de Anamnese e Exame Físico',
     description: 'Roteiro sistemático para não esquecer nenhum detalhe durante a consulta clínica diária.',
-    value: 'R$ 77,00',
+    value: 'R$ 25,00',
     img: './media/bonus-checklist.jpg'
   }
 ];
