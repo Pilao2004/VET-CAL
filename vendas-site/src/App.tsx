@@ -276,61 +276,6 @@ export default function App() {
 
   return (
     <main className="min-h-screen flex flex-col bg-white text-[#0D172D] font-sans antialiased selection:bg-[#00DFA2] selection:text-[#0D172D]">
-      {/* Top Floating Announcement Bar */}
-      <header className="sticky top-0 z-40 bg-[#0D172D]/90 backdrop-blur-md border-b border-white/10 px-4 py-3 text-white transition-all">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          <a href="#" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-[#00DFA2] text-[#0D172D] flex items-center justify-center font-bold shadow-md group-hover:scale-105 transition-transform">
-              <Stethoscope className="w-5 h-5" />
-            </div>
-            <span className="text-lg font-bold tracking-tight">
-              VET CALC <span className="text-[#00DFA2]">PRO</span>
-            </span>
-          </a>
-
-          <nav className="hidden md:flex items-center gap-6 text-xs lg:text-sm font-medium text-slate-300">
-            <a href="#recursos" className="hover:text-[#00DFA2] transition-colors">
-              Módulos
-            </a>
-            <a href="#publico" className="hover:text-[#00DFA2] transition-colors">
-              Público
-            </a>
-            <a href="#rotina" className="hover:text-[#00DFA2] transition-colors">
-              Rotina Clínica
-            </a>
-            <a href="#bonus" className="hover:text-[#00DFA2] transition-colors">
-              Bônus
-            </a>
-            <a href="#ofertas" className="hover:text-[#00DFA2] transition-colors">
-              Oferta
-            </a>
-            <a href="#avaliacoes" className="hover:text-[#00DFA2] transition-colors">
-              Avaliações
-            </a>
-            <a href="#faq" className="hover:text-[#00DFA2] transition-colors">
-              Dúvidas
-            </a>
-          </nav>
-
-          <div className="flex items-center gap-2.5">
-            <button
-              onClick={() => setShowConfigModal(true)}
-              title="Configurar links de checkout da Hotmart"
-              className="p-2 text-slate-400 hover:text-[#00DFA2] hover:bg-white/5 rounded-xl transition-colors"
-            >
-              <Settings className="w-4 h-4" />
-            </button>
-            <button
-              onClick={scrollToOffers}
-              className="bg-[#00DFA2] hover:bg-[#00C896] text-[#0D172D] font-bold text-xs sm:text-sm px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl transition-all shadow-md hover:scale-[1.02] active:scale-95 flex items-center gap-1.5"
-            >
-              <span>Garantir Acesso</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <section className="relative bg-gradient-to-b from-[#0D172D] to-[#142743] text-white py-14 sm:py-24 px-4 sm:px-6 overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#00DFA2_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
