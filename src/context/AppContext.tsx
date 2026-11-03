@@ -18,6 +18,7 @@ import {
   getSupabaseConfig,
 } from '../lib/supabase';
 import { patientService, MigrationSummary } from '../services/patientService';
+import { isVerified, logout, normalizeEmail, User as FirebaseUser, watchAccess, watchAuth } from '../lib/firebase';
 import { isOwnerPreview } from '../config/plans';
 
 interface PrefillData {
@@ -112,8 +113,12 @@ interface AppContextType {
 
   // Subscription
   subscription: SubscriptionInfo;
-  activateSubscriptionServer: (key: string, email?: string) => Promise<{ success: boolean; message: string }>;
-  claimPurchase: (email: string, order: string) => Promise<{ success: boolean; message: string }>;
+  /** Conta do Firebase (login com e-mail/senha ou Google); null = ninguém logado */
+  accountUser: FirebaseUser | null;
+  /** true enquanto o app confere a conta e a liberação */
+  accessChecking: boolean;
+  /** Recarrega a conta depois de confirmar o e-mail */
+  refreshAccount: () => void;
   deactivateSubscription: () => void;
   isPremium: boolean;
   checkIsFeatureUnlocked: (badge: 'Básica' | 'Avançada') => boolean;
@@ -870,102 +875,87 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
-  // Subscription state: grátis por padrão; Premium só com código ativado no servidor
+  // Acesso: login no Firebase + documento acessos/{e-mail} com liberado = true (liberado pelo dono no console)
   const FREE_PLAN: SubscriptionInfo = { tier: 'free', isActive: false };
-  const [subscription, setSubscription] = useState<SubscriptionInfo>(() => {
+  const ACCESS_CACHE_KEY = 'vet_calc_pro_sub';
+  const readAccessCache = (): SubscriptionInfo => {
     try {
-      const saved: SubscriptionInfo | null = JSON.parse(localStorage.getItem('vet_calc_pro_sub') || 'null');
-      // Licenças antigas sem token (códigos públicos) não valem mais
-      if (!saved || saved.tier !== 'premium' || !saved.token) return FREE_PLAN;
-      return saved;
+      const saved: SubscriptionInfo | null = JSON.parse(localStorage.getItem(ACCESS_CACHE_KEY) || 'null');
+      return saved && saved.tier === 'premium' && saved.email && !saved.token ? saved : FREE_PLAN;
     } catch {
       return FREE_PLAN;
     }
-  });
+  };
+  const [subscription, setSubscription] = useState<SubscriptionInfo>(readAccessCache);
+  const [accountUser, setAccountUser] = useState<FirebaseUser | null>(null);
+  const [accessChecking, setAccessChecking] = useState(true);
+  const [accountVersion, setAccountVersion] = useState(0);
+
+  const saveSubscription = (subData: SubscriptionInfo) => {
+    setSubscription(subData);
+    try {
+      if (subData.tier === 'premium') localStorage.setItem(ACCESS_CACHE_KEY, JSON.stringify(subData));
+      else localStorage.removeItem(ACCESS_CACHE_KEY);
+    } catch {}
+  };
+
+  useEffect(() => watchAuth((u) => {
+    setAccountUser(u);
+    setAccountVersion((v) => v + 1);
+  }), []);
+
+  useEffect(() => {
+    if (isOwnerPreview()) {
+      setAccessChecking(false);
+      return;
+    }
+    const user = accountUser;
+    if (!user) {
+      // Sem conta logada (saiu ou nunca entrou): o cache só vale para a mesma conta
+      setAccessChecking(false);
+      if (accountVersion > 0) saveSubscription(FREE_PLAN);
+      return;
+    }
+    const email = normalizeEmail(user.email);
+    if (!email || !isVerified(user)) {
+      setAccessChecking(false);
+      saveSubscription(FREE_PLAN);
+      return;
+    }
+    setAccessChecking(true);
+    const cached = readAccessCache();
+    const stop = watchAccess(
+      email,
+      ({ liberado, expiraEm }) => {
+        setAccessChecking(false);
+        const valid = liberado && (!expiraEm || expiraEm >= new Date().toISOString().slice(0, 10));
+        const wasPremium = cached.tier === 'premium' && cached.email === email;
+        saveSubscription(valid ? { tier: 'premium', isActive: true, email, expiresAt: expiraEm } : FREE_PLAN);
+        if (valid && !wasPremium) showToast('Acesso liberado!');
+      },
+      () => {
+        // Sem internet: mantém o acesso já confirmado antes nesta mesma conta
+        setAccessChecking(false);
+        if (!(cached.tier === 'premium' && cached.email === email)) saveSubscription(FREE_PLAN);
+      },
+    );
+    return stop;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accountUser, accountVersion]);
+
+  const refreshAccount = () => setAccountVersion((v) => v + 1);
 
   const isPremium =
     isOwnerPreview() ||
     (subscription.tier === 'premium' &&
       subscription.isActive &&
+      Boolean(accountUser ? normalizeEmail(accountUser.email) === subscription.email : subscription.email) &&
       (!subscription.expiresAt || subscription.expiresAt >= new Date().toISOString().slice(0, 10)));
 
-  const saveSubscription = (subData: SubscriptionInfo) => {
-    setSubscription(subData);
-    try {
-      localStorage.setItem('vet_calc_pro_sub', JSON.stringify(subData));
-    } catch {}
-  };
-
-  const postJson = async (url: string, body: unknown) => {
-    const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-    return { response, data: await response.json().catch(() => null) };
-  };
-
-  const activateSubscriptionServer = async (key: string, email?: string): Promise<{ success: boolean; message: string }> => {
-    try {
-      const { response, data } = await postJson('./api/subscription/activate', { licenseKey: key, email });
-      if (response.ok && data?.success) {
-        saveSubscription({
-          tier: 'premium',
-          isActive: true,
-          licenseKey: key.trim().toUpperCase(),
-          expiresAt: data.expiresAt,
-          email: (email || '').trim().toLowerCase(),
-          token: data.token,
-        });
-        showToast('Acesso liberado!');
-        return { success: true, message: data.message };
-      }
-      return { success: false, message: data?.message || 'Não foi possível ativar. Confira o código e o e-mail.' };
-    } catch {
-      return { success: false, message: 'Sem conexão com o servidor de ativação. Verifique a internet e tente de novo.' };
-    }
-  };
-
-  // Compra única na Kiwify/Hotmart: libera com e-mail + nº do pedido
-  const claimPurchase = async (email: string, order: string): Promise<{ success: boolean; message: string }> => {
-    try {
-      const { response, data } = await postJson('./api/subscription/claim', { email, order });
-      if (response.ok && data?.success) {
-        saveSubscription({ tier: 'premium', isActive: true, licenseKey: order.trim().toUpperCase(), email: email.trim().toLowerCase(), token: data.token });
-        showToast('Acesso liberado!');
-        return { success: true, message: data.message };
-      }
-      return { success: false, message: data?.message || 'Não foi possível confirmar a compra. Confira o e-mail e o nº do pedido.' };
-    } catch {
-      return { success: false, message: 'Sem conexão com o servidor. Verifique a internet e tente de novo.' };
-    }
-  };
-
-  // Ao abrir com internet, renova o token; reembolso ou chargeback bloqueia o acesso
-  useEffect(() => {
-    if (isOwnerPreview() || !subscription.token) return;
-    let cancelled = false;
-    postJson('./api/subscription/refresh', { token: subscription.token })
-      .then(({ response, data }) => {
-        if (cancelled) return;
-        if (response.ok && data?.token) saveSubscription({ ...subscription, token: data.token });
-        else if (response.status === 401 || response.status === 403) {
-          setSubscription(FREE_PLAN);
-          try {
-            localStorage.removeItem('vet_calc_pro_sub');
-          } catch {}
-          showToast(data?.reason === 'revoked' ? 'Acesso encerrado: a compra foi reembolsada ou cancelada.' : 'Seu acesso precisa ser ativado novamente.');
-        }
-      })
-      .catch(() => {});
-    return () => {
-      cancelled = true;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const deactivateSubscription = () => {
-    setSubscription(FREE_PLAN);
-    try {
-      localStorage.removeItem('vet_calc_pro_sub');
-    } catch {}
-    showToast('Acesso removido deste aparelho.');
+    saveSubscription(FREE_PLAN);
+    logout().catch(() => {});
+    showToast('Você saiu da sua conta neste aparelho.');
   };
 
   const checkIsFeatureUnlocked = (badge: 'Básica' | 'Avançada'): boolean => badge !== 'Avançada' || isPremium;
@@ -1106,8 +1096,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         clearLocalMigratedData,
 
         subscription,
-        activateSubscriptionServer,
-        claimPurchase,
+        accountUser,
+        accessChecking,
+        refreshAccount,
         deactivateSubscription,
         isPremium,
         checkIsFeatureUnlocked,

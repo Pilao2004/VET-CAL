@@ -5,11 +5,11 @@ export const PREMIUM_CALCULATORS: CalculatorType[] = ['emergency', 'cri', 'trans
 
 const env = (import.meta as any).env || {};
 
-/** Links de compra (compra única). Configure no Netlify. */
-export const KIWIFY_URL: string = env.VITE_KIWIFY_CHECKOUT_URL || env.VITE_CHECKOUT_URL || '';
+/** Link de compra (compra única). Pode ser trocado por VITE_CHECKOUT_URL no build. */
+export const KIWIFY_URL: string = env.VITE_KIWIFY_CHECKOUT_URL || env.VITE_CHECKOUT_URL || 'https://pay.wiapy.com/FODzV1BcUGdN';
 export const HOTMART_URL: string = env.VITE_HOTMART_CHECKOUT_URL || '';
 /** Preço exibido na página de vendas, ex.: "R$ 97,00". */
-export const PRICE_LABEL: string = env.VITE_PRICE_LABEL || '';
+export const PRICE_LABEL: string = env.VITE_PRICE_LABEL || 'R$ 27,90';
 /** Preço "de", riscado (opcional), ex.: "R$ 197,00". */
 export const PRICE_FROM_LABEL: string = env.VITE_PRICE_FROM_LABEL || '';
 
@@ -33,15 +33,3 @@ export const isLandingPreview = () => Boolean((window as any).__VCP_LANDING__);
 
 /** Dentro do claude.ai o app é a versão de testes do dono: tudo liberado. */
 export const isOwnerPreview = () => Boolean((window as any).claude);
-
-const SUB_KEY = 'vet_calc_pro_sub';
-
-/** Token do Premium enviado à IA do servidor. */
-export function premiumHeaders(): Record<string, string> {
-  try {
-    const token = JSON.parse(localStorage.getItem(SUB_KEY) || '{}').token;
-    return token ? { 'x-vcp-token': token } : {};
-  } catch {
-    return {};
-  }
-}

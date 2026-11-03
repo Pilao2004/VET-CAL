@@ -5,7 +5,7 @@ import { fixedPosology } from '../utils/fixedDosing';
 import { calculateDeterministicDosage, calculateTabletDosage, calculateDropsDosage } from '../utils/calculatorEngine';
 import { PatientRecord } from '../types';
 import { speciesSafetyAlerts } from '../utils/safetyRules';
-import { premiumHeaders } from '../config/plans';
+import { agentRound } from './firebaseAI';
 
 export interface AITurn {
   role: 'user' | 'assistant';
@@ -338,7 +338,7 @@ export type ServerAgentErrorCode = 'quota' | 'unavailable' | 'unconfigured' | 'u
 
 const MAX_TOOL_ROUNDS = 6;
 
-/** Conversa com a IA do servidor; as ferramentas rodam aqui, com os dados do aparelho. */
+/** Conversa com a IA (Firebase AI Logic); as ferramentas rodam aqui, com os dados do aparelho. */
 export async function askServerAssistant(
   history: AITurn[],
   getPatients: () => PatientRecord[],
@@ -350,23 +350,14 @@ export async function askServerAssistant(
   const fail = (code: ServerAgentErrorCode) => Object.assign(new Error(code), { code });
 
   for (let round = 0; round < MAX_TOOL_ROUNDS; round++) {
-    let res: Response;
+    if (handlers.signal?.aborted) throw fail('cancelled');
+    let data: { text?: string; toolCalls?: { id: string; name: string; args: Record<string, unknown> }[]; provider: string };
     try {
-      res = await fetch('./api/assistant/agent', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...premiumHeaders() },
-        body: JSON.stringify({ system: buildRules(getPatients()), history: work, tools: schemas, provider: handlers.provider || 'auto' }),
-        signal: handlers.signal,
-      });
+      data = await agentRound(buildRules(getPatients()), work, schemas);
     } catch (e: any) {
-      throw fail(e?.name === 'AbortError' ? 'cancelled' : 'unavailable');
+      throw fail(e?.code === 'quota' ? 'quota' : navigator.onLine === false ? 'unavailable' : 'upstream');
     }
-    if (!(res.headers.get('content-type') || '').includes('application/json')) throw fail('unavailable');
-    const data = await res.json().catch(() => null);
-    if (!res.ok || !data) {
-      const code = data?.error;
-      throw fail(code === 'quota' || code === 'unconfigured' || code === 'premium_required' ? code : res.status === 404 ? 'unavailable' : 'upstream');
-    }
+    if (handlers.signal?.aborted) throw fail('cancelled');
     if (data.toolCalls?.length) {
       work.push({ role: 'assistant', text: data.text, toolCalls: data.toolCalls });
       for (const call of data.toolCalls) {
@@ -386,7 +377,7 @@ export async function askServerAssistant(
   throw fail('upstream');
 }
 
-/** Texto simples com IA (sem ferramentas): Claude no claude.ai; no site, Gemini/Groq pelo servidor. */
+/** Texto simples com IA (sem ferramentas): Claude no claude.ai; no site, Gemini pelo Firebase. */
 export async function generateWithAI(
   instructions: string,
   prompt: string,
@@ -402,22 +393,14 @@ export async function generateWithAI(
     return { text, provider: 'claude' };
   }
   const fail = (code: ServerAgentErrorCode) => Object.assign(new Error(code), { code });
-  let res: Response;
+  if (options.signal?.aborted) throw fail('cancelled');
+  let data: { text?: string; provider: string };
   try {
-    res = await fetch('./api/assistant/agent', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...premiumHeaders() },
-      body: JSON.stringify({ system: instructions, history: [{ role: 'user', text: prompt }], tools: [], provider: options.provider || 'auto' }),
-      signal: options.signal,
-    });
+    data = await agentRound(instructions, [{ role: 'user', text: prompt }], []);
   } catch (e: any) {
-    throw fail(e?.name === 'AbortError' ? 'cancelled' : 'unavailable');
+    throw fail(e?.code === 'quota' ? 'quota' : navigator.onLine === false ? 'unavailable' : 'upstream');
   }
-  if (!(res.headers.get('content-type') || '').includes('application/json')) throw fail('unavailable');
-  const data = await res.json().catch(() => null);
-  if (!res.ok || !data?.text) {
-    const code = data?.error;
-    throw fail(code === 'quota' || code === 'unconfigured' || code === 'premium_required' ? code : res.status === 404 ? 'unavailable' : 'upstream');
-  }
+  if (options.signal?.aborted) throw fail('cancelled');
+  if (!data.text) throw fail('upstream');
   return { text: String(data.text).trim(), provider: data.provider };
 }

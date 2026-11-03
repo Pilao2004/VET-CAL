@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Calculator, Check, ChevronDown, ClipboardList, FileText, KeyRound, MessageCircle, Pill, ShieldCheck, Siren, Smartphone, Stethoscope } from 'lucide-react';
+import { AccountAccess } from './AccountAccess';
 import { useApp } from '../context/AppContext';
 import { APP_FEATURES, HOTMART_URL, isLandingPreview, KIWIFY_URL, PRICE_FROM_LABEL, PRICE_LABEL } from '../config/plans';
 
@@ -18,21 +19,16 @@ const HIGHLIGHTS = [
 
 const FAQ = [
   { q: 'É assinatura?', a: 'Não. É uma compra única: você paga uma vez e usa para sempre, sem mensalidade.' },
-  { q: 'Como recebo o acesso?', a: 'Logo após a aprovação do pagamento, volte a esta página, toque em "Já comprei" e informe o e-mail da compra e o número do pedido. O app é liberado na hora.' },
+  { q: 'Como recebo o acesso?', a: 'Depois da aprovação do pagamento, toque em "Já comprei" e entre com o mesmo e-mail da compra (pela conta Google ou criando uma senha). Assim que a compra for confirmada, o app abre sozinho.' },
   { q: 'Funciona no celular?', a: 'Sim. Funciona no navegador do celular, tablet ou computador, e pode ser instalado na tela inicial. As calculadoras funcionam até sem internet.' },
-  { q: 'E se eu não gostar?', a: 'Você tem 7 dias de garantia: peça o reembolso na plataforma onde comprou. Com o reembolso, o acesso é encerrado.' },
+  { q: 'E se eu não gostar?', a: 'Você tem 7 dias de garantia: é só pedir o reembolso. Com o reembolso, o acesso é encerrado.' },
   { q: 'Substitui o médico-veterinário?', a: 'Não. O VET CALC PRO é uma ferramenta de apoio; a decisão clínica é sempre do profissional responsável.' },
 ];
 
 /** Página de vendas: aparece para quem ainda não liberou o app. */
 export const LandingPage: React.FC = () => {
-  const { claimPurchase, activateSubscriptionServer, setCurrentView } = useApp();
+  const { setCurrentView, accountUser } = useApp();
   const [showClaim, setShowClaim] = useState(false);
-  const [useCode, setUseCode] = useState(false);
-  const [email, setEmail] = useState('');
-  const [order, setOrder] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [feedback, setFeedback] = useState<{ success: boolean; message: string } | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const claimRef = useRef<HTMLDivElement>(null);
 
@@ -41,42 +37,15 @@ export const LandingPage: React.FC = () => {
     setTimeout(() => claimRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 50);
   };
 
-  // Página de obrigado das plataformas pode redirecionar para ?ativar=1
+  // Página de obrigado do checkout pode redirecionar para ?ativar=1
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.has('ativar')) {
-      const presetEmail = params.get('email');
-      if (presetEmail) setEmail(presetEmail);
-      openClaim();
-    }
+    if (new URLSearchParams(window.location.search).has('ativar')) openClaim();
   }, []);
-
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email.trim() || !order.trim()) return;
-    if (PREVIEW) {
-      setFeedback({ success: true, message: 'Prévia: no site, este formulário confere a compra e libera o app.' });
-      return;
-    }
-    setLoading(true);
-    setFeedback(null);
-    const res = useCode ? await activateSubscriptionServer(order.trim(), email.trim()) : await claimPurchase(email.trim(), order.trim());
-    setLoading(false);
-    setFeedback(res);
-    if (res.success) {
-      try {
-        window.history.replaceState(null, '', window.location.pathname);
-      } catch {}
-    }
-  };
 
   // Na prévia, mostra os botões mesmo sem os links configurados
   const kiwifyUrl = KIWIFY_URL || (PREVIEW ? '#comprar' : '');
   const hotmartUrl = HOTMART_URL || (PREVIEW ? '#comprar' : '');
   const hasCheckout = Boolean(kiwifyUrl || hotmartUrl);
-  const inputCls =
-    'w-full px-3.5 py-3 rounded-xl bg-[var(--input-bg)] border border-[var(--border)] text-sm text-[var(--text-main)] focus:outline-none focus:border-[var(--primary)]';
-
   const BuyButtons = () =>
     hasCheckout ? (
       <div className="flex flex-col sm:flex-row gap-2.5 w-full">
@@ -147,8 +116,8 @@ export const LandingPage: React.FC = () => {
         <h2 className="text-2xl sm:text-3xl font-extrabold text-center mb-8">Como funciona</h2>
         <ol className="grid sm:grid-cols-3 gap-4">
           {[
-            ['Compre', 'Pague na Kiwify ou na Hotmart, por Pix, cartão ou boleto.'],
-            ['Libere', 'Toque em "Já comprei" e informe o e-mail e o nº do pedido.'],
+            ['Compre', 'Pague por Pix ou cartão, em ambiente seguro.'],
+            ['Entre', 'Toque em "Já comprei" e entre com o mesmo e-mail da compra.'],
             ['Use', 'Acesso permanente no celular, tablet e computador.'],
           ].map(([title, text], i) => (
             <li key={title} className="p-5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] space-y-2">
@@ -184,26 +153,8 @@ export const LandingPage: React.FC = () => {
       </section>
 
       <section ref={claimRef} className="max-w-xl mx-auto px-4 py-6">
-        {showClaim ? (
-          <form onSubmit={submit} className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border)] space-y-3">
-            <p className="font-extrabold flex items-center gap-2">
-              <KeyRound className="w-5 h-5 text-[var(--primary)]" /> Já comprei: liberar meu acesso
-            </p>
-            <p className="text-xs text-[var(--text-secondary)]">
-              {useCode
-                ? 'Informe o e-mail e o código de acesso que você recebeu (formato VCP-…).'
-                : 'Use o e-mail da compra e o nº do pedido (Kiwify) ou o código da transação (Hotmart, começa com HP). Os dois estão no e-mail de confirmação.'}
-            </p>
-            <input id="claim-email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="E-mail usado na compra" className={inputCls} autoComplete="email" />
-            <input id="claim-order" required value={order} onChange={(e) => setOrder(e.target.value)} placeholder={useCode ? 'Código de acesso' : 'Nº do pedido ou código da transação'} className={`${inputCls} font-mono uppercase`} />
-            {feedback && <p className={`text-xs ${feedback.success ? 'text-emerald-300' : 'text-red-300'}`}>{feedback.message}</p>}
-            <button type="submit" disabled={loading} className="w-full py-3 rounded-xl bg-[var(--primary)] text-[#062C23] text-sm font-extrabold cursor-pointer disabled:opacity-60">
-              {loading ? 'Conferindo…' : 'Liberar o app'}
-            </button>
-            <button type="button" onClick={() => { setUseCode(!useCode); setFeedback(null); }} className="text-xs text-[var(--text-secondary)] underline cursor-pointer">
-              {useCode ? 'Tenho o nº do pedido' : 'Recebi um código de acesso (VCP-…)'}
-            </button>
-          </form>
+        {showClaim || accountUser ? (
+          <AccountAccess preview={PREVIEW} />
         ) : (
           <button type="button" onClick={openClaim} className="w-full p-4 rounded-2xl border border-dashed border-[var(--border)] text-sm font-bold hover:border-[var(--primary)] cursor-pointer">
             Já comprei: liberar meu acesso

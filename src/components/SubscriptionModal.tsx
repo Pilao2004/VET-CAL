@@ -1,31 +1,14 @@
-import React, { useState } from 'react';
-import { Check, Crown, Key, X } from 'lucide-react';
+import React from 'react';
+import { Check, Crown, X } from 'lucide-react';
+import { AccountAccess } from './AccountAccess';
 import { useApp } from '../context/AppContext';
 import { isOwnerPreview } from '../config/plans';
 
 export const SubscriptionModal: React.FC = () => {
-  const { isSubscriptionModalOpen, setIsSubscriptionModalOpen, subscription, isPremium, activateSubscriptionServer, deactivateSubscription } = useApp();
-  const [code, setCode] = useState('');
-  const [email, setEmail] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [feedback, setFeedback] = useState<{ success: boolean; message: string } | null>(null);
+  const { isSubscriptionModalOpen, setIsSubscriptionModalOpen, subscription, isPremium, deactivateSubscription } = useApp();
 
   if (!isSubscriptionModalOpen) return null;
   const close = () => setIsSubscriptionModalOpen(false);
-
-  const activate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!code.trim() || !email.trim()) return;
-    setLoading(true);
-    setFeedback(null);
-    const res = await activateSubscriptionServer(code.trim(), email.trim());
-    setLoading(false);
-    setFeedback(res);
-    if (res.success) setTimeout(close, 1500);
-  };
-
-  const inputCls =
-    'w-full px-3.5 py-3 rounded-xl bg-[var(--input-bg)] border border-[var(--border)] text-sm text-[var(--text-main)] focus:outline-none focus:border-amber-400';
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-950/75 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Minha compra" onClick={close}>
@@ -56,26 +39,13 @@ export const SubscriptionModal: React.FC = () => {
                     {subscription.expiresAt ? <>Válido até {subscription.expiresAt.split('-').reverse().join('/')}</> : <>Acesso permanente</>}
                   </p>
                   <button type="button" onClick={deactivateSubscription} className="text-xs text-[var(--text-secondary)] underline cursor-pointer">
-                    Sair deste aparelho
+                    Sair da conta neste aparelho
                   </button>
                 </>
               )}
             </div>
           ) : (
-            <>
-              <form onSubmit={activate} className="space-y-3 p-4 rounded-2xl border border-[var(--border)]">
-                <p className="font-bold text-sm text-[var(--text-main)] flex items-center gap-2">
-                  <Key className="w-4 h-4 text-amber-400" /> Já comprei: ativar meu acesso
-                </p>
-                <p className="text-xs text-[var(--text-secondary)]">Use o e-mail da compra e o código de acesso que você recebeu (formato VCP-…).</p>
-                <input id="sub-email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="E-mail usado na compra" className={inputCls} autoComplete="email" />
-                <input id="sub-code" required value={code} onChange={(e) => setCode(e.target.value)} placeholder="Código de acesso" className={`${inputCls} font-mono uppercase`} />
-                {feedback && <p className={`text-xs ${feedback.success ? 'text-emerald-300' : 'text-red-300'}`}>{feedback.message}</p>}
-                <button type="submit" disabled={loading} className="w-full py-3 rounded-xl bg-[var(--primary)] text-[#062C23] text-sm font-extrabold cursor-pointer disabled:opacity-60">
-                  {loading ? 'Ativando…' : 'Ativar'}
-                </button>
-              </form>
-            </>
+            <AccountAccess />
           )}
         </div>
       </div>

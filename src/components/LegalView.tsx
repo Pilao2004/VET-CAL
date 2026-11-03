@@ -30,11 +30,11 @@ const TERMS: Section[] = [
     ],
   },
   {
-    title: '3. Conta, Premium e código de acesso',
+    title: '3. Conta e acesso',
     body: [
-      'O plano grátis pode ser usado sem cadastro. O Premium é liberado com o e-mail da compra e um código de acesso pessoal e intransferível, válido pelo período contratado.',
+      'O acesso ao app é liberado para a conta (Google ou e-mail e senha) com o mesmo e-mail usado na compra. A conta é pessoal e intransferível.',
       'O pagamento é processado pela plataforma de vendas indicada no app, conforme as regras dela. Em compras pela internet, você pode desistir em até 7 dias da contratação (art. 49 do Código de Defesa do Consumidor).',
-      'Compartilhar, revender ou divulgar códigos de acesso pode levar ao cancelamento do acesso sem reembolso.',
+      'Compartilhar, revender ou emprestar a conta pode levar ao cancelamento do acesso sem reembolso.',
     ],
   },
   {
@@ -47,7 +47,7 @@ const TERMS: Section[] = [
   {
     title: '5. Disponibilidade e serviços de terceiros',
     body: [
-      'O app depende de serviços de terceiros (hospedagem, provedores de IA e banco de dados). A IA gratuita tem limites diários de uso; quando o limite acaba, o app continua funcionando no modo automático de cálculo.',
+      'O app depende de serviços de terceiros (Google Firebase para hospedagem, login, banco de dados e IA). A IA gratuita tem limites diários de uso; quando o limite acaba, o app continua funcionando no modo automático de cálculo.',
       'Podemos atualizar, alterar ou descontinuar funcionalidades para melhorar o serviço, avisando no app quando a mudança for relevante.',
     ],
   },
@@ -81,7 +81,7 @@ const PRIVACY: Section[] = [
   {
     title: '2. Quais dados',
     body: [
-      'Licença Premium: e-mail da compra e validade do acesso.',
+      'Conta e acesso: nome, e-mail e foto da conta usada no login (Google ou e-mail e senha), e a situação da liberação do acesso.',
       'Prontuários: dados que você digita (nome, espécie, raça, peso do animal, nome e telefone do tutor, consultas, exames, prescrições e evoluções).',
       'Mensagens da Assistente IA e relatos de evolução: o texto que você envia para gerar a resposta.',
       'Preferências locais: tema, histórico de cálculos, favoritos, nome e CRMV para a receita.',
@@ -105,7 +105,7 @@ const PRIVACY: Section[] = [
   {
     title: '5. Compartilhamento',
     body: [
-      'Hospedagem (Netlify), banco de dados (Supabase, quando ativado), provedores de IA que geram as respostas (Google Gemini e Groq; Anthropic Claude na versão dentro do claude.ai) e a plataforma de pagamento. Esses fornecedores podem processar dados fora do Brasil, com as salvaguardas da LGPD.',
+      'Google Firebase (hospedagem, login, banco de dados da liberação e IA Gemini que gera as respostas), banco de dados de prontuários (Supabase, quando ativado), Anthropic Claude na versão dentro do claude.ai e a plataforma de pagamento. Esses fornecedores podem processar dados fora do Brasil, com as salvaguardas da LGPD.',
       'Os planos gratuitos de IA podem usar o conteúdo enviado para melhorar os serviços dos provedores. Por isso, não envie à Assistente nome, telefone, CPF ou endereço de tutores.',
       'Não vendemos dados pessoais.',
     ],

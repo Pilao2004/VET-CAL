@@ -34,7 +34,7 @@ import {
   formatClinicalVolume,
 } from '../utils/assistantCalculator';
 import { EvolutionComposer } from './EvolutionComposer';
-import { premiumHeaders } from '../config/plans';
+import { clinicalChat, searchDrugWithAI } from '../services/clinicalAI';
 import {
   AITurn,
   AssistantProviderChoice,
@@ -46,9 +46,7 @@ import {
 
 const PROVIDER_STORAGE_KEY = 'vetcalc_ai_provider';
 const PROVIDER_OPTIONS: { id: AssistantProviderChoice; label: string; hint: string }[] = [
-  { id: 'auto', label: 'Padrão', hint: 'O sistema escolhe a IA gratuita disponível no momento.' },
-  { id: 'gemini', label: 'Gemini', hint: 'Google Gemini, plano gratuito.' },
-  { id: 'groq', label: 'Groq', hint: 'Modelo Llama via Groq, plano gratuito.' },
+  { id: 'auto', label: 'Padrão', hint: 'Google Gemini pelo Firebase, plano gratuito.' },
 ];
 const PROVIDER_NAMES: Record<string, string> = { gemini: 'Gemini', groq: 'Groq (Llama)', claude: 'Claude' };
 
@@ -127,7 +125,7 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
   const [aiProvider, setAiProvider] = useState<AssistantProviderChoice>(() => {
     try {
       const saved = localStorage.getItem(PROVIDER_STORAGE_KEY);
-      return saved === 'gemini' || saved === 'groq' ? saved : 'auto';
+      return saved === 'gemini' ? saved : 'auto';
     } catch {
       return 'auto';
     }
@@ -223,18 +221,11 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
     }
   };
 
-  // Pesquisa externa via API no servidor quando o medicamento não está cadastrado
+  // Pesquisa externa com a IA do Firebase quando o medicamento não está cadastrado
   const searchExternalDrug = async (drugName: string, species?: string | null) => {
     setLoading(true);
     try {
-      const res = await fetch('./api/assistant/search-drug', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...premiumHeaders() },
-        body: JSON.stringify({ query: drugName, species }),
-      });
-
-      const data = await res.json();
-      return data;
+      return await searchDrugWithAI(drugName, species);
     } catch (err) {
       console.error('External search error:', err);
       return { found: false, insufficientData: true };
@@ -252,22 +243,14 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
   const sendToChatApi = async (textToSend: string) => {
     setLoading(true);
     try {
-      const response = await fetch('./api/assistant/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...premiumHeaders() },
-        body: JSON.stringify({
-          messages: [...messages, { id: 'u', role: 'user', content: textToSend }].map((m) => ({
-            role: m.role,
-            content: m.content,
-          })),
-        }),
-      });
-
-      const data = await response.json();
+      const reply = await clinicalChat(
+        [...messages, { id: 'u', role: 'user', content: textToSend }].map((m) => ({ role: m.role, content: m.content })),
+      );
+      if (!reply) throw new Error('empty');
       const assistantMessage: ChatMessage = {
         id: 'ai-' + Date.now(),
         role: 'assistant',
-        content: data.reply || 'Não foi possível obter resposta no momento.',
+        content: reply,
         timestamp: new Date().toISOString(),
       };
       setMessages((prev) => [...prev, assistantMessage]);
@@ -327,7 +310,7 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
     }
   };
 
-  // Site: Gemini gratuito (Groq gratuito de reserva) no servidor. false = usar o modo automático
+  // Site: Gemini gratuito pelo Firebase AI Logic. false = usar o modo automático
   const chatWithServer = async (textToSend: string): Promise<boolean> => {
     const replyId = 'ai-' + Date.now();
     setMessages((prev) => [...prev, { id: replyId, role: 'assistant', content: '⏳ Pensando…', timestamp: new Date().toISOString() }]);
@@ -1079,34 +1062,6 @@ Confirma esta dose ou deseja prescrever outro valor em mg/kg?`,
           <span className="hidden sm:inline">Nova Conversa</span>
         </button>
 
-        {/* Escolha da IA que responde */}
-        <div className="basis-full flex flex-wrap items-center gap-x-3 gap-y-2 pt-3 border-t border-[#DCE7F2] dark:border-slate-800">
-          <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#52677F] dark:text-slate-400">
-            Responder com
-          </span>
-          <div role="radiogroup" aria-label="IA que responde" className="inline-flex p-1 rounded-xl bg-[#F1F6FC] dark:bg-slate-800 border border-[#DCE7F2] dark:border-slate-700">
-            {PROVIDER_OPTIONS.map((opt) => (
-              <button
-                key={opt.id}
-                id={`ai-provider-${opt.id}`}
-                role="radio"
-                aria-checked={aiProvider === opt.id}
-                onClick={() => chooseProvider(opt.id)}
-                disabled={loading}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer disabled:cursor-not-allowed ${
-                  aiProvider === opt.id
-                    ? 'bg-[#00C896] text-[#062C23] shadow-sm'
-                    : 'text-[#52677F] dark:text-slate-300 hover:text-[#14243A] dark:hover:text-white'
-                }`}
-              >
-                {opt.label}
-              </button>
-            ))}
-          </div>
-          <span className="text-[11px] text-[#52677F] dark:text-slate-400">
-            {PROVIDER_OPTIONS.find((o) => o.id === aiProvider)?.hint}
-          </span>
-        </div>
       </div>
 
       {/* Chat Messages Container */}

@@ -1,0 +1,17 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Liberação do acesso: acessos/{e-mail em minúsculas} = { liberado: true, expiraEm?: "AAAA-MM-DD" }.
+    // Cada pessoa só lê o próprio documento, e só com o e-mail confirmado.
+    // Ninguém grava pelo app: o dono libera pelo console do Firebase (que ignora estas regras).
+    match /acessos/{email} {
+      allow read: if request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email.lower() == email;
+      allow write: if false;
+    }
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
