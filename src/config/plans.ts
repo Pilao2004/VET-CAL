@@ -31,5 +31,8 @@ export const PREMIUM_FEATURES = APP_FEATURES;
 /** Prévia da página de vendas (aba fixada no claude.ai): a página definida com window.__VCP_LANDING__. */
 export const isLandingPreview = () => Boolean((window as any).__VCP_LANDING__);
 
+/** Build com acesso livre (VITE_FREE_ACCESS=true): o app abre direto, sem login nem página de vendas. */
+export const FREE_ACCESS: boolean = env.VITE_FREE_ACCESS === 'true';
+
 /** Dentro do claude.ai o app é a versão de testes do dono: tudo liberado. */
-export const isOwnerPreview = () => Boolean((window as any).claude);
+export const isOwnerPreview = () => FREE_ACCESS || Boolean((window as any).claude);

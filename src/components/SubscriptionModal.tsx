@@ -2,7 +2,7 @@ import React from 'react';
 import { Check, Crown, X } from 'lucide-react';
 import { AccountAccess } from './AccountAccess';
 import { useApp } from '../context/AppContext';
-import { isOwnerPreview } from '../config/plans';
+import { FREE_ACCESS, isOwnerPreview } from '../config/plans';
 
 export const SubscriptionModal: React.FC = () => {
   const { isSubscriptionModalOpen, setIsSubscriptionModalOpen, subscription, isPremium, deactivateSubscription } = useApp();
@@ -31,7 +31,7 @@ export const SubscriptionModal: React.FC = () => {
                 <Check className="w-4 h-4" /> Acesso liberado
               </p>
               {isOwnerPreview() ? (
-                <p className="text-xs text-[var(--text-secondary)]">Versão de testes do proprietário (claude.ai): todos os recursos liberados.</p>
+                <p className="text-xs text-[var(--text-secondary)]">{FREE_ACCESS ? 'Acesso livre: todos os recursos liberados.' : 'Versão de testes do proprietário (claude.ai): todos os recursos liberados.'}</p>
               ) : (
                 <>
                   <p className="text-xs text-[var(--text-secondary)]">
