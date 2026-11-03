@@ -613,6 +613,72 @@ export default function App() {
         </div>
       </section>
 
+      {/* Avaliações & Feedbacks dos Usuários - Estilo Idêntico à Rotina Clínica */}
+      <section id="avaliacoes" className="py-20 bg-[#F3F7FB] paw-texture overflow-hidden border-t border-slate-200/50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="text-center max-w-3xl mx-auto mb-6">
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/10 via-amber-400/20 to-yellow-500/10 border border-amber-400/50 px-5 py-2 rounded-full mb-3 shadow-sm hover:scale-105 transition-transform">
+              <Star className="w-4 h-4 fill-amber-400 text-amber-500 shrink-0" />
+              <span className="text-sm sm:text-base font-extrabold uppercase tracking-widest text-amber-600 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 bg-clip-text text-transparent drop-shadow-[0_1px_1px_rgba(245,158,11,0.25)]">
+                AVALIAÇÕES
+              </span>
+              <Star className="w-4 h-4 fill-amber-400 text-amber-500 shrink-0" />
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#0D172D] mb-4">
+              Avaliações de quem usa o VET CALC PRO.
+            </h2>
+            <p className="text-slate-600 text-base">
+              Prints enviados por quem usa o app, publicados com autorização. Nome e foto foram borrados para preservar a privacidade.
+            </p>
+          </div>
+        </div>
+
+        {/* Carrossel de Prints no Mesmo Estilo da Rotina Clínica com Looping Infinito */}
+        <div className={FEEDBACK_LOOP ? 'photo-strip' : 'px-4'}>
+          <div className={FEEDBACK_LOOP ? 'photo-track flex gap-4 sm:gap-6 w-max py-6' : 'flex flex-wrap justify-center gap-6 py-6'}>
+            {(FEEDBACK_LOOP ? [...FEEDBACK_SCREENSHOTS, ...FEEDBACK_SCREENSHOTS] : FEEDBACK_SCREENSHOTS).map((item, idx) => (
+              <figure
+                key={idx}
+                aria-hidden={idx >= FEEDBACK_SCREENSHOTS.length}
+                onClick={() => setSelectedScreenshot(item)}
+                className={`shrink-0 w-52 sm:w-64 bg-white p-1.5 sm:p-2 rounded-2xl sm:rounded-3xl shadow-[0_20px_40px_-18px_rgba(13,23,45,0.45)] transition-all duration-300 hover:scale-105 hover:rotate-0 hover:shadow-2xl cursor-pointer group ${
+                  idx % 2 ? 'rotate-1' : '-rotate-1'
+                }`}
+              >
+                <div className="relative overflow-hidden rounded-xl sm:rounded-[18px] bg-slate-900 aspect-[9/18]">
+                  {item.src ? (
+                    <img
+                      src={item.src}
+                      alt={idx < FEEDBACK_SCREENSHOTS.length ? item.alt : ''}
+                      decoding="async"
+                      loading="lazy"
+                      className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-102"
+                    />
+                  ) : (
+                    <FeedbackPlaceholder badge={item.badge} />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-3">
+                    <span className="text-[11px] font-semibold text-white bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full">
+                      Clique para ampliar 🔍
+                    </span>
+                  </div>
+                </div>
+              </figure>
+            ))}
+          </div>
+        </div>
+
+        <div className="max-w-4xl mx-auto px-4 mt-8 text-center">
+          <button
+            onClick={scrollToOffers}
+            className="inline-flex items-center justify-center gap-2.5 bg-[#00DFA2] hover:bg-[#00C896] text-[#0D172D] font-bold text-sm sm:text-base px-8 py-4 rounded-2xl transition-all shadow-xl hover:scale-[1.02] active:scale-95"
+          >
+            <span>QUERO GARANTIR MEU ACESSO AGORA</span>
+            <ArrowRight className="w-5 h-5" />
+          </button>
+        </div>
+      </section>
+
       {/* Bonus Section */}
       <section id="bonus" className="py-20 bg-white px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
@@ -756,72 +822,6 @@ export default function App() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Avaliações & Feedbacks dos Usuários - Estilo Idêntico à Rotina Clínica */}
-      <section id="avaliacoes" className="py-20 bg-[#F3F7FB] paw-texture overflow-hidden border-t border-slate-200/50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-3xl mx-auto mb-6">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/10 via-amber-400/20 to-yellow-500/10 border border-amber-400/50 px-5 py-2 rounded-full mb-3 shadow-sm hover:scale-105 transition-transform">
-              <Star className="w-4 h-4 fill-amber-400 text-amber-500 shrink-0" />
-              <span className="text-sm sm:text-base font-extrabold uppercase tracking-widest text-amber-600 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 bg-clip-text text-transparent drop-shadow-[0_1px_1px_rgba(245,158,11,0.25)]">
-                AVALIAÇÕES
-              </span>
-              <Star className="w-4 h-4 fill-amber-400 text-amber-500 shrink-0" />
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#0D172D] mb-4">
-              Avaliações de quem usa o VET CALC PRO.
-            </h2>
-            <p className="text-slate-600 text-base">
-              Prints enviados por quem usa o app, publicados com autorização. Nome e foto foram borrados para preservar a privacidade.
-            </p>
-          </div>
-        </div>
-
-        {/* Carrossel de Prints no Mesmo Estilo da Rotina Clínica com Looping Infinito */}
-        <div className={FEEDBACK_LOOP ? 'photo-strip' : 'px-4'}>
-          <div className={FEEDBACK_LOOP ? 'photo-track flex gap-4 sm:gap-6 w-max py-6' : 'flex flex-wrap justify-center gap-6 py-6'}>
-            {(FEEDBACK_LOOP ? [...FEEDBACK_SCREENSHOTS, ...FEEDBACK_SCREENSHOTS] : FEEDBACK_SCREENSHOTS).map((item, idx) => (
-              <figure
-                key={idx}
-                aria-hidden={idx >= FEEDBACK_SCREENSHOTS.length}
-                onClick={() => setSelectedScreenshot(item)}
-                className={`shrink-0 w-52 sm:w-64 bg-white p-1.5 sm:p-2 rounded-2xl sm:rounded-3xl shadow-[0_20px_40px_-18px_rgba(13,23,45,0.45)] transition-all duration-300 hover:scale-105 hover:rotate-0 hover:shadow-2xl cursor-pointer group ${
-                  idx % 2 ? 'rotate-1' : '-rotate-1'
-                }`}
-              >
-                <div className="relative overflow-hidden rounded-xl sm:rounded-[18px] bg-slate-900 aspect-[9/18]">
-                  {item.src ? (
-                    <img
-                      src={item.src}
-                      alt={idx < FEEDBACK_SCREENSHOTS.length ? item.alt : ''}
-                      decoding="async"
-                      loading="lazy"
-                      className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-102"
-                    />
-                  ) : (
-                    <FeedbackPlaceholder badge={item.badge} />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-3">
-                    <span className="text-[11px] font-semibold text-white bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full">
-                      Clique para ampliar 🔍
-                    </span>
-                  </div>
-                </div>
-              </figure>
-            ))}
-          </div>
-        </div>
-
-        <div className="max-w-4xl mx-auto px-4 mt-8 text-center">
-          <button
-            onClick={scrollToOffers}
-            className="inline-flex items-center justify-center gap-2.5 bg-[#00DFA2] hover:bg-[#00C896] text-[#0D172D] font-bold text-sm sm:text-base px-8 py-4 rounded-2xl transition-all shadow-xl hover:scale-[1.02] active:scale-95"
-          >
-            <span>QUERO GARANTIR MEU ACESSO AGORA</span>
-            <ArrowRight className="w-5 h-5" />
-          </button>
         </div>
       </section>
 
