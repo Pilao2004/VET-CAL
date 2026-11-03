@@ -6,7 +6,7 @@ import { firebaseApp } from '../lib/firebase';
 const ai = getAI(firebaseApp, { backend: new GoogleAIBackend() });
 
 /** Modelos tentados em ordem; o primeiro que responder é usado. */
-const MODELS = ['gemini-flash-latest', 'gemini-2.5-flash', 'gemini-flash-lite-latest'];
+const MODELS = ['gemini-3.8-flash', 'gemini-flash-latest', 'gemini-flash-lite-latest'];
 
 export interface AgentToolSchema {
   name: string;
