@@ -359,8 +359,8 @@ export default function App() {
           <div className="relative w-full max-w-[360px] mx-auto aspect-[9/16] rounded-3xl overflow-hidden bg-black shadow-[0_30px_60px_-20px_rgba(13,23,45,0.5)] group border-4 border-white">
             <video
               ref={videoRef}
-              src="./media/vet-calc-pro-5-coisas.mp4"
-              poster="./media/vet-calc-pro-5-coisas-capa.jpg"
+              src="./media/video-vendas-1min.mp4"
+              poster="./media/video-vendas-1min-capa.jpg"
               controls={isVideoPlaying}
               playsInline
               preload="metadata"
@@ -383,7 +383,7 @@ export default function App() {
                   Assistir Apresentação do VET CALC PRO
                 </span>
                 <span className="text-slate-300 text-xs sm:text-sm mt-1">
-                  Veja o app funcionando em 35 segundos
+                  Veja o app funcionando em 1 minuto
                 </span>
               </button>
             )}
