@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CheckCircle2, CloudOff, LogOut, RefreshCw, Save, UserRound } from 'lucide-react';
 import { useApp } from '../context/AppContext';
-import { loginWithGoogle } from '../lib/firebase';
+import { loginWithEmail, loginWithGoogle, resetPassword, signUpWithEmail } from '../lib/firebase';
 import { loadLocalVetProfile, saveCloudProfile, saveLocalVetProfile, VetProfile } from '../services/cloudSync';
 
 const GoogleIcon = () => (
@@ -15,10 +15,13 @@ const GoogleIcon = () => (
 
 /** Perfil: login com a conta Google e dados do médico-veterinário, salvos no Firebase. */
 export const ProfileView: React.FC = () => {
-  const { accountUser, cloudSync, syncCloudNow, deactivateSubscription, showToast } = useApp();
+  const { accountUser, cloudSync, syncCloudNow, deactivateSubscription, showToast, refreshAccount } = useApp();
   const [profile, setProfile] = useState<VetProfile>(loadLocalVetProfile);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [mode, setMode] = useState<'login' | 'signup'>('login');
+  const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const [notice, setNotice] = useState('');
 
   const inputCls =
     'w-full px-3.5 py-3 rounded-xl bg-[var(--input-bg)] border border-[var(--border)] text-sm text-[var(--text-main)] focus:outline-none focus:border-[var(--primary)]';
@@ -29,6 +32,34 @@ export const ProfileView: React.FC = () => {
     const res = await loginWithGoogle();
     setLoading(false);
     if (!res.success) setError(res.message);
+  };
+
+  const submitAccount = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (mode === 'signup' && !form.name.trim()) return setError('Digite o nome que vai aparecer no seu perfil.');
+    setLoading(true);
+    setError('');
+    setNotice('');
+    const res = mode === 'login' ? await loginWithEmail(form.email, form.password) : await signUpWithEmail(form.email, form.password, form.name);
+    setLoading(false);
+    if (!res.success) return setError(res.message);
+    if (mode === 'signup') {
+      // O nome do cadastro também vira o nome da receita, se ainda estiver vazio
+      if (!profile.name) {
+        const next = { ...profile, name: form.name.trim() };
+        setProfile(next);
+        saveLocalVetProfile(next);
+      }
+      refreshAccount();
+      showToast('Conta criada! Enviamos um link de confirmação para o seu e-mail.');
+    }
+  };
+
+  const forgot = async () => {
+    if (!form.email.trim()) return setError('Digite o seu e-mail acima para receber o link.');
+    setError('');
+    const res = await resetPassword(form.email);
+    res.success ? setNotice(res.message) : setError(res.message);
   };
 
   const save = async (e: React.FormEvent) => {
@@ -63,7 +94,7 @@ export const ProfileView: React.FC = () => {
           </div>
           <div>
             <h1 className="text-xl font-extrabold text-[var(--text-main)]">Meu perfil</h1>
-            <p className="text-xs text-[var(--text-secondary)]">Entre com o Google para guardar seu perfil e seus prontuários na sua conta.</p>
+            <p className="text-xs text-[var(--text-secondary)]">Entre com o Google ou crie uma conta para guardar seu perfil e seus prontuários.</p>
           </div>
         </div>
 
@@ -77,7 +108,7 @@ export const ProfileView: React.FC = () => {
               </div>
             )}
             <div className="flex-1 min-w-0">
-              <p className="font-bold text-[var(--text-main)] truncate">{accountUser.displayName || 'Conta Google'}</p>
+              <p className="font-bold text-[var(--text-main)] truncate">{accountUser.displayName || accountUser.email?.split('@')[0] || 'Minha conta'}</p>
               <p className="text-xs text-[var(--text-secondary)] truncate">{accountUser.email}</p>
               {syncLabel && (
                 <p className={`text-xs mt-1 flex items-center gap-1 ${cloudSync.status === 'saved' ? 'text-emerald-400' : 'text-[var(--text-secondary)]'}`}>
@@ -106,7 +137,50 @@ export const ProfileView: React.FC = () => {
               <GoogleIcon />
               {loading ? 'Abrindo o Google…' : 'Entrar com Google'}
             </button>
-            {error && <p className="text-xs text-red-400">{error}</p>}
+            <div className="flex items-center gap-3 text-[11px] text-[var(--text-secondary)] pt-1">
+              <span className="flex-1 h-px bg-[var(--border)]" /> ou com e-mail e senha <span className="flex-1 h-px bg-[var(--border)]" />
+            </div>
+            <div role="tablist" className="grid grid-cols-2 p-1 rounded-xl bg-[var(--input-bg)] border border-[var(--border)]">
+              {(['login', 'signup'] as const).map((m) => (
+                <button
+                  key={m}
+                  type="button"
+                  role="tab"
+                  aria-selected={mode === m}
+                  onClick={() => { setMode(m); setError(''); setNotice(''); }}
+                  className={`py-2 rounded-lg text-xs font-bold cursor-pointer ${mode === m ? 'bg-[var(--primary)] text-[#062C23]' : 'text-[var(--text-secondary)]'}`}
+                >
+                  {m === 'login' ? 'Entrar' : 'Criar conta'}
+                </button>
+              ))}
+            </div>
+            <form onSubmit={submitAccount} className="space-y-3">
+              {mode === 'signup' && (
+                <input id="acc-name" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Nome que vai aparecer no perfil" className={inputCls} autoComplete="name" />
+              )}
+              <input id="acc-email" type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="E-mail" className={inputCls} autoComplete="email" />
+              <input
+                id="acc-password"
+                type="password"
+                required
+                minLength={6}
+                value={form.password}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                placeholder={mode === 'login' ? 'Senha' : 'Crie uma senha (mínimo 6 caracteres)'}
+                className={inputCls}
+                autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+              />
+              {error && <p className="text-xs text-red-400">{error}</p>}
+              {notice && <p className="text-xs text-emerald-400">{notice}</p>}
+              <button type="submit" disabled={loading} className="w-full py-3 rounded-xl bg-[var(--primary)] text-[#062C23] text-sm font-extrabold cursor-pointer disabled:opacity-60">
+                {loading ? 'Aguarde…' : mode === 'login' ? 'Entrar' : 'Criar conta'}
+              </button>
+              {mode === 'login' && (
+                <button type="button" onClick={forgot} className="text-xs text-[var(--text-secondary)] underline cursor-pointer">
+                  Esqueci a senha
+                </button>
+              )}
+            </form>
             <p className="text-xs text-[var(--text-secondary)]">Sem entrar, o app funciona normalmente e guarda tudo só neste aparelho.</p>
           </div>
         )}
@@ -120,7 +194,7 @@ export const ProfileView: React.FC = () => {
         <button type="submit" className="w-full py-3 rounded-xl bg-[var(--primary)] text-[#062C23] text-sm font-extrabold cursor-pointer flex items-center justify-center gap-2">
           <Save className="w-4 h-4" /> Salvar perfil
         </button>
-        <p className="text-xs text-[var(--text-secondary)]">Esses dados aparecem na receita em PDF{accountUser ? ' e ficam guardados na sua conta Google.' : '.'}</p>
+        <p className="text-xs text-[var(--text-secondary)]">Esses dados aparecem na receita em PDF{accountUser ? ' e ficam guardados na sua conta.' : '.'}</p>
       </form>
     </div>
   );

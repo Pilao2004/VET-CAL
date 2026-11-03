@@ -11,6 +11,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
   User,
 } from 'firebase/auth';
 import { doc, getFirestore, onSnapshot } from 'firebase/firestore';
@@ -88,9 +89,11 @@ export async function loginWithEmail(email: string, password: string): Promise<R
   }
 }
 
-export async function signUpWithEmail(email: string, password: string): Promise<Result> {
+export async function signUpWithEmail(email: string, password: string, name?: string): Promise<Result> {
   try {
     const cred = await createUserWithEmailAndPassword(auth, normalizeEmail(email), password);
+    // Nome que aparece no perfil
+    if (name?.trim()) await updateProfile(cred.user, { displayName: name.trim() });
     await sendEmailVerification(cred.user);
     return { success: true, message: 'Conta criada. Enviamos um link de confirmação para o seu e-mail: abra-o e depois toque em "Já confirmei".' };
   } catch (err) {
