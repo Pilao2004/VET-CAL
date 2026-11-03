@@ -59,7 +59,7 @@ const DEFAULT_OFFERS: OfferPlan[] = [
     badge: 'OFERTA ESPECIAL',
     description: 'Acesso completo a todas as ferramentas, calculadoras e biblioteca farmacológica.',
     price: 'R$ 27,90',
-    installments: 'ou em até 3x no cartão',
+    installments: 'ou em até 4x no cartão',
     duration: 'Acesso completo imediato',
     features: [
       'Todas as calculadoras veterinárias',
@@ -177,7 +177,7 @@ const FAQS = [
   },
   {
     q: 'Quais são as formas de pagamento?',
-    a: 'Você pode pagar via Pix, cartão de crédito (com opção de parcelamento em até 3x) ou cartão de débito, em ambiente de pagamento 100% seguro.'
+    a: 'Você pode pagar via Pix, cartão de crédito (com opção de parcelamento em até 4x) ou cartão de débito, em ambiente de pagamento 100% seguro.'
   },
   {
     q: 'Posso solicitar reembolso?',
@@ -207,7 +207,7 @@ function FeedbackPlaceholder({ badge }: { badge: string }) {
 
 export default function App() {
   const [offers, setOffers] = useState<OfferPlan[]>(() => {
-    const saved = localStorage.getItem('vet_calc_offers_v3');
+    const saved = localStorage.getItem('vet_calc_offers_v4');
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -266,7 +266,7 @@ export default function App() {
   };
 
   const handleSaveOffers = () => {
-    localStorage.setItem('vet_calc_offers_v3', JSON.stringify(offers));
+    localStorage.setItem('vet_calc_offers_v4', JSON.stringify(offers));
     setSaveSuccess(true);
     setTimeout(() => {
       setSaveSuccess(false);
