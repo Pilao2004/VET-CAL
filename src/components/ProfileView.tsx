@@ -14,7 +14,7 @@ const GoogleIcon = () => (
 );
 
 /** Perfil: login com a conta Google e dados do médico-veterinário, salvos no Firebase. */
-export const ProfileView: React.FC = () => {
+export const ProfileView: React.FC<{ welcome?: boolean; onContinue?: () => void }> = ({ welcome, onContinue }) => {
   const { accountUser, cloudSync, syncCloudNow, deactivateSubscription, showToast, refreshAccount } = useApp();
   const [profile, setProfile] = useState<VetProfile>(loadLocalVetProfile);
   const [loading, setLoading] = useState(false);
@@ -93,8 +93,10 @@ export const ProfileView: React.FC = () => {
             <UserRound className="w-6 h-6" />
           </div>
           <div>
-            <h1 className="text-xl font-extrabold text-[var(--text-main)]">Meu perfil</h1>
-            <p className="text-xs text-[var(--text-secondary)]">Entre com o Google ou crie uma conta para guardar seu perfil e seus prontuários.</p>
+            <h1 className="text-xl font-extrabold text-[var(--text-main)]">{welcome ? 'Bem-vindo ao VET CALC PRO' : 'Meu perfil'}</h1>
+            <p className="text-xs text-[var(--text-secondary)]">
+              {welcome ? 'Entre na sua conta ou crie uma agora para guardar seu perfil e seus prontuários.' : 'Entre com o Google ou crie uma conta para guardar seu perfil e seus prontuários.'}
+            </p>
           </div>
         </div>
 
@@ -196,6 +198,20 @@ export const ProfileView: React.FC = () => {
         </button>
         <p className="text-xs text-[var(--text-secondary)]">Esses dados aparecem na receita em PDF{accountUser ? ' e ficam guardados na sua conta.' : '.'}</p>
       </form>
+
+      {onContinue && (
+        <div className="space-y-2 text-center">
+          {accountUser ? (
+            <button type="button" onClick={onContinue} className="w-full py-3.5 rounded-xl bg-[var(--primary)] text-[#062C23] text-sm font-extrabold cursor-pointer">
+              Entrar no app
+            </button>
+          ) : (
+            <button type="button" onClick={onContinue} className="text-xs text-[var(--text-secondary)] underline cursor-pointer">
+              Continuar sem conta (os dados ficam só neste aparelho)
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };

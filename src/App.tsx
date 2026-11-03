@@ -22,8 +22,37 @@ import { OnboardingTutorial } from './components/OnboardingTutorial';
 import { isLandingPreview } from './config/plans';
 import { ShieldCheck, Heart } from 'lucide-react';
 
+const WELCOME_KEY = 'vetcalc_welcome';
+const readWelcome = () => {
+  try {
+    return localStorage.getItem(WELCOME_KEY);
+  } catch {
+    return null;
+  }
+};
+
 const AppContent: React.FC = () => {
-  const { currentView, toast, setCurrentView, isPremium } = useApp();
+  const { currentView, toast, setCurrentView, isPremium, accountUser } = useApp();
+  // Tela de boas-vindas: entrar ou criar conta antes de usar (some depois de "Entrar no app" ou "Continuar sem conta")
+  const [welcomeDone, setWelcomeDone] = React.useState(() => Boolean(readWelcome()));
+  const hadAccount = React.useRef(false);
+  React.useEffect(() => {
+    // Ao sair da conta, a tela de entrada volta a aparecer
+    if (accountUser) hadAccount.current = true;
+    else if (hadAccount.current) {
+      hadAccount.current = false;
+      try {
+        localStorage.removeItem(WELCOME_KEY);
+      } catch {}
+      setWelcomeDone(false);
+    }
+  }, [accountUser]);
+  const finishWelcome = () => {
+    try {
+      localStorage.setItem(WELCOME_KEY, accountUser ? 'done' : 'skip');
+    } catch {}
+    setWelcomeDone(true);
+  };
 
   // App inteiro pago: sem acesso liberado, mostra a página de vendas (os Termos continuam abertos)
   if (!isPremium || isLandingPreview()) {
@@ -41,6 +70,21 @@ const AppContent: React.FC = () => {
           <div className="fixed bottom-6 right-4 z-50 bg-emerald-500 text-slate-950 px-4 py-3 rounded-2xl shadow-2xl text-xs font-semibold">{toast}</div>
         )}
       </>
+    );
+  }
+
+  if (!welcomeDone) {
+    return (
+      <main className="min-h-screen bg-[var(--bg-main)] text-[var(--text-main)] px-4 py-8 sm:py-12">
+        <div className="max-w-2xl mx-auto flex items-center justify-center gap-2.5 mb-6">
+          <img src="./assets/aistudio/_cone_Vet_Calc_Pro_com_Patinha_Calculadora_42b4d775.png" alt="" className="w-10 h-10 rounded-xl" />
+          <span className="font-extrabold tracking-tight">VET CALC PRO</span>
+        </div>
+        <ProfileView welcome onContinue={finishWelcome} />
+        {toast && (
+          <div className="fixed bottom-6 right-4 z-50 bg-emerald-500 text-slate-950 px-4 py-3 rounded-2xl shadow-2xl text-xs font-semibold">{toast}</div>
+        )}
+      </main>
     );
   }
 
