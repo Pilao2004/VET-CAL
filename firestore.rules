@@ -10,6 +10,10 @@ service cloud.firestore {
         && request.auth.token.email.lower() == email;
       allow write: if false;
     }
+    // Perfil e cópia dos prontuários de cada pessoa: só a própria conta lê e grava.
+    match /usuarios/{uid}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
     match /{document=**} {
       allow read, write: if false;
     }

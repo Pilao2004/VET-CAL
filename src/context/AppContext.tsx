@@ -19,6 +19,7 @@ import {
 } from '../lib/supabase';
 import { patientService, MigrationSummary } from '../services/patientService';
 import { isVerified, logout, normalizeEmail, User as FirebaseUser, watchAccess, watchAuth } from '../lib/firebase';
+import { loadCloudPatients, loadCloudProfile, loadLocalVetProfile, mergePatients, saveCloudPatients, saveCloudProfile, saveLocalVetProfile } from '../services/cloudSync';
 import { isOwnerPreview } from '../config/plans';
 
 interface PrefillData {
@@ -119,6 +120,9 @@ interface AppContextType {
   accessChecking: boolean;
   /** Recarrega a conta depois de confirmar o e-mail */
   refreshAccount: () => void;
+  /** Cópia do perfil e dos prontuários na conta Google (Firestore) */
+  cloudSync: { status: 'off' | 'syncing' | 'saved' | 'error' | 'too_big'; at?: string };
+  syncCloudNow: () => void;
   deactivateSubscription: () => void;
   isPremium: boolean;
   checkIsFeatureUnlocked: (badge: 'Básica' | 'Avançada') => boolean;
@@ -904,6 +908,71 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setAccountVersion((v) => v + 1);
   }), []);
 
+  // Perfil e prontuários na conta Google: ao entrar, junta o que está na nuvem com o aparelho;
+  // depois, cada mudança nos prontuários é copiada para a conta (2 s após a última alteração).
+  const [cloudSync, setCloudSync] = useState<{ status: 'off' | 'syncing' | 'saved' | 'error' | 'too_big'; at?: string }>({ status: 'off' });
+  const cloudReadyUid = React.useRef<string | null>(null);
+  const patientsRef = React.useRef(patients);
+  patientsRef.current = patients;
+
+  const pushPatientsToCloud = async (uid: string) => {
+    setCloudSync((c) => ({ ...c, status: 'syncing' }));
+    try {
+      const res = await saveCloudPatients(uid, patientsRef.current);
+      setCloudSync(res.ok ? { status: 'saved', at: new Date().toISOString() } : { status: 'too_big' });
+    } catch {
+      setCloudSync({ status: 'error' });
+    }
+  };
+
+  useEffect(() => {
+    cloudReadyUid.current = null;
+    const uid = accountUser?.uid;
+    if (!uid) {
+      setCloudSync({ status: 'off' });
+      return;
+    }
+    let cancelled = false;
+    setCloudSync({ status: 'syncing' });
+    (async () => {
+      try {
+        const [cloudPatients, cloudProfile] = await Promise.all([loadCloudPatients(uid), loadCloudProfile(uid)]);
+        if (cancelled) return;
+        if (cloudPatients && cloudPatients.length) {
+          const merged = mergePatients(patientsRef.current, cloudPatients);
+          setPatients(merged);
+          try {
+            localStorage.setItem(getStorageKey('patients'), JSON.stringify(merged));
+          } catch {}
+          patientsRef.current = merged;
+        }
+        const local = loadLocalVetProfile();
+        if (cloudProfile && !local.name && !local.crmv && !local.clinic) saveLocalVetProfile(cloudProfile);
+        else if (accountUser && (local.name || local.crmv || local.clinic)) await saveCloudProfile(accountUser, local);
+        cloudReadyUid.current = uid;
+        await pushPatientsToCloud(uid);
+      } catch {
+        if (!cancelled) setCloudSync({ status: 'error' });
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accountUser?.uid]);
+
+  useEffect(() => {
+    const uid = accountUser?.uid;
+    if (!uid || cloudReadyUid.current !== uid) return;
+    const t = window.setTimeout(() => pushPatientsToCloud(uid), 2000);
+    return () => window.clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [patients]);
+
+  const syncCloudNow = () => {
+    if (accountUser?.uid && cloudReadyUid.current === accountUser.uid) pushPatientsToCloud(accountUser.uid);
+  };
+
   useEffect(() => {
     if (isOwnerPreview()) {
       setAccessChecking(false);
@@ -1099,6 +1168,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         accountUser,
         accessChecking,
         refreshAccount,
+        cloudSync,
+        syncCloudNow,
         deactivateSubscription,
         isPremium,
         checkIsFeatureUnlocked,

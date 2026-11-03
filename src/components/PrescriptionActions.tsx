@@ -32,7 +32,9 @@ export const PrescriptionActions: React.FC<{ prescriptionText: string }> = ({ pr
     const next = { ...vet, [field]: value };
     setVet(next);
     try {
-      localStorage.setItem(VET_KEY, JSON.stringify(next));
+      // Mantém os outros campos do perfil (ex.: clínica) salvos pela página Perfil
+      const saved = JSON.parse(localStorage.getItem(VET_KEY) || '{}');
+      localStorage.setItem(VET_KEY, JSON.stringify({ ...saved, ...next }));
     } catch {}
   };
 
