@@ -91,7 +91,6 @@ const PRIVACY: Section[] = [
     title: '3. Onde ficam guardados',
     body: [
       'No modo local, os prontuários e preferências ficam apenas no seu aparelho (armazenamento do navegador). Se o navegador for limpo, eles se perdem: use o botão Fazer backup.',
-      'Quando o salvamento em nuvem estiver ativado, os prontuários ficam no banco de dados Supabase, com acesso restrito à sua conta.',
     ],
   },
   {
@@ -105,7 +104,7 @@ const PRIVACY: Section[] = [
   {
     title: '5. Compartilhamento',
     body: [
-      'Google Firebase (hospedagem, login, banco de dados da liberação e IA Gemini que gera as respostas), banco de dados de prontuários (Supabase, quando ativado), Anthropic Claude na versão dentro do claude.ai e a plataforma de pagamento. Esses fornecedores podem processar dados fora do Brasil, com as salvaguardas da LGPD.',
+      'Google Firebase (hospedagem, login, banco de dados da liberação e IA Gemini que gera as respostas), Anthropic Claude na versão dentro do claude.ai e a plataforma de pagamento. Esses fornecedores podem processar dados fora do Brasil, com as salvaguardas da LGPD.',
       'Os planos gratuitos de IA podem usar o conteúdo enviado para melhorar os serviços dos provedores. Por isso, não envie à Assistente nome, telefone, CPF ou endereço de tutores.',
       'Não vendemos dados pessoais.',
     ],

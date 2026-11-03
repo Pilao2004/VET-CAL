@@ -38,9 +38,6 @@ export const PatientsView: React.FC = () => {
     setCurrentView,
     addConsultationToPatient,
     showToast,
-    user,
-    isSupabaseReady,
-    supabaseConnected,
     isLoadingPatients,
     patientError,
     refreshPatients,
@@ -265,44 +262,12 @@ export const PatientsView: React.FC = () => {
         </div>
       </div>
 
-      {/* Cloud & PostgreSQL Security Status Banner */}
-      <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs">
-        <div className="flex items-center space-x-2.5">
-          <div
-            className={`w-2.5 h-2.5 rounded-full shrink-0 ${
-              user && supabaseConnected
-                ? 'bg-emerald-500'
-                : isSupabaseReady
-                ? 'bg-amber-500'
-                : 'bg-blue-500'
-            }`}
-          />
-          <span className="text-slate-700 dark:text-slate-300">
-            {user && supabaseConnected ? (
-              <>
-                <strong className="text-emerald-600 dark:text-emerald-400">Banco de Dados Ativo:</strong> Prontuários sincronizados com Supabase PostgreSQL (RLS por usuário).
-              </>
-            ) : user ? (
-              <>
-                <strong className="text-amber-600 dark:text-amber-400">Aguardando Conexão:</strong> Autenticado como {user.email}, mas a conexão com o PostgreSQL precisa ser verificada no Perfil.
-              </>
-            ) : (
-              <>
-                <strong className="text-blue-600 dark:text-blue-400">Modo Local:</strong> Prontuários salvos neste navegador. Acesse a aba <strong>Perfil</strong> para fazer login no Supabase e ativar o salvamento na nuvem.
-              </>
-            )}
-          </span>
-        </div>
-
-        {user && (
-          <button
-            type="button"
-            onClick={() => setCurrentView('profile')}
-            className="text-[11px] font-bold text-teal-600 dark:text-teal-400 hover:underline shrink-0 cursor-pointer"
-          >
-            Gerenciar Conexão &gt;
-          </button>
-        )}
+      {/* Onde os prontuários ficam salvos */}
+      <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center gap-2.5 text-xs">
+        <div className="w-2.5 h-2.5 rounded-full shrink-0 bg-blue-500" />
+        <span className="text-slate-700 dark:text-slate-300">
+          Prontuários salvos neste aparelho. Use <strong>Fazer backup</strong> com frequência para não perder os dados se o navegador for limpo.
+        </span>
       </div>
 
       {/* Backup dos prontuários */}
@@ -336,11 +301,6 @@ export const PatientsView: React.FC = () => {
             e.target.value = '';
           }}
         />
-        {!user && (
-          <span className="text-slate-500 dark:text-slate-400">
-            No modo local, faça backup com frequência: os dados ficam só neste aparelho.
-          </span>
-        )}
       </div>
 
       {/* Error Banner */}

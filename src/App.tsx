@@ -12,7 +12,6 @@ import { LabsView } from './components/LabsView';
 import { PatientsView } from './components/PatientsView';
 import { AssistantView } from './components/AssistantView';
 import { BonusView } from './components/BonusView';
-import { ProfileView } from './components/ProfileView';
 import { SupportView } from './components/SupportView';
 import { PremiumGate } from './components/PremiumGate';
 import { LegalView } from './components/LegalView';
@@ -71,7 +70,7 @@ const AppContent: React.FC = () => {
           </PremiumGate>
         )}
         {currentView === 'bonus' && <BonusView />}
-        {currentView === 'profile' && <ProfileView />}
+        {currentView === 'profile' && <HomeView />}
         {currentView === 'support' && <SupportView />}
         {currentView === 'legal' && <LegalView />}
       </main>

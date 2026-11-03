@@ -67,13 +67,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             <span>{isDarkMode ? 'Modo claro' : 'Modo escuro'}</span>
           </button>
           <div className="border-t border-[var(--border)] my-2" />
-          <button 
-            onClick={() => { setCurrentView('profile'); onClose(); }}
-            className="flex items-center space-x-3 w-full p-3 hover:bg-[var(--input-bg)] rounded-xl cursor-pointer"
-          >
-            <User className="w-5 h-5 text-[var(--secondary)]" />
-            <span>Perfil</span>
-          </button>
           <button
             onClick={() => { openTutorial(); onClose(); }}
             className="flex items-center space-x-3 w-full p-3 hover:bg-[var(--input-bg)] rounded-xl cursor-pointer"
