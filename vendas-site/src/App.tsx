@@ -70,7 +70,7 @@ const DEFAULT_OFFERS: OfferPlan[] = [
       'Assistente IA veterinário',
       'Atualizações automáticas'
     ],
-    hotmartUrl: 'https://mpago.li/1bku2Ff',
+    hotmartUrl: 'https://pay.wiapy.com/FODzV1BcUGdN',
     popular: true
   }
 ];
@@ -169,7 +169,7 @@ const FAQS = [
   },
   {
     q: 'Como recebo meu acesso depois da compra?',
-    a: 'Assim que o pagamento for confirmado pelo Mercado Pago, você recebe o seu código de acesso para liberar todas as ferramentas da plataforma.'
+    a: 'Assim que o pagamento for confirmado, você recebe o seu código de acesso para liberar todas as ferramentas da plataforma.'
   },
   {
     q: 'Por quanto tempo terei acesso?',
@@ -177,7 +177,7 @@ const FAQS = [
   },
   {
     q: 'Quais são as formas de pagamento?',
-    a: 'Você pode pagar via Pix, cartão de crédito (com opção de parcelamento em até 3x) ou cartão de débito, pelo ambiente 100% seguro do Mercado Pago.'
+    a: 'Você pode pagar via Pix, cartão de crédito (com opção de parcelamento em até 3x) ou cartão de débito, em ambiente de pagamento 100% seguro.'
   },
   {
     q: 'Posso solicitar reembolso?',
@@ -207,7 +207,7 @@ function FeedbackPlaceholder({ badge }: { badge: string }) {
 
 export default function App() {
   const [offers, setOffers] = useState<OfferPlan[]>(() => {
-    const saved = localStorage.getItem('vet_calc_offers_mp');
+    const saved = localStorage.getItem('vet_calc_offers_v3');
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -266,7 +266,7 @@ export default function App() {
   };
 
   const handleSaveOffers = () => {
-    localStorage.setItem('vet_calc_offers_mp', JSON.stringify(offers));
+    localStorage.setItem('vet_calc_offers_v3', JSON.stringify(offers));
     setSaveSuccess(true);
     setTimeout(() => {
       setSaveSuccess(false);
@@ -750,7 +750,7 @@ export default function App() {
 
                 <div className="mt-4 text-center">
                   <span className="text-[11px] text-slate-400 flex items-center justify-center gap-1">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#00C896]" /> Pagamento 100% seguro pelo Mercado Pago
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#00C896]" /> Pagamento 100% seguro
                   </span>
                 </div>
               </div>
@@ -1017,7 +1017,7 @@ export default function App() {
             </div>
 
             <p className="text-xs text-slate-500 mb-6">
-              Insira abaixo o link de pagamento do Mercado Pago para o plano da sua página de vendas. Ele será salvo e vinculado aos botões de compra.
+              Insira abaixo o link de pagamento (checkout) para o plano da sua página de vendas. Ele será salvo e vinculado aos botões de compra.
             </p>
 
             <div className="space-y-6">
@@ -1028,7 +1028,7 @@ export default function App() {
                   </h4>
                   <div>
                     <label className="block text-xs font-semibold text-slate-600 mb-1">
-                      Link de pagamento (Mercado Pago):
+                      Link de pagamento (checkout):
                     </label>
                     <input
                       type="text"
@@ -1038,7 +1038,7 @@ export default function App() {
                         updated[index].hotmartUrl = e.target.value;
                         setOffers(updated);
                       }}
-                      placeholder="https://mpago.li/..."
+                      placeholder="https://pay.wiapy.com/..."
                       className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 focus:outline-none focus:border-[#00C896] bg-white"
                     />
                   </div>
