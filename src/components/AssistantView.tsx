@@ -37,17 +37,17 @@ import { EvolutionComposer } from './EvolutionComposer';
 import { clinicalChat, searchDrugWithAI } from '../services/clinicalAI';
 import {
   AITurn,
-  AssistantProviderChoice,
   askServerAssistant,
   askVetAssistant,
   errorMessage,
   getClaudeSample,
 } from '../services/vetAssistantAI';
 
-const PROVIDER_STORAGE_KEY = 'vetcalc_ai_provider';
-const PROVIDER_OPTIONS: { id: AssistantProviderChoice; label: string; hint: string }[] = [
-  { id: 'auto', label: 'Padrão', hint: 'Google Gemini pelo Firebase, plano gratuito.' },
-];
+// Escolha de IA de versões antigas: hoje a IA é sempre automática
+const OLD_PROVIDER_STORAGE_KEY = 'vetcalc_ai_provider';
+try {
+  localStorage.removeItem(OLD_PROVIDER_STORAGE_KEY);
+} catch {}
 const PROVIDER_NAMES: Record<string, string> = { gemini: 'Gemini', groq: 'Groq (Llama)', claude: 'Claude' };
 
 interface PendingCalculationState {
@@ -122,21 +122,6 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
   const [aiAvailable, setAiAvailable] = useState(false);
   // Fica true quando o site não tem a IA do servidor publicada ou configurada
   const serverAgentDownRef = useRef(false);
-  const [aiProvider, setAiProvider] = useState<AssistantProviderChoice>(() => {
-    try {
-      const saved = localStorage.getItem(PROVIDER_STORAGE_KEY);
-      return saved === 'gemini' ? saved : 'auto';
-    } catch {
-      return 'auto';
-    }
-  });
-  const chooseProvider = (choice: AssistantProviderChoice) => {
-    setAiProvider(choice);
-    serverAgentDownRef.current = false;
-    try {
-      localStorage.setItem(PROVIDER_STORAGE_KEY, choice);
-    } catch {}
-  };
 
   useEffect(() => {
     let active = true;
@@ -320,7 +305,6 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
     try {
       const { text, provider } = await askServerAssistant([...aiTurnsRef.current, { role: 'user', content: textToSend }], () => patientsRef.current, {
         signal: ctl.signal,
-        provider: aiProvider,
         onProgress: (label) => updateMessageContent(replyId, `⏳ ${label}`),
       });
       aiTurnsRef.current.push({ role: 'user', content: textToSend }, { role: 'assistant', content: text });
@@ -331,18 +315,6 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
       const code = e?.code;
       if (code === 'cancelled') {
         updateMessageContent(replyId, 'Resposta interrompida.');
-        return true;
-      }
-      const chosen = aiProvider !== 'auto' ? PROVIDER_NAMES[aiProvider] : null;
-      if (chosen && (code === 'unavailable' || code === 'unconfigured' || code === 'quota')) {
-        updateMessageContent(
-          replyId,
-          code === 'quota'
-            ? `⚠️ O ${chosen} atingiu o limite gratuito de hoje. Escolha outra IA no topo ou use "Padrão".`
-            : code === 'unconfigured'
-              ? `⚠️ O ${chosen} ainda não foi configurado no servidor do app. Escolha outra IA no topo ou use "Padrão".`
-              : `⚠️ O ${chosen} só funciona no site publicado do app. Aqui, use a opção "Padrão".`,
-        );
         return true;
       }
       if (code === 'unavailable' || code === 'unconfigured') {
@@ -368,12 +340,12 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
 
   // Fluxo de análise da mensagem
   const processUserMessage = async (textToSend: string) => {
-    const sample = aiProvider === 'auto' ? await getClaudeSample() : null;
+    const sample = await getClaudeSample();
     if (sample) {
       await chatWithAI(sample, textToSend);
       return;
     }
-    if ((aiProvider !== 'auto' || !serverAgentDownRef.current) && (await chatWithServer(textToSend))) {
+    if (!serverAgentDownRef.current && (await chatWithServer(textToSend))) {
       return;
     }
 
