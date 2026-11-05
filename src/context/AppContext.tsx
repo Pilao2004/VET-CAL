@@ -139,6 +139,9 @@ interface AppContextType {
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
+/** Conta (uid) dona dos prontuários guardados neste aparelho. */
+const PATIENTS_OWNER_KEY = 'vetcalc_patients_owner';
+
 const DEMO_PATIENTS: PatientRecord[] = [
   {
     id: 'demo-patient-1',
@@ -943,7 +946,19 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       try {
         const [cloudPatients, cloudProfile] = await Promise.all([loadCloudPatients(uid), loadCloudProfile(uid)]);
         if (cancelled) return;
-        if (cloudPatients && cloudPatients.length) {
+        // Os prontuários deste aparelho pertencem a uma conta: se outra conta entrar, não mistura os dados
+        let owner: string | null = null;
+        try {
+          owner = localStorage.getItem(PATIENTS_OWNER_KEY);
+        } catch {}
+        if (owner && owner !== uid) {
+          const own = cloudPatients || [];
+          setPatients(own.length ? own : DEMO_PATIENTS);
+          try {
+            localStorage.setItem(getStorageKey('patients'), JSON.stringify(own));
+          } catch {}
+          patientsRef.current = own;
+        } else if (cloudPatients && cloudPatients.length) {
           const merged = mergePatients(patientsRef.current, cloudPatients);
           setPatients(merged);
           try {
@@ -954,6 +969,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         const local = loadLocalVetProfile();
         if (cloudProfile && !local.name && !local.crmv && !local.clinic) saveLocalVetProfile(cloudProfile);
         else if (accountUser && (local.name || local.crmv || local.clinic)) await saveCloudProfile(accountUser, local);
+        try {
+          localStorage.setItem(PATIENTS_OWNER_KEY, uid);
+        } catch {}
         cloudReadyUid.current = uid;
         await pushPatientsToCloud(uid);
       } catch {
@@ -1060,7 +1078,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       Boolean(accountUser ? normalizeEmail(accountUser.email) === subscription.email : subscription.email) &&
       (!subscription.expiresAt || subscription.expiresAt >= new Date().toISOString().slice(0, 10)));
 
-  const deactivateSubscription = () => {
+  const deactivateSubscription = async () => {
+    // Antes de sair, garante a cópia na conta e tira os prontuários deste aparelho
+    const uid = accountUser?.uid;
+    if (uid && cloudReadyUid.current === uid) await pushPatientsToCloud(uid);
+    cloudReadyUid.current = null;
+    setPatients(DEMO_PATIENTS);
+    try {
+      localStorage.removeItem(getStorageKey('patients'));
+      localStorage.removeItem(PATIENTS_OWNER_KEY);
+    } catch {}
     saveSubscription(FREE_PLAN);
     logout().catch(() => {});
     showToast('Você saiu da sua conta neste aparelho.');
