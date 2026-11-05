@@ -335,15 +335,17 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
     setLoading(true);
     try {
       const usedPremium = premiumOnRef.current;
-      const { text, provider } = await askServerAssistant([...aiTurnsRef.current, { role: 'user', content: textToSend }], () => patientsRef.current, {
+      const { text, provider, perguntas, premiumUsed } = await askServerAssistant([...aiTurnsRef.current, { role: 'user', content: textToSend }], () => patientsRef.current, {
         signal: ctl.signal,
         premium: usedPremium,
         onProgress: (label) => updateMessageContent(replyId, `⏳ ${label}`),
       });
       aiTurnsRef.current.push({ role: 'user', content: textToSend }, { role: 'assistant', content: text });
-      setMessages((prev) => prev.map((m) => (m.id === replyId ? { ...m, content: text, aiProvider: (PROVIDER_NAMES[provider] || provider) + (usedPremium ? ' · Premium' : '') } : m)));
+      setMessages((prev) => prev.map((m) => (m.id === replyId ? { ...m, content: text, aiProvider: (PROVIDER_NAMES[provider] || provider) + (premiumUsed ? ' · Premium' : '') } : m)));
       setAiAvailable(true);
-      if (usedPremium) countPremiumQuestion();
+      // Com o servidor ligado, o número de perguntas vem dele; sem servidor, conta aqui
+      if (typeof perguntas === 'number') setIaUsage({ mes: currentMonth(), perguntas: Math.min(perguntas, IA_PREMIUM_LIMIT) });
+      else if (usedPremium) countPremiumQuestion();
       return true;
     } catch (e: any) {
       const code = e?.code;

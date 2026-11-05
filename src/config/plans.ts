@@ -42,3 +42,5 @@ export const IA_PREMIUM_CHECKOUT_URL: string = env.VITE_IA_PREMIUM_CHECKOUT_URL 
 export const IA_PREMIUM_PRICE_LABEL = 'R$ 19,90/mês';
 /** Perguntas por mês incluídas no Premium. */
 export const IA_PREMIUM_LIMIT = 300;
+/** Servidor do Premium (projeto vet-calc-pro-ia). Vazio = ainda não ligado: o Premium usa a IA gratuita. */
+export const IA_PREMIUM_ENDPOINT: string = env.VITE_IA_PREMIUM_ENDPOINT || '';

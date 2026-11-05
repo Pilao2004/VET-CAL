@@ -1,0 +1,4 @@
+{
+  "functions": [{ "source": ".", "codebase": "ia-premium", "predeploy": ["npm run build"], "ignore": ["node_modules", "src", ".git"] }],
+  "firestore": { "rules": "firestore.rules" }
+}

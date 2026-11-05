@@ -1,7 +1,8 @@
 // Assistente IA pelo Firebase AI Logic (Gemini Developer API, plano gratuito).
 // Substitui a IA do servidor: as ferramentas continuam rodando no navegador.
 import { getAI, getGenerativeModel, GoogleAIBackend } from 'firebase/ai';
-import { firebaseApp } from '../lib/firebase';
+import { auth, firebaseApp } from '../lib/firebase';
+import { IA_PREMIUM_ENDPOINT } from '../config/plans';
 
 const ai = getAI(firebaseApp, { backend: new GoogleAIBackend() });
 
@@ -81,7 +82,22 @@ async function generate(params: { system?: string; tools?: any[]; temperature: n
 }
 
 /** Uma rodada da Assistente conversacional, com as ferramentas declaradas. */
+/** Premium com servidor ligado: a pergunta vai ao projeto pago, que confere a assinatura e conta o uso. */
+async function premiumServerRound(system: string, history: AgentMessage[], tools: AgentToolSchema[]) {
+  const token = await auth.currentUser?.getIdToken();
+  if (!token) throw Object.assign(new Error('not_premium'), { code: 'not_premium' });
+  const r = await fetch(IA_PREMIUM_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+    body: JSON.stringify({ system, history: history.slice(-40), tools }),
+  });
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok) throw Object.assign(new Error(data.code || 'upstream'), { code: data.code === 'limit' || data.code === 'not_premium' ? data.code : 'upstream' });
+  return data as { text?: string; toolCalls?: AgentToolCall[]; provider: string; perguntas?: number };
+}
+
 export async function agentRound(system: string, history: AgentMessage[], tools: AgentToolSchema[], opts: { premium?: boolean } = {}) {
+  if (opts.premium && IA_PREMIUM_ENDPOINT) return premiumServerRound(system, history, tools);
   const declarations = tools.map((t) => ({ name: t.name, description: t.description, ...(t.inputSchema ? { parameters: t.inputSchema as any } : {}) }));
   const response = await generate(
     { system, tools: declarations.length ? [{ functionDeclarations: declarations }] : [], temperature: 0.4, premium: opts.premium },

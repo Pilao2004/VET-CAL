@@ -351,18 +351,28 @@ export async function askServerAssistant(
   history: AITurn[],
   getPatients: () => PatientRecord[],
   handlers: { onProgress: (label: string) => void; signal?: AbortSignal; provider?: AssistantProviderChoice; premium?: boolean },
-): Promise<{ text: string; provider: string }> {
+): Promise<{ text: string; provider: string; perguntas?: number; premiumUsed?: boolean }> {
   const tools = buildTools(getPatients, handlers.onProgress);
+  let premium = Boolean(handlers.premium);
+  let perguntas: number | undefined;
   const schemas = tools.map(({ name, description, inputSchema }) => ({ name, description, inputSchema }));
   const work: ServerMessage[] = history.slice(-20).map((t) => ({ role: t.role, text: t.content }));
   const fail = (code: ServerAgentErrorCode) => Object.assign(new Error(code), { code });
 
   for (let round = 0; round < MAX_TOOL_ROUNDS; round++) {
     if (handlers.signal?.aborted) throw fail('cancelled');
-    let data: { text?: string; toolCalls?: { id: string; name: string; args: Record<string, unknown> }[]; provider: string };
+    let data: { text?: string; toolCalls?: { id: string; name: string; args: Record<string, unknown> }[]; provider: string; perguntas?: number };
     try {
-      data = await agentRound(buildRules(getPatients()) + (handlers.premium ? PREMIUM_RULES : ''), work, schemas, { premium: handlers.premium });
+      data = await agentRound(buildRules(getPatients()) + (premium ? PREMIUM_RULES : ''), work, schemas, { premium });
+      if (typeof data.perguntas === 'number') perguntas = data.perguntas;
     } catch (e: any) {
+      // Limite do mês atingido ou assinatura vencida: segue com a IA gratuita
+      if (premium && (e?.code === 'limit' || e?.code === 'not_premium')) {
+        if (e.code === 'limit') perguntas = Number.MAX_SAFE_INTEGER;
+        premium = false;
+        round--;
+        continue;
+      }
       throw fail(e?.code === 'quota' ? 'quota' : navigator.onLine === false ? 'unavailable' : 'upstream');
     }
     if (handlers.signal?.aborted) throw fail('cancelled');
@@ -380,7 +390,7 @@ export async function askServerAssistant(
       }
       continue;
     }
-    return { text: String(data.text || '').trim() || 'Não consegui formular uma resposta. Pode reformular?', provider: data.provider };
+    return { text: String(data.text || '').trim() || 'Não consegui formular uma resposta. Pode reformular?', provider: data.provider, perguntas, premiumUsed: premium };
   }
   throw fail('upstream');
 }
