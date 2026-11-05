@@ -1039,7 +1039,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     } catch {}
   };
   const today = new Date().toISOString().slice(0, 10);
-  const iaPremium = isOwnerPreview() && !iaPremiumAte
+  // A prévia (botões Assinante/Gratuito) só existe no app aberto no claude.ai, nunca no site publicado
+  const iaOwnerPreview = Boolean((window as any).claude);
+  const iaPremium = iaOwnerPreview && !iaPremiumAte
     ? { active: iaPreviewAs === 'premium', ate: undefined }
     : { active: Boolean(iaPremiumAte && iaPremiumAte >= today), ate: iaPremiumAte || undefined };
 
@@ -1202,7 +1204,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         deactivateSubscription,
         isPremium,
         iaPremium,
-        iaPreviewAs: isOwnerPreview() && !iaPremiumAte ? iaPreviewAs : null,
+        iaPreviewAs: iaOwnerPreview && !iaPremiumAte ? iaPreviewAs : null,
         setIaPreviewAs,
         checkIsFeatureUnlocked,
         toast,
