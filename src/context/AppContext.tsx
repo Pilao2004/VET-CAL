@@ -125,6 +125,11 @@ interface AppContextType {
   syncCloudNow: () => void;
   deactivateSubscription: () => void;
   isPremium: boolean;
+  /** Assistente IA Premium (assinatura mensal): ativo e até quando está pago */
+  iaPremium: { active: boolean; ate?: string };
+  /** Só na prévia do dono: ver o Assistente como assinante ou como gratuito */
+  iaPreviewAs: 'premium' | 'gratuito' | null;
+  setIaPreviewAs: (v: 'premium' | 'gratuito') => void;
   checkIsFeatureUnlocked: (badge: 'Básica' | 'Avançada') => boolean;
 
   // Toast
@@ -995,8 +1000,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const cached = readAccessCache();
     const stop = watchAccess(
       email,
-      ({ liberado, expiraEm }) => {
+      ({ liberado, expiraEm, iaPremiumAte }) => {
         setAccessChecking(false);
+        setIaPremiumAte(iaPremiumAte || null);
         const valid = liberado && (!expiraEm || expiraEm >= new Date().toISOString().slice(0, 10));
         const wasPremium = cached.tier === 'premium' && cached.email === email;
         saveSubscription(valid ? { tier: 'premium', isActive: true, email, expiresAt: expiraEm } : FREE_PLAN);
@@ -1013,6 +1019,29 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [accountUser, accountVersion]);
 
   const refreshAccount = () => setAccountVersion((v) => v + 1);
+
+  // Assistente IA Premium: liberado no Firebase com acessos/{e-mail}.iaPremiumAte (data de validade)
+  const [iaPremiumAte, setIaPremiumAte] = useState<string | null>(null);
+  useEffect(() => {
+    if (!accountUser) setIaPremiumAte(null);
+  }, [accountUser]);
+  const [iaPreviewAs, setIaPreviewAsState] = useState<'premium' | 'gratuito'>(() => {
+    try {
+      return localStorage.getItem('vetcalc_ia_preview') === 'gratuito' ? 'gratuito' : 'premium';
+    } catch {
+      return 'premium';
+    }
+  });
+  const setIaPreviewAs = (v: 'premium' | 'gratuito') => {
+    setIaPreviewAsState(v);
+    try {
+      localStorage.setItem('vetcalc_ia_preview', v);
+    } catch {}
+  };
+  const today = new Date().toISOString().slice(0, 10);
+  const iaPremium = isOwnerPreview() && !iaPremiumAte
+    ? { active: iaPreviewAs === 'premium', ate: undefined }
+    : { active: Boolean(iaPremiumAte && iaPremiumAte >= today), ate: iaPremiumAte || undefined };
 
   const isPremium =
     isOwnerPreview() ||
@@ -1172,6 +1201,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         syncCloudNow,
         deactivateSubscription,
         isPremium,
+        iaPremium,
+        iaPreviewAs: isOwnerPreview() && !iaPremiumAte ? iaPreviewAs : null,
+        setIaPreviewAs,
         checkIsFeatureUnlocked,
         toast,
         showToast,

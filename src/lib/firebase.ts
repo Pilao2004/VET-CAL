@@ -40,15 +40,25 @@ export const isVerified = (user: User | null) => Boolean(user?.emailVerified);
 export const watchAuth = (cb: (user: User | null) => void) => onAuthStateChanged(auth, cb);
 
 /**
- * Acompanha a liberação do acesso: documento acessos/{e-mail} com { liberado: true }.
+ * Acompanha a liberação do acesso: documento acessos/{e-mail} com { liberado: true }
+ * e, para quem assina o Assistente IA Premium, { iaPremiumAte: "AAAA-MM-DD" }.
  * Quem libera é o dono do app, pelo console do Firebase (Firestore Database).
  */
-export function watchAccess(email: string, cb: (access: { liberado: boolean; expiraEm?: string }) => void, onError: () => void) {
+export function watchAccess(
+  email: string,
+  cb: (access: { liberado: boolean; expiraEm?: string; iaPremiumAte?: string }) => void,
+  onError: () => void,
+) {
   return onSnapshot(
     doc(db, 'acessos', normalizeEmail(email)),
     (snap) => {
       const data = snap.data() || {};
-      cb({ liberado: data.liberado === true, expiraEm: typeof data.expiraEm === 'string' ? data.expiraEm : undefined });
+      cb({
+        liberado: data.liberado === true,
+        expiraEm: typeof data.expiraEm === 'string' ? data.expiraEm : undefined,
+        // Assistente IA Premium: data (AAAA-MM-DD) até quando a assinatura mensal está paga
+        iaPremiumAte: typeof data.iaPremiumAte === 'string' ? data.iaPremiumAte : undefined,
+      });
     },
     onError,
   );

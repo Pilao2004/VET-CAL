@@ -307,14 +307,22 @@ export function errorMessage(code: string) {
   return ERROR_COPY[code] || 'Não consegui responder agora. Tente enviar de novo.';
 }
 
+/** Regras extras do Assistente IA Premium: responde qualquer assunto, com mais profundidade. */
+export const PREMIUM_RULES = `
+
+ASSISTENTE IA PREMIUM
+- Este usuário assina o Assistente IA Premium. Responda perguntas de qualquer assunto, não só de veterinária, de forma completa e útil.
+- Em dúvidas clínicas, aprofunde mais: fisiopatologia resumida, diferenciais com o que os separa, exames com o que esperar e conduta passo a passo.
+- As regras de doses continuam valendo: qualquer dose ou volume sai das ferramentas do app, nunca de cabeça.`;
+
 /** Envia a conversa ao Claude com as ferramentas do app e transmite a resposta. */
 export async function askVetAssistant(
   sample: SampleFn,
   history: AITurn[],
   getPatients: () => PatientRecord[],
-  handlers: { onText: (text: string) => void; onProgress: (label: string) => void; signal?: AbortSignal },
+  handlers: { onText: (text: string) => void; onProgress: (label: string) => void; signal?: AbortSignal; premium?: boolean },
 ) {
-  const turns: AITurn[] = [{ role: 'user', content: buildRules(getPatients()) }, ...history.slice(-24)];
+  const turns: AITurn[] = [{ role: 'user', content: buildRules(getPatients()) + (handlers.premium ? PREMIUM_RULES : '') }, ...history.slice(-24)];
   const { text } = await sample(turns, {
     modelTier: 'quick',
     cache: false,
@@ -342,7 +350,7 @@ const MAX_TOOL_ROUNDS = 6;
 export async function askServerAssistant(
   history: AITurn[],
   getPatients: () => PatientRecord[],
-  handlers: { onProgress: (label: string) => void; signal?: AbortSignal; provider?: AssistantProviderChoice },
+  handlers: { onProgress: (label: string) => void; signal?: AbortSignal; provider?: AssistantProviderChoice; premium?: boolean },
 ): Promise<{ text: string; provider: string }> {
   const tools = buildTools(getPatients, handlers.onProgress);
   const schemas = tools.map(({ name, description, inputSchema }) => ({ name, description, inputSchema }));
@@ -353,7 +361,7 @@ export async function askServerAssistant(
     if (handlers.signal?.aborted) throw fail('cancelled');
     let data: { text?: string; toolCalls?: { id: string; name: string; args: Record<string, unknown> }[]; provider: string };
     try {
-      data = await agentRound(buildRules(getPatients()), work, schemas);
+      data = await agentRound(buildRules(getPatients()) + (handlers.premium ? PREMIUM_RULES : ''), work, schemas, { premium: handlers.premium });
     } catch (e: any) {
       throw fail(e?.code === 'quota' ? 'quota' : navigator.onLine === false ? 'unavailable' : 'upstream');
     }

@@ -22,7 +22,10 @@ import {
   FileText,
   ExternalLink,
   ClipboardList,
+  Crown,
 } from 'lucide-react';
+import { IA_PREMIUM_CHECKOUT_URL, IA_PREMIUM_LIMIT, IA_PREMIUM_PRICE_LABEL } from '../config/plans';
+import { addIaQuestion, currentMonth, IaUsage, loadIaUsage } from '../services/iaPremium';
 import { useApp } from '../context/AppContext';
 import { ChatMessage, ChatQuickOption, PatientRecord } from '../types';
 import { COMMERCIAL_PRODUCTS, CommercialProduct, DosageProtocol } from '../data/commercialProducts';
@@ -84,7 +87,32 @@ export const AssistantView: React.FC = () => {
     setCurrentView,
     setSelectedPatientId,
     addClinicalEvolutionToPatient,
+    iaPremium,
+    iaPreviewAs,
+    setIaPreviewAs,
+    accountUser,
   } = useApp();
+
+  // Assistente IA Premium: contador de perguntas do mês
+  const uid = accountUser?.uid || null;
+  const [iaUsage, setIaUsage] = useState<IaUsage>({ mes: currentMonth(), perguntas: 0 });
+  useEffect(() => {
+    let alive = true;
+    loadIaUsage(uid).then((u) => alive && setIaUsage(u));
+    return () => {
+      alive = false;
+    };
+  }, [uid]);
+  const iaUsageRef = useRef(iaUsage);
+  iaUsageRef.current = iaUsage;
+  const premiumLimitReached = iaPremium.active && iaUsage.perguntas >= IA_PREMIUM_LIMIT;
+  const premiumOn = iaPremium.active && !premiumLimitReached;
+  const premiumOnRef = useRef(premiumOn);
+  premiumOnRef.current = premiumOn;
+  const countPremiumQuestion = async () => {
+    if (!premiumOnRef.current) return;
+    setIaUsage(await addIaQuestion(uid, iaUsageRef.current));
+  };
   const [evolutionPreview, setEvolutionPreview] = useState<{
     patientId: string;
     patientName: string;
@@ -268,8 +296,10 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
     let started = false;
     setLoading(true);
     try {
+      const usedPremium = premiumOnRef.current;
       const reply = await askVetAssistant(sample, aiTurnsRef.current, () => patientsRef.current, {
         signal: ctl.signal,
+        premium: usedPremium,
         onText: (text) => {
           started = true;
           updateMessageContent(replyId, text);
@@ -279,8 +309,9 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
         },
       });
       updateMessageContent(replyId, reply);
-      setMessages((prev) => prev.map((m) => (m.id === replyId ? { ...m, aiProvider: PROVIDER_NAMES.claude } : m)));
+      setMessages((prev) => prev.map((m) => (m.id === replyId ? { ...m, aiProvider: PROVIDER_NAMES.claude + (usedPremium ? ' · Premium' : '') } : m)));
       aiTurnsRef.current.push({ role: 'assistant', content: reply });
+      if (usedPremium) countPremiumQuestion();
     } catch (e: any) {
       const partial: string = e?.text || '';
       if (partial) aiTurnsRef.current.push({ role: 'assistant', content: partial });
@@ -303,13 +334,16 @@ Posso auxiliar com cálculos de medicamentos, consultar informações farmacoló
     aiAbortRef.current = ctl;
     setLoading(true);
     try {
+      const usedPremium = premiumOnRef.current;
       const { text, provider } = await askServerAssistant([...aiTurnsRef.current, { role: 'user', content: textToSend }], () => patientsRef.current, {
         signal: ctl.signal,
+        premium: usedPremium,
         onProgress: (label) => updateMessageContent(replyId, `⏳ ${label}`),
       });
       aiTurnsRef.current.push({ role: 'user', content: textToSend }, { role: 'assistant', content: text });
-      setMessages((prev) => prev.map((m) => (m.id === replyId ? { ...m, content: text, aiProvider: PROVIDER_NAMES[provider] || provider } : m)));
+      setMessages((prev) => prev.map((m) => (m.id === replyId ? { ...m, content: text, aiProvider: (PROVIDER_NAMES[provider] || provider) + (usedPremium ? ' · Premium' : '') } : m)));
       setAiAvailable(true);
+      if (usedPremium) countPremiumQuestion();
       return true;
     } catch (e: any) {
       const code = e?.code;
@@ -1036,6 +1070,15 @@ Confirma esta dose ou deseja prescrever outro valor em mg/kg?`,
 
       </div>
 
+      <IaPremiumCard
+        active={iaPremium.active}
+        ate={iaPremium.ate}
+        used={iaUsage.perguntas}
+        limitReached={premiumLimitReached}
+        previewAs={iaPreviewAs}
+        onPreview={setIaPreviewAs}
+      />
+
       {/* Chat Messages Container */}
       <div className="bg-[#FFFFFF] dark:bg-slate-900 rounded-3xl border border-[#DCE7F2] dark:border-slate-800 shadow-sm overflow-hidden flex flex-col h-[640px]">
         {/* Messages List */}
@@ -1498,6 +1541,107 @@ Confirma esta dose ou deseja prescrever outro valor em mg/kg?`,
         </div>
       )}
       {composerPatient && <EvolutionComposer patient={composerPatient} onClose={() => setComposerPatient(null)} />}
+    </div>
+  );
+};
+
+const fmtDia = (iso?: string) => (iso ? iso.split('-').reverse().join('/') : '');
+const MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+
+/** Cartão do Assistente IA Premium: uso do mês para assinantes, convite para quem ainda não assina. */
+const IaPremiumCard: React.FC<{
+  active: boolean;
+  ate?: string;
+  used: number;
+  limitReached: boolean;
+  previewAs: 'premium' | 'gratuito' | null;
+  onPreview: (v: 'premium' | 'gratuito') => void;
+}> = ({ active, ate, used, limitReached, previewAs, onPreview }) => {
+  const pct = Math.min(100, Math.round((used / IA_PREMIUM_LIMIT) * 100));
+  const mes = MESES[new Date().getMonth()];
+  const preview = previewAs && (
+    <div className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide">
+      <span className="text-[#64748B] dark:text-slate-400 mr-1">Prévia:</span>
+      {(['premium', 'gratuito'] as const).map((v) => (
+        <button
+          key={v}
+          type="button"
+          onClick={() => onPreview(v)}
+          className={`px-2.5 py-1 rounded-full border cursor-pointer ${previewAs === v ? 'bg-[#14243A] text-white border-[#14243A] dark:bg-white dark:text-slate-900' : 'bg-transparent text-[#52677F] border-[#DCE7F2] dark:text-slate-400 dark:border-slate-700'}`}
+        >
+          {v === 'premium' ? 'Assinante' : 'Gratuito'}
+        </button>
+      ))}
+    </div>
+  );
+
+  if (active) {
+    return (
+      <div className="rounded-3xl p-4 sm:p-5 border border-[#F5D46B] dark:border-amber-500/40 bg-gradient-to-r from-[#FFF8DB] to-[#FFFDF3] dark:from-amber-500/10 dark:to-slate-900 shadow-sm space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#FFE15A] to-[#FFB800] flex items-center justify-center shrink-0">
+              <Crown className="w-5 h-5 text-[#3B2A00]" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-sm font-extrabold text-[#3B2A00] dark:text-amber-200">Assistente IA Premium ativo</p>
+              <p className="text-xs text-[#6B5418] dark:text-amber-200/70">
+                Responde qualquer assunto, com respostas mais completas e sem limite diário.{ate ? ` Assinatura paga até ${fmtDia(ate)}.` : ''}
+              </p>
+            </div>
+          </div>
+          {preview}
+        </div>
+        <div>
+          <div className="flex justify-between text-xs font-semibold text-[#6B5418] dark:text-amber-200/80 mb-1">
+            <span>Perguntas em {mes}</span>
+            <span className="tabular-nums">
+              {Math.min(used, IA_PREMIUM_LIMIT)} de {IA_PREMIUM_LIMIT}
+            </span>
+          </div>
+          <div className="h-2 rounded-full bg-[#F3E5B0] dark:bg-amber-500/20 overflow-hidden">
+            <div className={`h-full rounded-full ${limitReached ? 'bg-[#DC2626]' : 'bg-[#E0A800]'}`} style={{ width: `${pct}%` }} />
+          </div>
+          {limitReached && (
+            <p className="text-xs font-semibold text-[#B91C1C] dark:text-red-400 mt-2">
+              Você usou as {IA_PREMIUM_LIMIT} perguntas de {mes}. Até o dia 1º, o Assistente responde com a IA gratuita.
+            </p>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-3xl p-4 sm:p-5 border border-[#DCE7F2] dark:border-slate-800 bg-[#FFFFFF] dark:bg-slate-900 shadow-sm flex flex-wrap items-center justify-between gap-4">
+      <div className="flex items-start gap-3 min-w-0 flex-1">
+        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#FFE15A] to-[#FFB800] flex items-center justify-center shrink-0">
+          <Crown className="w-5 h-5 text-[#3B2A00]" />
+        </div>
+        <div className="min-w-0">
+          <p className="text-sm font-extrabold text-[#14243A] dark:text-white">
+            Assistente IA Premium <span className="text-[#B98900] dark:text-amber-300">· {IA_PREMIUM_PRICE_LABEL}</span>
+          </p>
+          <p className="text-xs text-[#52677F] dark:text-slate-400">
+            Responde qualquer assunto, aprofunda os casos clínicos e não tem limite diário. Até {IA_PREMIUM_LIMIT} perguntas por mês. Cancele quando quiser.
+          </p>
+        </div>
+      </div>
+      <div className="flex flex-col items-end gap-2">
+        {IA_PREMIUM_CHECKOUT_URL ? (
+          <a
+            href={IA_PREMIUM_CHECKOUT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2.5 rounded-xl bg-[#FFD400] hover:bg-[#FFC800] text-[#1A1400] text-xs font-extrabold shadow-sm"
+          >
+            Assinar Premium
+          </a>
+        ) : (
+          <span className="px-4 py-2.5 rounded-xl bg-[#F1F6FC] dark:bg-slate-800 text-[#52677F] dark:text-slate-400 text-xs font-bold">Em breve</span>
+        )}
+        {preview}
+      </div>
     </div>
   );
 };

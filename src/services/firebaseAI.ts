@@ -7,6 +7,11 @@ const ai = getAI(firebaseApp, { backend: new GoogleAIBackend() });
 
 /** Modelos tentados em ordem; o primeiro que responder é usado. */
 const MODELS = ['gemini-3.8-flash', 'gemini-flash-latest', 'gemini-flash-lite-latest'];
+/**
+ * Assistente IA Premium: modelo de bom custo no plano pago (Gemini 3.5 Flash-Lite, US$ 0,30 / US$ 2,50 por 1M tokens).
+ * Enquanto o projeto pago separado não estiver ligado, usa este mesmo projeto (gratuito).
+ */
+const PREMIUM_MODELS = ['gemini-3.5-flash-lite', ...MODELS];
 
 export interface AgentToolSchema {
   name: string;
@@ -55,9 +60,9 @@ function toContents(history: AgentMessage[]) {
 }
 
 /** Tenta cada modelo até um responder; devolve a resposta bruta do primeiro que funcionar. */
-async function generate(params: { system?: string; tools?: any[]; temperature: number }, contents: any[]) {
+async function generate(params: { system?: string; tools?: any[]; temperature: number; premium?: boolean }, contents: any[]) {
   let lastErr: unknown = null;
-  for (const model of MODELS) {
+  for (const model of params.premium ? PREMIUM_MODELS : MODELS) {
     try {
       const m = getGenerativeModel(ai, {
         model,
@@ -76,9 +81,12 @@ async function generate(params: { system?: string; tools?: any[]; temperature: n
 }
 
 /** Uma rodada da Assistente conversacional, com as ferramentas declaradas. */
-export async function agentRound(system: string, history: AgentMessage[], tools: AgentToolSchema[]) {
+export async function agentRound(system: string, history: AgentMessage[], tools: AgentToolSchema[], opts: { premium?: boolean } = {}) {
   const declarations = tools.map((t) => ({ name: t.name, description: t.description, ...(t.inputSchema ? { parameters: t.inputSchema as any } : {}) }));
-  const response = await generate({ system, tools: declarations.length ? [{ functionDeclarations: declarations }] : [], temperature: 0.4 }, toContents(history.slice(-40)));
+  const response = await generate(
+    { system, tools: declarations.length ? [{ functionDeclarations: declarations }] : [], temperature: 0.4, premium: opts.premium },
+    toContents(history.slice(-40)),
+  );
   const calls = response.functionCalls() || [];
   if (calls.length) {
     const parts: any[] = response.candidates?.[0]?.content?.parts || [];

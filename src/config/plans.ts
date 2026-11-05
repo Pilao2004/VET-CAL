@@ -36,3 +36,9 @@ export const FREE_ACCESS: boolean = env.VITE_FREE_ACCESS === 'true';
 
 /** Dentro do claude.ai o app é a versão de testes do dono: tudo liberado. */
 export const isOwnerPreview = () => FREE_ACCESS || Boolean((window as any).claude);
+
+/** Assistente IA Premium: assinatura mensal vendida à parte (order bump recorrente na Wiapy). */
+export const IA_PREMIUM_CHECKOUT_URL: string = env.VITE_IA_PREMIUM_CHECKOUT_URL || '';
+export const IA_PREMIUM_PRICE_LABEL = 'R$ 19,90/mês';
+/** Perguntas por mês incluídas no Premium. */
+export const IA_PREMIUM_LIMIT = 300;
