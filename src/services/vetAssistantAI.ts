@@ -367,7 +367,8 @@ export async function askServerAssistant(
       if (typeof data.perguntas === 'number') perguntas = data.perguntas;
     } catch (e: any) {
       // Limite do mês atingido ou assinatura vencida: segue com a IA gratuita
-      if (premium && (e?.code === 'limit' || e?.code === 'not_premium')) {
+      // (e se o servidor do Premium falhar, a pessoa continua sendo atendida pela IA gratuita)
+      if (premium) {
         if (e.code === 'limit') perguntas = Number.MAX_SAFE_INTEGER;
         premium = false;
         round--;

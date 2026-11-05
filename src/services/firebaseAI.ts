@@ -92,7 +92,7 @@ async function premiumServerRound(system: string, history: AgentMessage[], tools
     body: JSON.stringify({ system, history: history.slice(-40), tools }),
   });
   const data = await r.json().catch(() => ({}));
-  if (!r.ok) throw Object.assign(new Error(data.code || 'upstream'), { code: data.code === 'limit' || data.code === 'not_premium' ? data.code : 'upstream' });
+  if (!r.ok) throw Object.assign(new Error(data.code || 'upstream'), { code: data.code === 'limit' ? 'limit' : ['not_premium', 'no_credit', 'unconfigured', 'login'].includes(data.code) ? 'not_premium' : 'upstream' });
   return data as { text?: string; toolCalls?: AgentToolCall[]; provider: string; perguntas?: number };
 }
 

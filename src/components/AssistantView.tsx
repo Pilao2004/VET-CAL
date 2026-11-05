@@ -51,7 +51,7 @@ const OLD_PROVIDER_STORAGE_KEY = 'vetcalc_ai_provider';
 try {
   localStorage.removeItem(OLD_PROVIDER_STORAGE_KEY);
 } catch {}
-const PROVIDER_NAMES: Record<string, string> = { gemini: 'Gemini', groq: 'Groq (Llama)', claude: 'Claude' };
+const PROVIDER_NAMES: Record<string, string> = { gemini: 'Gemini', groq: 'Groq (Llama)', claude: 'Claude', chatgpt: 'ChatGPT' };
 
 interface PendingCalculationState {
   drug: CommercialProduct | null;

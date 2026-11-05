@@ -981,7 +981,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   useEffect(() => {
     if (isOwnerPreview()) {
       setAccessChecking(false);
-      return;
+      // App liberado para todos: ainda assim lê a assinatura do Assistente IA Premium de quem está logado
+      const u = accountUser;
+      const mail = normalizeEmail(u?.email);
+      if (!u || !mail || !isVerified(u)) return;
+      return watchAccess(
+        mail,
+        ({ iaPremiumAte }) => setIaPremiumAte(iaPremiumAte || null),
+        () => {},
+      );
     }
     const user = accountUser;
     if (!user) {
