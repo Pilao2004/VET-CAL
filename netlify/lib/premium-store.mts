@@ -2,7 +2,9 @@
 import { getStore } from '@netlify/blobs';
 
 export interface Assinante {
-  ate: string; // AAAA-MM-DD
+  ate: string | null; // AAAA-MM-DD: fim do Assistente IA Premium
+  /** Comprou o app VET CALC PRO (liberado pelo webhook da Wiapy) */
+  appLiberado?: boolean;
   origem: string;
   status: string;
   atualizadoEm: string;

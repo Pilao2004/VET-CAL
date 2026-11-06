@@ -64,7 +64,7 @@ export default async (req: Request) => {
   // Premium liberado à mão no Firebase ou sozinho pelo webhook da Wiapy: vale a data mais distante
   const [ateFirebase, assinante] = await Promise.all([premiumAte(email, idToken), lerAssinante(email)]);
   const ate = maiorData(ateFirebase, assinante?.ate);
-  if (req.method === 'GET') return json(200, { iaPremiumAte: ate });
+  if (req.method === 'GET') return json(200, { iaPremiumAte: ate, appLiberado: Boolean(assinante?.appLiberado) });
   if (!ate || ate < hojeSP()) return json(403, { code: 'not_premium' });
 
   const raw = await req.text();

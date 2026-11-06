@@ -901,6 +901,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [subscription, setSubscription] = useState<SubscriptionInfo>(readAccessCache);
   const [accountUser, setAccountUser] = useState<FirebaseUser | null>(null);
   const [accessChecking, setAccessChecking] = useState(true);
+  // Compra do app liberada sozinha pelo webhook da Wiapy (guardada no servidor do app)
+  const [appLiberadoServidor, setAppLiberadoServidor] = useState(false);
+  const appLiberadoServidorRef = React.useRef(false);
+  appLiberadoServidorRef.current = appLiberadoServidor;
   const [accountVersion, setAccountVersion] = useState(0);
 
   const saveSubscription = (subData: SubscriptionInfo) => {
@@ -1029,7 +1033,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       ({ liberado, expiraEm, iaPremiumAte }) => {
         setAccessChecking(false);
         setIaPremiumAte(iaPremiumAte || null);
-        const valid = liberado && (!expiraEm || expiraEm >= new Date().toISOString().slice(0, 10));
+        const valid = (liberado && (!expiraEm || expiraEm >= new Date().toISOString().slice(0, 10))) || appLiberadoServidorRef.current;
         const wasPremium = cached.tier === 'premium' && cached.email === email;
         saveSubscription(valid ? { tier: 'premium', isActive: true, email, expiresAt: expiraEm } : FREE_PLAN);
         if (valid && !wasPremium) showToast('Acesso liberado!');
@@ -1045,6 +1049,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [accountUser, accountVersion]);
 
   const refreshAccount = () => setAccountVersion((v) => v + 1);
+
+  useEffect(() => {
+    const email = normalizeEmail(accountUser?.email);
+    if (!appLiberadoServidor || !email || !accountUser || !isVerified(accountUser) || isOwnerPreview()) return;
+    setAccessChecking(false);
+    if (!(subscription.tier === 'premium' && subscription.email === email)) {
+      saveSubscription({ tier: 'premium', isActive: true, email });
+      showToast('Acesso liberado!');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appLiberadoServidor, accountUser]);
 
   // Assistente IA Premium: liberado no Firebase com acessos/{e-mail}.iaPremiumAte (data de validade)
   const [iaPremiumAte, setIaPremiumAte] = useState<string | null>(null);
@@ -1068,6 +1083,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [iaPremiumAteServidor, setIaPremiumAteServidor] = useState<string | null>(null);
   useEffect(() => {
     setIaPremiumAteServidor(null);
+    setAppLiberadoServidor(false);
     const u = accountUser;
     if (!u || !isVerified(u) || !IA_PREMIUM_ENDPOINT) return;
     let alive = true;
@@ -1075,13 +1091,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       .then((token) => fetch(IA_PREMIUM_ENDPOINT, { headers: { Authorization: `Bearer ${token}` } }))
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => {
-        if (alive && typeof d?.iaPremiumAte === 'string') setIaPremiumAteServidor(d.iaPremiumAte);
+        if (!alive || !d) return;
+        if (typeof d.iaPremiumAte === 'string') setIaPremiumAteServidor(d.iaPremiumAte);
+        if (d.appLiberado === true) setAppLiberadoServidor(true);
       })
       .catch(() => {});
     return () => {
       alive = false;
     };
-  }, [accountUser]);
+  }, [accountUser, accountVersion]);
   const iaAte = [iaPremiumAte, iaPremiumAteServidor].filter(Boolean).sort().pop() || null;
   const today = new Date().toISOString().slice(0, 10);
   // A prévia (botões Assinante/Gratuito) só existe no app aberto no claude.ai, nunca no site publicado

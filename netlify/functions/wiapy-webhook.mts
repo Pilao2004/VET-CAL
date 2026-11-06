@@ -1,10 +1,12 @@
-// Webhook da Wiapy (/api/wiapy-webhook): libera o Assistente IA Premium sozinho a cada pagamento.
+// Webhook da Wiapy (/api/wiapy-webhook): libera sozinho o app e o Assistente IA Premium a cada pagamento.
+// Compra aprovada do app VET CALC PRO = acesso ao app liberado para o e-mail da compra.
 // Pagamento aprovado do Premium (produto, order bump ou assinatura) = Premium até o fim do período (ou 30 dias).
 // Estorno ou chargeback = Premium encerrado. A Wiapy manda o token cadastrado no header Authorization.
 import { assinantes, hojeSP, lerAssinante, maiorData, type Assinante } from '../lib/premium-store.mts';
 
 const json = (status: number, body: unknown) => new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
 const ehPremium = (t: unknown) => /ia\s*premium|assistente\s*ia/i.test(String(t || ''));
+const ehApp = (t: unknown) => /^\s*vet\s*calc\s*pro\s*$/i.test(String(t || ''));
 const maisDias = (iso: string, dias: number) => new Date(Date.parse(iso.slice(0, 10)) + dias * 86400000).toISOString().slice(0, 10);
 
 export default async (req: Request) => {
@@ -28,7 +30,8 @@ export default async (req: Request) => {
     ehPremium(b?.checkout?.title) ||
     (b?.checkout?.orderbump || []).some((o: any) => ehPremium(o?.title)) ||
     (b?.products || []).some((p: any) => ehPremium(p?.title));
-  if (!temPremium) return json(200, { ok: true, ignorado: 'sem premium' });
+  const temApp = ehApp(b?.checkout?.title) || (b?.products || []).some((p: any) => ehApp(p?.title));
+  if (!temPremium && !temApp) return json(200, { ok: true, ignorado: 'sem produto do app' });
 
   const atual = await lerAssinante(email);
   const pagamentos = atual?.pagamentos || [];
@@ -36,26 +39,32 @@ export default async (req: Request) => {
   const status = String(pay.status || '');
   const sub = b?.subscription && Object.keys(b.subscription).length ? b.subscription : null;
   let ate = atual?.ate || null;
+  let appLiberado = Boolean(atual?.appLiberado);
 
   if (status === 'paid') {
     // Assinatura: vale até o fim do período pago (+1 dia de folga). Compra avulsa (order bump): 30 dias.
-    const fim = sub?.dt_end ? maisDias(String(sub.dt_end), 1) : maisDias(String(pay.dt_create || hojeSP()), 30);
-    ate = maiorData(ate, fim);
+    if (temPremium) {
+      const fim = sub?.dt_end ? maisDias(String(sub.dt_end), 1) : maisDias(String(pay.dt_create || hojeSP()), 30);
+      ate = maiorData(ate, fim);
+    }
+    if (temApp) appLiberado = true;
   } else if (status === 'refunded' || status === 'chargedback') {
-    ate = maisDias(hojeSP(), -1);
+    if (temPremium) ate = maisDias(hojeSP(), -1);
+    if (temApp) appLiberado = false;
   } else {
     return json(200, { ok: true, ignorado: status }); // pendente, recusado: nada muda
   }
 
   const reg: Assinante = {
-    ate: ate!,
-    origem: sub ? 'assinatura' : 'order bump / compra avulsa',
+    ate,
+    appLiberado,
+    origem: sub ? 'assinatura' : temApp ? 'compra do app' : 'order bump / compra avulsa',
     status,
     atualizadoEm: new Date().toISOString(),
     pagamentos: id && !pagamentos.includes(id) ? [...pagamentos, id].slice(-50) : pagamentos,
   };
   await assinantes().setJSON(email, reg);
-  return json(200, { ok: true, email, ate: reg.ate });
+  return json(200, { ok: true, email, ate: reg.ate, appLiberado });
 };
 
 export const config = { path: '/api/wiapy-webhook' };
