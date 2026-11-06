@@ -996,7 +996,7 @@ export default function App() {
             <div>
               <h4 className="font-bold text-white mb-4">Suporte & Contato</h4>
               <p className="text-sm text-slate-400 mb-2">Dúvidas sobre o acesso ou suporte técnico?</p>
-              <p className="text-sm text-[#00DFA2] font-medium">suporte@vetcalcpro.app</p>
+              <p className="text-sm text-[#00DFA2] font-medium">suporte.vetcalcpro@gmail.com</p>
             </div>
           </div>
 
