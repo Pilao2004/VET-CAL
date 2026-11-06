@@ -20,7 +20,7 @@ import {
 import { patientService, MigrationSummary } from '../services/patientService';
 import { isVerified, logout, normalizeEmail, User as FirebaseUser, watchAccess, watchAuth } from '../lib/firebase';
 import { loadCloudPatients, loadCloudProfile, loadLocalVetProfile, mergePatients, saveCloudPatients, saveCloudProfile, saveLocalVetProfile } from '../services/cloudSync';
-import { isOwnerPreview } from '../config/plans';
+import { IA_PREMIUM_ENDPOINT, isOwnerPreview } from '../config/plans';
 
 interface PrefillData {
   drugName?: string;
@@ -1064,12 +1064,31 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       localStorage.setItem('vetcalc_ia_preview', v);
     } catch {}
   };
+  // Premium liberado sozinho pelo webhook da Wiapy fica no servidor: busca a data ao entrar
+  const [iaPremiumAteServidor, setIaPremiumAteServidor] = useState<string | null>(null);
+  useEffect(() => {
+    setIaPremiumAteServidor(null);
+    const u = accountUser;
+    if (!u || !isVerified(u) || !IA_PREMIUM_ENDPOINT) return;
+    let alive = true;
+    u.getIdToken()
+      .then((token) => fetch(IA_PREMIUM_ENDPOINT, { headers: { Authorization: `Bearer ${token}` } }))
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (alive && typeof d?.iaPremiumAte === 'string') setIaPremiumAteServidor(d.iaPremiumAte);
+      })
+      .catch(() => {});
+    return () => {
+      alive = false;
+    };
+  }, [accountUser]);
+  const iaAte = [iaPremiumAte, iaPremiumAteServidor].filter(Boolean).sort().pop() || null;
   const today = new Date().toISOString().slice(0, 10);
   // A prévia (botões Assinante/Gratuito) só existe no app aberto no claude.ai, nunca no site publicado
   const iaOwnerPreview = Boolean((window as any).claude);
-  const iaPremium = iaOwnerPreview && !iaPremiumAte
+  const iaPremium = iaOwnerPreview && !iaAte
     ? { active: iaPreviewAs === 'premium', ate: undefined }
-    : { active: Boolean(iaPremiumAte && iaPremiumAte >= today), ate: iaPremiumAte || undefined };
+    : { active: Boolean(iaAte && iaAte >= today), ate: iaAte || undefined };
 
   const isPremium =
     isOwnerPreview() ||
@@ -1239,7 +1258,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         deactivateSubscription,
         isPremium,
         iaPremium,
-        iaPreviewAs: iaOwnerPreview && !iaPremiumAte ? iaPreviewAs : null,
+        iaPreviewAs: iaOwnerPreview && !iaAte ? iaPreviewAs : null,
         setIaPreviewAs,
         checkIsFeatureUnlocked,
         toast,
