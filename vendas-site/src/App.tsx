@@ -81,35 +81,35 @@ const BONUSES: BonusItem[] = [
     title: 'Guia de Urgências e Emergências Clínicas',
     description: 'Manual digital prático com fluxograma de atendimento inicial para pacientes críticos em cães e gatos.',
     value: 'R$ 25,00',
-    img: './media/bonus-guia.jpg'
+    img: './media/bonus-guia.webp'
   },
   {
     id: 'b2',
     title: 'Checklist de Anamnese e Exame Físico',
     description: 'Roteiro sistemático para não esquecer nenhum detalhe durante a consulta clínica diária.',
     value: 'R$ 25,00',
-    img: './media/bonus-checklist.jpg'
+    img: './media/bonus-checklist.webp'
   }
 ];
 
 const CLINIC_PHOTOS = [
-  { src: './media/foto-spitz.jpg', alt: 'Spitz alemão em observação na clínica' },
-  { src: './media/foto-gatinho.jpg', alt: 'Gatinho branco e cinza olhando para a câmera' },
-  { src: './media/foto-dalmata.jpg', alt: 'Cão malhado de língua de fora durante a consulta' },
-  { src: './media/foto-labrador.jpg', alt: 'Filhote preto de língua de fora na clínica' },
-  { src: './media/foto-chihuahua.jpg', alt: 'Chihuahua de pelo longo sobre a mesa de atendimento' },
-  { src: './media/foto-golden-colar.jpg', alt: 'Golden retriever idoso com colar elizabetano' },
-  { src: './media/foto-labrador-sofa.jpg', alt: 'Filhote preto deitado e sorridente' },
-  { src: './media/foto-gato.jpg', alt: 'Gato cinza e branco sobre a mesa de atendimento' },
-  { src: './media/foto-shihtzu.jpg', alt: 'Shih-tzu de roupinha sobre o tapete higiênico' },
-  { src: './media/foto-filhote.jpg', alt: 'Filhote de olhos azuis sobre a mesa de inox' },
-  { src: './media/foto-lhasa.jpg', alt: 'Lhasa apso recebendo carinho na consulta' },
-  { src: './media/foto-bully.jpg', alt: 'Bully merle sobre a mesa de atendimento' },
-  { src: './media/foto-gato-laranja.jpg', alt: 'Gato laranja no colo durante a consulta' },
-  { src: './media/foto-chihuahua-idoso.jpg', alt: 'Chihuahua idoso de coleira vermelha' },
-  { src: './media/foto-yorkshire-lacos.jpg', alt: 'Yorkshire com dois lacinhos no colo da tutora' },
-  { src: './media/foto-yorkshire.jpg', alt: 'Yorkshire com lacinho rosa na clínica' },
-  { src: './media/foto-lulu.jpg', alt: 'Lulu da Pomerânia em close' }
+  { src: './media/foto-spitz.webp', alt: 'Spitz alemão em observação na clínica' },
+  { src: './media/foto-gatinho.webp', alt: 'Gatinho branco e cinza olhando para a câmera' },
+  { src: './media/foto-dalmata.webp', alt: 'Cão malhado de língua de fora durante a consulta' },
+  { src: './media/foto-labrador.webp', alt: 'Filhote preto de língua de fora na clínica' },
+  { src: './media/foto-chihuahua.webp', alt: 'Chihuahua de pelo longo sobre a mesa de atendimento' },
+  { src: './media/foto-golden-colar.webp', alt: 'Golden retriever idoso com colar elizabetano' },
+  { src: './media/foto-labrador-sofa.webp', alt: 'Filhote preto deitado e sorridente' },
+  { src: './media/foto-gato.webp', alt: 'Gato cinza e branco sobre a mesa de atendimento' },
+  { src: './media/foto-shihtzu.webp', alt: 'Shih-tzu de roupinha sobre o tapete higiênico' },
+  { src: './media/foto-filhote.webp', alt: 'Filhote de olhos azuis sobre a mesa de inox' },
+  { src: './media/foto-lhasa.webp', alt: 'Lhasa apso recebendo carinho na consulta' },
+  { src: './media/foto-bully.webp', alt: 'Bully merle sobre a mesa de atendimento' },
+  { src: './media/foto-gato-laranja.webp', alt: 'Gato laranja no colo durante a consulta' },
+  { src: './media/foto-chihuahua-idoso.webp', alt: 'Chihuahua idoso de coleira vermelha' },
+  { src: './media/foto-yorkshire-lacos.webp', alt: 'Yorkshire com dois lacinhos no colo da tutora' },
+  { src: './media/foto-yorkshire.webp', alt: 'Yorkshire com lacinho rosa na clínica' },
+  { src: './media/foto-lulu.webp', alt: 'Lulu da Pomerânia em close' }
 ];
 
 interface FeedbackScreenshot {
@@ -122,25 +122,25 @@ interface FeedbackScreenshot {
 // Avaliações reais enviadas por usuários (nome e foto borrados, uso autorizado na conversa)
 const FEEDBACK_SCREENSHOTS: FeedbackScreenshot[] = [
   {
-    src: './media/avaliacao-1.jpg',
+    src: './media/avaliacao-1.webp',
     alt: 'Conversa no Instagram em que um usuário elogia a parte de medicamentos e autoriza a publicação',
     title: 'Várias marcas e concentrações, fica bem mais fácil achar',
     badge: 'Biblioteca de Medicamentos'
   },
   {
-    src: './media/avaliacao-2.jpg',
+    src: './media/avaliacao-2.webp',
     alt: 'Conversa no Instagram em que um usuário elogia a parte de medicamentos, sugere um plano de IA avançado e autoriza a publicação',
     title: 'Várias marcas e concentrações; sugere um plano de IA avançado',
     badge: 'Medicamentos'
   },
   {
-    src: './media/avaliacao-3.jpg',
+    src: './media/avaliacao-3.webp',
     alt: 'Conversa no Instagram em que um usuário elogia as calculadoras, os medicamentos e as imagens ilustrativas e autoriza a publicação',
     title: 'Calculadoras, medicamentos e imagens ilustrativas',
     badge: 'Calculadoras'
   },
   {
-    src: './media/avaliacao-4.jpg',
+    src: './media/avaliacao-4.webp',
     alt: 'Conversa no Instagram em que um usuário elogia a calculadora, o assistente de IA, a parte de emergência e os bônus',
     title: 'A parte de emergência me salvou e os bônus são irados',
     badge: 'Emergência & Bônus'
@@ -294,10 +294,16 @@ export default function App() {
           {/* Hero App Mockup */}
           <div className="mb-10 -mx-2 sm:mx-auto max-w-3xl drop-shadow-[0_25px_35px_rgba(0,0,0,0.5)]">
             <img
-              src="./media/hero-app-dose.webp"
+              src="./media/hero-app-dose-1200.webp"
+              srcSet="./media/hero-app-dose-1200.webp 1200w, ./media/hero-app-dose-1800.webp 1800w"
+              sizes="(max-width: 768px) 100vw, 768px"
+              width={1200}
+              height={986}
               alt="Telas do app VET CALC PRO no celular"
               className="w-full h-auto object-cover rounded-2xl"
               loading="eager"
+              fetchPriority="high"
+              decoding="async"
             />
           </div>
 
@@ -360,10 +366,10 @@ export default function App() {
             <video
               ref={videoRef}
               src="./media/video-vendas-1min.mp4"
-              poster="./media/video-vendas-1min-capa.jpg"
+              poster="./media/video-vendas-1min-capa.webp"
               controls={isVideoPlaying}
               playsInline
-              preload="metadata"
+              preload="none"
               onEnded={() => setIsVideoPlaying(false)}
               className="w-full h-full object-cover"
             />
@@ -522,25 +528,25 @@ export default function App() {
                 title: 'Estudantes de Medicina Veterinária',
                 desc: 'Para quem deseja organizar os estudos, fixar conceitos e praticar cálculos veterinários com segurança.',
                 icon: GraduationCap,
-                img: './media/publico-estudantes.jpg'
+                img: './media/publico-estudantes.webp'
               },
               {
                 title: 'Estagiários',
                 desc: 'Para quem está começando a acompanhar a rotina clínica e precisa consultar informações com rapidez e precisão.',
                 icon: UserCheck,
-                img: './media/publico-estagiarios.jpg'
+                img: './media/publico-estagiarios.webp'
               },
               {
                 title: 'Médicos-Veterinários',
                 desc: 'Para profissionais que buscam centralizar ferramentas ágeis de apoio à rotina e agilizar plantões e atendimentos.',
                 icon: Stethoscope,
-                img: './media/publico-veterinarios.jpg'
+                img: './media/publico-veterinarios.webp'
               },
               {
                 title: 'Profissionais que buscam organização',
                 desc: 'Para quem prefere reunir diferentes recursos veterinários em uma única plataforma online moderna e confiável.',
                 icon: Award,
-                img: './media/publico-organizacao.jpg'
+                img: './media/publico-organizacao.webp'
               }
             ].map((target, idx) => {
               const IconTarget = target.icon;
@@ -553,6 +559,8 @@ export default function App() {
                     <img
                       src={target.img}
                       alt={target.title}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0D172D]/80 via-transparent to-transparent flex items-end p-4">
@@ -648,7 +656,7 @@ export default function App() {
                 <div className="relative overflow-hidden rounded-xl sm:rounded-[18px] bg-slate-900 aspect-[9/18]">
                   {item.src ? (
                     <img
-                      src={item.src}
+                      src={item.src.replace('.webp', '-p.webp')}
                       alt={idx < FEEDBACK_SCREENSHOTS.length ? item.alt : ''}
                       decoding="async"
                       loading="lazy"
@@ -704,6 +712,8 @@ export default function App() {
                   <img
                     src={bonus.img}
                     alt={bonus.title}
+                    loading="lazy"
+                    decoding="async"
                     className={`w-full h-auto rounded-xl mb-6 shadow-[0_18px_40px_-12px_rgba(13,23,45,0.45)] transition-transform duration-500 group-hover:rotate-0 group-hover:scale-[1.02] ${
                       idx === 0 ? '-rotate-[1.5deg]' : 'rotate-[1.5deg]'
                     }`}
@@ -768,7 +778,9 @@ export default function App() {
 
                   <div className="-mx-4 sm:-mx-6 mb-6 rounded-2xl bg-gradient-to-b from-[#E6FBF4] to-[#F3F7FB] px-3 pt-6 pb-3">
                     <img
-                      src="./media/mockup-oferta.webp"
+                      src="./media/mockup-oferta-1000.webp"
+                      loading="lazy"
+                      decoding="async"
                       alt="App VET CALC PRO no celular com os bônus Guia de Urgências e Checklist de Anamnese"
                       className="w-full h-auto drop-shadow-[0_18px_24px_rgba(13,23,45,0.25)]"
                     />
