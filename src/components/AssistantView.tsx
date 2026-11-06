@@ -1560,6 +1560,19 @@ const IaPremiumCard: React.FC<{
   onPreview: (v: 'premium' | 'gratuito') => void;
 }> = ({ active, ate, used, limitReached, previewAs, onPreview }) => {
   const pct = Math.min(100, Math.round((used / IA_PREMIUM_LIMIT) * 100));
+  // Dias até o Premium vencer (pela data iaPremiumAte); negativo = já venceu
+  const hoje = new Date().toISOString().slice(0, 10);
+  const diasRestantes = ate ? Math.round((Date.parse(ate) - Date.parse(hoje)) / 86400000) : null;
+  const assinar = IA_PREMIUM_CHECKOUT_URL ? (
+    <a
+      href={IA_PREMIUM_CHECKOUT_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-block px-4 py-2.5 rounded-xl bg-[#FFD400] hover:bg-[#FFC800] text-[#1A1400] text-xs font-extrabold shadow-sm"
+    >
+      Assinar Premium
+    </a>
+  ) : null;
   const mes = MESES[new Date().getMonth()];
   const preview = previewAs && (
     <div className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide">
@@ -1604,6 +1617,15 @@ const IaPremiumCard: React.FC<{
           <div className="h-2 rounded-full bg-[#F3E5B0] dark:bg-amber-500/20 overflow-hidden">
             <div className={`h-full rounded-full ${limitReached ? 'bg-[#DC2626]' : 'bg-[#E0A800]'}`} style={{ width: `${pct}%` }} />
           </div>
+          {diasRestantes !== null && diasRestantes <= 7 && (
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-[#FFF1C2] dark:bg-amber-500/15 px-3 py-2.5">
+              <p className="text-xs font-bold text-[#6B4E00] dark:text-amber-200">
+                {diasRestantes <= 0 ? 'Seu Premium vence hoje.' : `Seu Premium vence em ${diasRestantes} dia${diasRestantes === 1 ? '' : 's'} (${fmtDia(ate)}).`} Assine para continuar
+                todo mês sem interrupção.
+              </p>
+              {assinar}
+            </div>
+          )}
           {limitReached && (
             <p className="text-xs font-semibold text-[#B91C1C] dark:text-red-400 mt-2">
               Você usou as {IA_PREMIUM_LIMIT} perguntas de {mes}. Até o dia 1º, o Assistente responde com a IA gratuita.
@@ -1624,9 +1646,15 @@ const IaPremiumCard: React.FC<{
           <p className="text-sm font-extrabold text-[#14243A] dark:text-white">
             Assistente IA Premium <span className="text-[#B98900] dark:text-amber-300">· {IA_PREMIUM_PRICE_LABEL}</span>
           </p>
-          <p className="text-xs text-[#52677F] dark:text-slate-400">
-            Responde qualquer assunto, aprofunda os casos clínicos e não tem limite diário. Até {IA_PREMIUM_LIMIT} perguntas por mês. Cancele quando quiser.
-          </p>
+          {ate ? (
+            <p className="text-xs font-semibold text-[#B45309] dark:text-amber-300">
+              Seu Premium venceu em {fmtDia(ate)}. Assine para voltar a usar a IA Premium; enquanto isso, o Assistente responde com a IA gratuita.
+            </p>
+          ) : (
+            <p className="text-xs text-[#52677F] dark:text-slate-400">
+              Responde qualquer assunto, aprofunda os casos clínicos e não tem limite diário. Até {IA_PREMIUM_LIMIT} perguntas por mês. Cancele quando quiser.
+            </p>
+          )}
         </div>
       </div>
       <div className="flex flex-col items-end gap-2">
